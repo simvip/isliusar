@@ -7,16 +7,16 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
-* Test.
-*
-* @author Ivan Sliusar (mailto:ivan.sliusar.ua@gmail.com)
-* @version $Id$
-* @since 0.1
-*/
+ * Test.
+ *
+ * @author Ivan Sliusar (ivan.sliusar.ua@gmail.com)
+ * @version $Id$
+ * @since 0.1
+ */
 public class CalculateTest {
 	/**
-	* Test add.
-	*/
+	 * Test add.
+	 */
 	@Test
 	public void whenAddOneToOneThenTwo() {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -26,11 +26,10 @@ public class CalculateTest {
 				out.toString(),
 				is(
 						String.format(
-								"Hello world%s",
-								System.getProperty("line.separator")
-						)
+							"Hello world%s",
+							System.getProperty("line.separator")
+					)
 				)
 		);
 	}
 }
- 
