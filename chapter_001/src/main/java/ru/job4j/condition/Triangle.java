@@ -10,22 +10,22 @@ package ru.job4j.condition;
  */
 public class Triangle {
 	/**
-	 *Координата a.
+	 *Р’РµСЂС€РёРЅР° a.
 	 */
 	private Point a;
 	/**
-	 *Координата b.
+	 *Р’РµСЂС€РёРЅР° b.
 	 */
 	private Point b;
 	/**
-	 *Координата c.
+	 *Р’РµСЂС€РёРЅР° c.
 	 */
 	private Point c;
 	/**
-	 *point.
-	 *@param a - Первый аргумент.
-	 *@param b - Второй аргумент.
-	 *@param c - Третий аргумент.
+	 *РўСЂРµСѓРіРѕР»СЊРЅРёРє.
+	 *@param a - Р’РµСЂС€РёРЅР°.
+	 *@param b - Р’РµСЂС€РёРЅР°.
+	 *@param c - Р’РµСЂС€РёРЅР°.
 	 */
 	public Triangle(Point a, Point b, Point c) {
 		this.a = a;
