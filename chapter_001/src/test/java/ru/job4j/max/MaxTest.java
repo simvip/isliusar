@@ -23,4 +23,14 @@ public class MaxTest {
 		int expected = 1;
 		assertThat(result, is(expected));
 	}
+	/**
+	 *Test max.
+	 */
+	@Test
+	public void whenMaxThreeMaximumPhfiveMaximumEigthThenEigth() {
+		Max max = new Max();
+		int result = max.max(3, 5, 8);
+		int expected = 8;
+		assertThat(result, is(expected));
+	}
 }
