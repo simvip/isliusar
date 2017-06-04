@@ -15,7 +15,7 @@ import static org.junit.Assert.assertThat;
  */
 public class TriangleTest {
 	/**
-	 *Тест area.
+	 *Test max.
 	 */
     @Test
     public void whenIsFistArgTwoSecondArgTwoThenThrue() {
