@@ -1,5 +1,6 @@
 package ru.job4j.condition;
 
+import static java.lang.Math.abs;
 /**
  *Class triangle.
  *
@@ -43,6 +44,7 @@ public class Triangle {
 		int by = this.b.getY();
 		int cx = this.c.getX();
 		int cy = this.c.getY();
-		return  (ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)) / 2;
+		int rezult = abs((ax * (by - cy) + bx * (cy - ay) + cx * (ay - by)));
+		return   rezult / 2.0;
 	}
 }
