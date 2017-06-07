@@ -1,7 +1,6 @@
-package ru.job4j.loop;
+package ru.job4j.array;
 
 import org.junit.Test;
-import ru.job4j.array.Turn;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
