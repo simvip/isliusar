@@ -27,7 +27,7 @@ public class BubbleSort {
                     array[i] = array[i + 1];
                     array[i + 1] = temp;
                     doAgain = true;
-                    if (aLenght == i+1){
+                    if (aLenght == i + 1) {
                         aLenght--;
                     }
                 }
