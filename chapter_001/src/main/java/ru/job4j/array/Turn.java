@@ -16,7 +16,7 @@ public class Turn {
      * @return array -int[].
      */
     public int[] back(int[] array) {
-        int maxIter = (int) array.length / 2;
+        int maxIter = array.length / 2;
         int tempInt;
         int maxIndex = array.length - 1;
         for (int i = 0; i < maxIter; i++) {
