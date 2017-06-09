@@ -20,20 +20,14 @@ public class ArrayDuplicate {
     public String[] remove(String[] array) {
         int size = array.length;
         int sizeNew = 0;
-        int positionDuplicate = 0;
         String tempLine = "";
         for (int i = 0; i < size; i++) {
-            if (tempLine.contains(array[i])) {
-                if (positionDuplicate == 0) {
-                    positionDuplicate = i;
+            if (!tempLine.contains(array[i])) {
+                if (sizeNew != i) {
+                    array[sizeNew] = array[i];
                 }
-            } else {
-                if (positionDuplicate != 0) {
-                    array[positionDuplicate] = array[i];
-                    positionDuplicate = 0;
-                }
-                tempLine += array[i];
                 sizeNew++;
+                tempLine += array[i];
             }
         }
         return Arrays.copyOf(array, sizeNew);
