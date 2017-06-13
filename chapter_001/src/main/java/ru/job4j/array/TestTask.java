@@ -24,7 +24,17 @@ public class TestTask {
         for (int i = 0; i < originMass.length; i++) {
             if (subMass[0] == originMass[i]) {
                 for (int j = 1; j < subMass.length; j++) {
-                    contains = !((i + j) >= originMass.length || subMass[j] != originMass[i + j]);
+                    if ((i + j) <= originMass.length) {
+                        if (subMass[j] == originMass[i + j]) {
+                            contains = true;
+                        } else {
+                            contains = false;
+                            break;
+                        }
+                    } else {
+                        contains = false;
+                        break;
+                    }
                 }
                 if (contains) {
                     break;
