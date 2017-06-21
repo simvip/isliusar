@@ -1,7 +1,7 @@
 package ru.job4j.calculator;
 
 /**
- *Class Calculator.
+ *Class calculator.
  *
  *@author i.sliusar
  *@version $Id$

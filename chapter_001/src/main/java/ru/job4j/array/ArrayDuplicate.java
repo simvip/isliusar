@@ -3,12 +3,12 @@ package ru.job4j.array;
 import java.util.Arrays;
 
 /**
- *Class ArrayDuplicate.
+ * Class ArrayDuplicate.
  *
- *@author i.sliusar
- *@version $Id$
- *@since 0.1
- *08.06.2017
+ * @author i.sliusar
+ * @version $Id$
+ * @since 0.1
+ * 08.06.2017
  */
 public class ArrayDuplicate {
     /**

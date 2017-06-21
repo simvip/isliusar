@@ -6,7 +6,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- *Class Calculator решение задачи части 001 урок 1.
+ *Class calculator решение задачи части 001 урок 1.
  *
  *@author i.sliusar
  *@version $Id$
