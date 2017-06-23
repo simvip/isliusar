@@ -33,9 +33,9 @@ public class Tracker {
      * @return item
      */
     public Item add(Item item) {
-        if (counter <= this.items.length) {
+        if (this.counter <= this.items.length) {
             item.setId(String.valueOf(System.currentTimeMillis() + "-" + RD.nextInt(100)));
-            items[counter++] = item;
+            items[this.counter++] = item;
         }
         return item;
     }
@@ -69,7 +69,7 @@ public class Tracker {
         for (int i = 0; i < this.counter; i++) {
             newItem[i] = this.items[i];
         }
-        return this.items;
+        return newItem;
     }
 
     /**
@@ -124,7 +124,7 @@ public class Tracker {
         String itemId = item.getId();
 
         for (int index = 0; index < lenghtStorage; index++) {
-            if (this.items[index].getId().equals(itemId)) {
+            if (this.items[index] != null && this.items[index].getId().equals(itemId)) {
                 findIndex = index;
                 break;
             }
