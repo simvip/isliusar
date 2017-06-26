@@ -14,6 +14,35 @@ import ru.job4j.model.Item;
  */
 public class StartUI {
     /**
+     * Add.
+     */
+    private static final int ADD = 0;
+    /**
+     * Show all.
+     */
+    private static final int SHOW_ALL = 1;
+    /**
+     * Edit.
+     */
+    private static final int EDIT = 2;
+    /**
+     * delete.
+     */
+    private static final int DELETE = 3;
+    /**
+     * find by id.
+     */
+    private static final int FIND_BY_ID = 4;
+    /**
+     * finde by name.
+     */
+    private static final int FIND_BY_NAME = 5;
+    /**
+     * exit.
+     */
+    private static final int EXIT = 6;
+
+    /**
      * menu of our program.
      */
     private String[] doList;
@@ -44,14 +73,14 @@ public class StartUI {
             userAnswer = Integer.parseInt(input.answer("Select"));
 
             switch (userAnswer) {
-                case 0:
+                case ADD:
                     currentItem = new Item(
                             input.answer("Please input Name"),
                             input.answer("Please input description"),
                             Long.parseLong(input.answer("Please input create")));
                     tracker.add(currentItem);
                     break;
-                case 1:
+                case SHOW_ALL:
                     items = tracker.findAll();
                     for (Item item : items) {
                         if (item == null) {
@@ -61,13 +90,13 @@ public class StartUI {
                     }
                     System.out.println();
                     break;
-                case 2:
+                case EDIT:
                     if (currentItem == null) {
                         currentItem = tracker.findById(input.answer("input Id Item for update"));
                     }
                     tracker.update(currentItem);
                     break;
-                case 3:
+                case DELETE:
                     if (currentItem == null) {
                         currentItem = tracker.findById(input.answer("input Id Item for delete"));
                     }
@@ -78,7 +107,7 @@ public class StartUI {
                         System.out.println("delete failed");
                     }
                     break;
-                case 4:
+                case FIND_BY_ID:
                     currentItem = tracker.findById(input.answer("input Id for search"));
                     if (currentItem == null) {
                         System.out.println("find failed");
@@ -87,7 +116,7 @@ public class StartUI {
                         System.out.println("find successful");
                     }
                     break;
-                case 5:
+                case FIND_BY_NAME:
                     items = tracker.findByName(input.answer("input Name for search"));
                     System.out.println("I found the following list Item:");
                     for (Item item : items) {
@@ -95,7 +124,7 @@ public class StartUI {
                     }
                     System.out.println();
                     break;
-                case 6:
+                case EXIT:
                     String answer = input.answer("You want to close program? yes/no");
                     programOnline = !answer.equals("yes");
                     break;
@@ -115,7 +144,7 @@ public class StartUI {
     private void printList(boolean programOnline) {
         if (programOnline) {
             for (int i = 0; i < doList.length; i++) {
-                System.out.println("" + i + "." + doList[i]);
+                System.out.printf("%d. %s \n", i, doList[i]);
             }
         } else {
             System.out.println("Bye bye");
