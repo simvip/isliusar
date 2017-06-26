@@ -1,8 +1,8 @@
-package ru.job4j.bigtask;
+package ru.job4j;
 
 
 import org.junit.Test;
-import ru.job4j.bigtask.model.Item;
+import ru.job4j.model.Item;
 
 import static org.hamcrest.core.Is.is;
 
@@ -62,7 +62,7 @@ public class TrackerTest {
      */
     @Test
     public void whenFindAllItemsThenTrackerSameItems() {
-        Item[] items = new Item[100];
+        Item[] items = new Item[2];
         Tracker tracker = new Tracker();
 
         Item item1 = new Item("test1", "testDescription", 123L);
@@ -92,6 +92,23 @@ public class TrackerTest {
         tracker.add(item2);
 
         assertThat(tracker.findByName(item1.getName()), is(itemsExpected));
+    }
+
+    /**
+     * test findByName.
+     */
+    @Test
+    public void whenFindByNameItemNameThenTrackerItemsWithSameName2() {
+        Item[] itemsExpected = new Item[0];
+        Tracker tracker = new Tracker();
+
+        Item item1 = new Item("test1", "testDescription", 123L);
+        tracker.add(item1);
+
+        Item item2 = new Item("test2", "testDescription", 123L);
+        tracker.add(item2);
+
+        assertThat(tracker.findByName("test3"), is(itemsExpected));
     }
 
     /**
