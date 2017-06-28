@@ -55,9 +55,18 @@ public class Item {
     }
 
     /**
+     * Setter name.
+     * @param name String
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
      * getName.
      * @return name
      */
+
     public String getName() {
         return this.name;
     }

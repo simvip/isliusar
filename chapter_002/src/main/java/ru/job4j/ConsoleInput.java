@@ -10,7 +10,7 @@ import java.util.Scanner;
  * @since 0.1
  * 23.06.2017
  */
-public class ConsoleInput {
+public class ConsoleInput implements Input {
     /**
      * scanner system in.
      */

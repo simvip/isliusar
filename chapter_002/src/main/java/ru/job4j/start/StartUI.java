@@ -1,6 +1,7 @@
 package ru.job4j.start;
 
 import ru.job4j.ConsoleInput;
+import ru.job4j.Input;
 import ru.job4j.Tracker;
 import ru.job4j.model.Item;
 
@@ -43,15 +44,44 @@ public class StartUI {
     private static final int EXIT = 6;
 
     /**
+     * program Online.
+     */
+    private boolean programOnline;
+    /**
      * menu of our program.
      */
     private String[] doList;
+
+    /**
+     * Input.
+     */
+    private Input input;
+
+    /**
+     * Tracker.
+     */
+    private Tracker tracker;
 
     /**
      * Construct.
      */
     public StartUI() {
         createDoList();
+        this.input = new ConsoleInput();
+        this.tracker = new Tracker();
+    }
+
+    /**
+     * Other construct.
+     *
+     * @param input   Input
+     * @param tracker Tracker
+     */
+    public StartUI(Input input, Tracker tracker) {
+        createDoList();
+        this.input = input;
+        this.tracker = tracker;
+        this.programOnline = true;
     }
 
     /**
@@ -61,9 +91,6 @@ public class StartUI {
 
         printList(true);
 
-        Tracker tracker = new Tracker();
-        ConsoleInput input = new ConsoleInput();
-        boolean programOnline = true;
         Item[] items;
         int userAnswer;
         Item currentItem = null;
@@ -94,6 +121,7 @@ public class StartUI {
                     if (currentItem == null) {
                         currentItem = tracker.findById(input.answer("input Id Item for update"));
                     }
+                    currentItem.setName(input.answer("input New name for update"));
                     tracker.update(currentItem);
                     break;
                 case DELETE:
@@ -139,6 +167,7 @@ public class StartUI {
 
     /**
      * Print menu of program.
+     *
      * @param programOnline boolean
      */
     private void printList(boolean programOnline) {
@@ -166,7 +195,25 @@ public class StartUI {
     }
 
     /**
+     * Status program.
+     *
+     * @return boolean
+     */
+    public boolean isProgramOnline() {
+        return programOnline;
+    }
+
+    /**
+     * Init Start.
+     */
+
+    public void init() {
+        start();
+    }
+
+    /**
      * psvm.
+     *
      * @param args String[]
      */
     public static void main(String[] args) {
