@@ -45,7 +45,7 @@ public class StartUITest {
     @Test
     public void whenEditItemThenTrackerHasEditItemIn() {
         Tracker tracker = new Tracker();
-        Input input = new StubInput(new String[]{"0", "test name", "desc", "12", "2", "New name", "6", "yes"});
+        Input input = new StubInput(new String[]{"0", "test name", "desc", "12", "2", "0", "New name", "6", "yes"});
         new StartUI(input, tracker).init();
         assertThat(tracker.findAll()[0].getName(), is("New name"));
     }
@@ -61,6 +61,7 @@ public class StartUITest {
                 "0", "test name2", "desc2", "13",
                 "0", "test name3", "desc3", "14",
                 "3",
+                "2",
                 "6", "yes"});
         new StartUI(input, tracker).init();
         assertThat(tracker.findByName("test name3").length, is(0));

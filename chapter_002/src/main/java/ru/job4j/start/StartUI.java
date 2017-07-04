@@ -2,6 +2,7 @@ package ru.job4j.start;
 
 import ru.job4j.ConsoleInput;
 import ru.job4j.Input;
+import ru.job4j.MenuTracker;
 import ru.job4j.Tracker;
 import ru.job4j.model.Item;
 
@@ -206,9 +207,15 @@ public class StartUI {
     /**
      * Init Start.
      */
-
     public void init() {
-        start();
+        MenuTracker menuTracker = new MenuTracker(this.input, this.tracker);
+        int keyAnswer = 6;
+        do {
+            menuTracker.printMenu();
+            keyAnswer = Integer.parseInt(input.answer("Select"));
+            menuTracker.select(keyAnswer);
+        } while (keyAnswer != 6);
+        this.programOnline = false;
     }
 
     /**

@@ -9,8 +9,13 @@ package ru.job4j.strategy;
  * 29.06.2017
  */
 public class Triangle implements Shape {
+    /**
+     * Pic.
+     *
+     * @return String
+     */
     @Override
     public String pic() {
-        return String.format("  x  %s ххх %<sxxxxx",System.getProperty("line.separator")).toString();
+        return String.format("  x  %s ххх %<sxxxxx", System.getProperty("line.separator")).toString();
     }
 }

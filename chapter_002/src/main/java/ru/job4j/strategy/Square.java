@@ -8,7 +8,12 @@ package ru.job4j.strategy;
  * @since 0.1
  * 29.06.2017
  */
-public class Square implements Shape{
+public class Square implements Shape {
+    /**
+     *Pic.
+     *
+     * @return String
+     */
     @Override
     public String pic() {
         String line = "* * * *";
@@ -16,7 +21,7 @@ public class Square implements Shape{
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < 4; i++) {
             builder.append(line);
-            if (i<3) {
+            if (i < 3) {
                 builder.append(separator);
             }
         }

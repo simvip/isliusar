@@ -21,6 +21,10 @@ public class Tracker {
      */
     private int counter = 0;
     /**
+     * Id item.
+     */
+    private int idCount = 0;
+    /**
      * RD.
      */
     private static final Random RD = new Random();
@@ -33,7 +37,8 @@ public class Tracker {
      */
     public Item add(Item item) {
         if (this.counter <= this.items.length) {
-            item.setId(String.valueOf(System.currentTimeMillis() + "-" + RD.nextInt(100)));
+            //item.setId(String.valueOf(System.currentTimeMillis() + "-" + RD.nextInt(100)));
+            item.setId(String.valueOf(this.idCount++));
             items[this.counter++] = item;
         }
         return item;

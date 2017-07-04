@@ -12,11 +12,12 @@ public class Paint {
     /**
      * Shape.
      */
-    Shape shape;
+    private Shape shape;
 
     /**
      * construct.
-     * @param shape
+     *
+     * @param shape Shape
      */
     public Paint(Shape shape) {
         this.shape = shape;
