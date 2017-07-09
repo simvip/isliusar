@@ -10,7 +10,7 @@ import ru.job4j.model.Item;
  * @since 0.1
  * 04.07.2017
  */
-class FindByName implements UserAction {
+class FindByName extends BaseAction {
     @Override
     public int key() {
         return 5;
@@ -27,9 +27,14 @@ class FindByName implements UserAction {
         System.out.println();
     }
 
-    @Override
-    public String info() {
-        return "Find item by name";
+        /**
+     * construct.
+     *
+     * @param key  String
+     * @param name string
+     */
+    FindByName(String key, String name) {
+        super(key, name);
     }
 }
 
@@ -82,12 +87,12 @@ public class MenuTracker {
      * Fill actions.
      */
     private void fillActions() {
-        this.actions[0] = new AddItem();
-        this.actions[1] = new ShowAll();
-        this.actions[2] = new EditItem();
-        this.actions[3] = new MenuTracker.DeleteItem();
-        this.actions[4] = new FindById();
-        this.actions[5] = new FindByName();
+        this.actions[0] = new AddItem("0", "Add item");
+        this.actions[1] = new ShowAll("1", "Show all");
+        this.actions[2] = new EditItem("2", "Edit item");
+        this.actions[3] = new MenuTracker.DeleteItem("3", "Delete item");
+        this.actions[4] = new FindById("4", "Finde by id");
+        this.actions[5] = new FindByName("5", "Finde by name");
     }
 
     /**
@@ -104,7 +109,17 @@ public class MenuTracker {
     /**
      * Add.
      */
-    private class AddItem implements UserAction {
+    private class AddItem extends BaseAction {
+        /**
+         * construct.
+         *
+         * @param key  String
+         * @param name string
+         */
+        AddItem(String key, String name) {
+            super(key, name);
+        }
+
         @Override
         public int key() {
             return 0;
@@ -120,16 +135,23 @@ public class MenuTracker {
             );
         }
 
-        @Override
-        public String info() {
-            return "Add new item";
-        }
     }
 
     /**
      * Show.
      */
-    private class ShowAll implements UserAction {
+    private class ShowAll extends BaseAction {
+
+        /**
+         * construct.
+         *
+         * @param key  String
+         * @param name string
+         */
+        ShowAll(String key, String name) {
+            super(key, name);
+        }
+
         @Override
         public int key() {
             return 1;
@@ -147,17 +169,12 @@ public class MenuTracker {
             }
             System.out.println();
         }
-
-        @Override
-        public String info() {
-            return "Show all items";
-        }
     }
 
     /**
      * Edit.
      */
-    private class EditItem implements UserAction {
+    private class EditItem extends BaseAction {
         @Override
         public int key() {
             return 2;
@@ -172,16 +189,21 @@ public class MenuTracker {
             tracker.update(currentItem);
         }
 
-        @Override
-        public String info() {
-            return "Edit item";
+        /**
+         * construct.
+         *
+         * @param key  String
+         * @param name string
+         */
+        EditItem(String key, String name) {
+            super(key, name);
         }
     }
 
     /**
      * Delete.
      */
-    private static class DeleteItem implements UserAction {
+    private static class DeleteItem extends BaseAction {
         @Override
         public int key() {
             return 3;
@@ -200,16 +222,21 @@ public class MenuTracker {
             }
         }
 
-        @Override
-        public String info() {
-            return "Delete item";
+        /**
+         * construct.
+         *
+         * @param key  String
+         * @param name string
+         */
+        DeleteItem(String key, String name) {
+            super(key, name);
         }
     }
 
     /**
      * FindById.
      */
-    private class FindById implements UserAction {
+    private class FindById extends BaseAction {
         @Override
         public int key() {
             return 4;
@@ -227,9 +254,14 @@ public class MenuTracker {
             }
         }
 
-        @Override
-        public String info() {
-            return "Find item by id";
+        /**
+         * construct.
+         *
+         * @param key  String
+         * @param name string
+         */
+        FindById(String key, String name) {
+            super(key, name);
         }
     }
 
