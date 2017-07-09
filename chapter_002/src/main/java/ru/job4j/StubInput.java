@@ -35,4 +35,16 @@ public class StubInput implements Input {
         System.out.println(question);
         return answers[index++];
     }
+
+    /**
+     * validate answer.
+     * @param question String.
+     * @param range int
+     * @return int
+     */
+    @Override
+    public int answer(String question, int range) {
+        System.out.println(question);
+        return Integer.valueOf(answers[index++]);
+    }
 }

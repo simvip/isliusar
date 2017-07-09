@@ -25,4 +25,14 @@ public class ConsoleInput implements Input {
         System.out.println(question);
         return scanner.nextLine();
     }
+
+    @Override
+    public int answer(String question, int range) {
+        int keyAnswer = Integer.parseInt(answer(question));
+
+        if (!(keyAnswer < range && keyAnswer >= 0)) {
+            throw new MenuOutException("Action with this key not find, please choose correct key");
+        }
+        return keyAnswer;
+    }
 }

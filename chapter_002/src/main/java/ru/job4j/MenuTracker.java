@@ -74,6 +74,7 @@ public class MenuTracker {
         for (UserAction action : this.actions) {
             System.out.printf("%s. %s \n", action.key(), action.info());
         }
+        System.out.println("6. Exit");
         System.out.println("--------------------");
     }
 

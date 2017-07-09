@@ -15,4 +15,12 @@ public interface Input {
      * @return String
      */
     String answer(String question);
+
+    /**
+     * validate answer.
+     * @param question String
+     * @param range int
+     * @return int
+     */
+    int answer(String question, int range);
 }

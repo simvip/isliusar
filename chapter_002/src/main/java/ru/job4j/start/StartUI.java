@@ -1,9 +1,9 @@
 package ru.job4j.start;
 
-import ru.job4j.ConsoleInput;
 import ru.job4j.Input;
 import ru.job4j.MenuTracker;
 import ru.job4j.Tracker;
+import ru.job4j.ValidateInput;
 import ru.job4j.model.Item;
 
 /**
@@ -14,7 +14,7 @@ import ru.job4j.model.Item;
  * @since 0.1
  * 23.06.2017
  */
-public class StartUI {
+    public class StartUI {
     /**
      * Add.
      */
@@ -68,7 +68,8 @@ public class StartUI {
      */
     public StartUI() {
         createDoList();
-        this.input = new ConsoleInput();
+        //this.input = new ConsoleInput();
+        this.input = new ValidateInput();
         this.tracker = new Tracker();
     }
 
@@ -212,7 +213,7 @@ public class StartUI {
         int keyAnswer = 6;
         do {
             menuTracker.printMenu();
-            keyAnswer = Integer.parseInt(input.answer("Select"));
+            keyAnswer = input.answer("Select", doList.length);
             menuTracker.select(keyAnswer);
         } while (keyAnswer != 6);
         this.programOnline = false;
@@ -224,7 +225,7 @@ public class StartUI {
      * @param args String[]
      */
     public static void main(String[] args) {
-        new StartUI().start();
+        new StartUI().init();
     }
 }
 
