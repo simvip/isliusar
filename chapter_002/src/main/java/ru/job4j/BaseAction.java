@@ -31,7 +31,9 @@ public abstract class BaseAction implements UserAction {
      * @return
      */
     @Override
-    public abstract int key();
+    public int key() {
+        return Integer.parseInt(this.key);
+    }
 
     /**
      * execute.

@@ -13,7 +13,7 @@ import ru.job4j.model.Item;
 class FindByName extends BaseAction {
     @Override
     public int key() {
-        return 5;
+        return super.key();
     }
 
     @Override
@@ -27,7 +27,7 @@ class FindByName extends BaseAction {
         System.out.println();
     }
 
-        /**
+    /**
      * construct.
      *
      * @param key  String
@@ -122,7 +122,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return 0;
+            return super.key();
         }
 
         @Override
@@ -154,7 +154,7 @@ public class MenuTracker {
 
         @Override
         public int key() {
-            return 1;
+            return super.key();
         }
 
         @Override
@@ -177,7 +177,7 @@ public class MenuTracker {
     private class EditItem extends BaseAction {
         @Override
         public int key() {
-            return 2;
+            return super.key();
         }
 
         @Override
@@ -206,7 +206,7 @@ public class MenuTracker {
     private static class DeleteItem extends BaseAction {
         @Override
         public int key() {
-            return 3;
+            return super.key();
         }
 
         @Override
@@ -239,7 +239,7 @@ public class MenuTracker {
     private class FindById extends BaseAction {
         @Override
         public int key() {
-            return 4;
+            return super.key();
         }
 
         @Override
