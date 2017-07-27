@@ -4,7 +4,7 @@ package ru.job4j;
 import java.util.Collection;
 
 /**
- * Класс для тестированния произовдительности коллекций
+ * Класс для тестированния произовдительности коллекций.
  */
 public class PerformanceCollections {
     /**
@@ -12,7 +12,7 @@ public class PerformanceCollections {
      *
      * @param collection Test Collection
      * @param amount     int amount elements need add to collection
-     * @return
+     * @return long.
      */
     public long add(Collection<String> collection, int amount) {
         long startTime = System.currentTimeMillis();
@@ -30,7 +30,7 @@ public class PerformanceCollections {
      *
      * @param collection Test Collection
      * @param amount     int amount elements need delete from collection
-     * @return
+     * @return long.
      */
     public long delete(Collection<String> collection, int amount) {
         long startTime = System.currentTimeMillis();
