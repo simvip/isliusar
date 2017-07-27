@@ -11,10 +11,6 @@ import ru.job4j.model.Item;
  * 04.07.2017
  */
 class FindByName extends BaseAction {
-    @Override
-    public int key() {
-        return super.key();
-    }
 
     @Override
     public void execute(Input input, Tracker tracker) {
@@ -121,11 +117,6 @@ public class MenuTracker {
         }
 
         @Override
-        public int key() {
-            return super.key();
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
 
             tracker.add(new Item(
@@ -153,11 +144,6 @@ public class MenuTracker {
         }
 
         @Override
-        public int key() {
-            return super.key();
-        }
-
-        @Override
         public void execute(Input input, Tracker tracker) {
 
             Item[] items = tracker.findAll();
@@ -175,10 +161,6 @@ public class MenuTracker {
      * Edit.
      */
     private class EditItem extends BaseAction {
-        @Override
-        public int key() {
-            return super.key();
-        }
 
         @Override
         public void execute(Input input, Tracker tracker) {
@@ -204,10 +186,6 @@ public class MenuTracker {
      * Delete.
      */
     private static class DeleteItem extends BaseAction {
-        @Override
-        public int key() {
-            return super.key();
-        }
 
         @Override
         public void execute(Input input, Tracker tracker) {
@@ -237,10 +215,6 @@ public class MenuTracker {
      * FindById.
      */
     private class FindById extends BaseAction {
-        @Override
-        public int key() {
-            return super.key();
-        }
 
         @Override
         public void execute(Input input, Tracker tracker) {
