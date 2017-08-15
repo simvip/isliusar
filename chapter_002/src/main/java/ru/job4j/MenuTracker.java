@@ -87,8 +87,8 @@ public class MenuTracker {
         this.actions[1] = new ShowAll("1", "Show all");
         this.actions[2] = new EditItem("2", "Edit item");
         this.actions[3] = new MenuTracker.DeleteItem("3", "Delete item");
-        this.actions[4] = new FindById("4", "Finde by id");
-        this.actions[5] = new FindByName("5", "Finde by name");
+        this.actions[4] = new FindById("4", "Find by id");
+        this.actions[5] = new FindByName("5", "Find by name");
     }
 
     /**
