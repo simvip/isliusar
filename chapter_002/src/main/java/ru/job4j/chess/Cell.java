@@ -17,7 +17,7 @@ public class Cell {
     /**
      * figure in this cell.
      */
-    private Figure figureInThisCell = null;
+    public Figure figureInThisCell = null;
 
     /**
      * Construct.

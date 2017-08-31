@@ -51,7 +51,12 @@ public class Board {
         dist.setFigureInThisCell(newFigure);
 
         source.setFigureInThisCell(null);
-
+        for (int i = 0; i < this.figures.length; i++) {
+            if (this.figures[i] == currentFigure) {
+                this.figures[i] = newFigure;
+                break;
+            }
+        }
         return true;
     }
 

@@ -1,6 +1,7 @@
 package ru.job4j;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,4 +45,19 @@ public class ConvertList {
         }
         return array;
     }
+
+    /**
+     * Convert merger all list in one.
+     *
+     * @param list List
+     * @return List
+     */
+    public List<Integer> convert(List<int[]> list) {
+        List rezult = new ArrayList<Integer>();
+        for (int[] mass : list) {
+            rezult.addAll(Arrays.asList(mass));
+        }
+        return rezult;
+    }
+
 }
