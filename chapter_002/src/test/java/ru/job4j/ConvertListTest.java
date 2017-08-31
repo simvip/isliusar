@@ -7,8 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
-import static org.hamcrest.CoreMatchers.equalTo;
+
 
 /**
  * Created by Admin on 27.07.2017.
@@ -50,7 +51,7 @@ public class ConvertListTest {
         list.add(new int[]{3, 4, 5, 6});
         ConvertList convertList = new ConvertList();
         List rezult = convertList.convert(list);
-        List expect = Arrays.asList(new int[]{1, 2, 3, 4, 5, 6});
-        assertThat(rezult, equalTo(rezult));
+        List expect = Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6});
+        assertEquals(rezult, expect);
     }
 }

@@ -1,7 +1,6 @@
 package ru.job4j;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,7 +54,9 @@ public class ConvertList {
     public List<Integer> convert(List<int[]> list) {
         List rezult = new ArrayList<Integer>();
         for (int[] mass : list) {
-            rezult.addAll(Arrays.asList(mass));
+            for (int value : mass) {
+                rezult.add(value);
+            }
         }
         return rezult;
     }
