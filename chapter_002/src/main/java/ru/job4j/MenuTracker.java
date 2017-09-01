@@ -2,6 +2,9 @@ package ru.job4j;
 
 import ru.job4j.model.Item;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Class FindByName.
  *
@@ -15,7 +18,7 @@ class FindByName extends BaseAction {
     @Override
     public void execute(Input input, Tracker tracker) {
 
-        Item[] items = tracker.findByName(input.answer("input Name for search"));
+        List<Item> items = tracker.findByName(input.answer("input Name for search"));
         System.out.println("I found the following list Item:");
         for (Item item : items) {
             System.out.printf("ID:%s  NAME:%s  DESCRIPTION:%s  \n", item.getId(), item.getName(), item.getCreate());
@@ -54,7 +57,7 @@ public class MenuTracker {
     /**
      * pull actions.
      */
-    private UserAction[] actions = new UserAction[6];
+    private List<UserAction> actions = new ArrayList();
 
     /**
      * construct.
@@ -83,12 +86,12 @@ public class MenuTracker {
      * Fill actions.
      */
     private void fillActions() {
-        this.actions[0] = new AddItem("0", "Add item");
-        this.actions[1] = new ShowAll("1", "Show all");
-        this.actions[2] = new EditItem("2", "Edit item");
-        this.actions[3] = new MenuTracker.DeleteItem("3", "Delete item");
-        this.actions[4] = new FindById("4", "Find by id");
-        this.actions[5] = new FindByName("5", "Find by name");
+        actions.add(new AddItem("0", "Add item"));
+        actions.add(new ShowAll("1", "Show all"));
+        actions.add(new EditItem("2", "Edit item"));
+        actions.add(new MenuTracker.DeleteItem("3", "Delete item"));
+        actions.add(new FindById("4", "Find by id"));
+        actions.add(new FindByName("5", "Find by name"));
     }
 
     /**
@@ -98,7 +101,7 @@ public class MenuTracker {
      */
     public void select(int key) {
         if (key >= 0 & key <= 5) {
-            actions[key].execute(this.input, this.tracker);
+            actions.get(key).execute(this.input, this.tracker);
         }
     }
 
@@ -146,7 +149,7 @@ public class MenuTracker {
         @Override
         public void execute(Input input, Tracker tracker) {
 
-            Item[] items = tracker.findAll();
+            List<Item> items = tracker.findAll();
             for (Item item : items) {
                 if (item == null) {
                     break;

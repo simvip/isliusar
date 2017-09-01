@@ -25,7 +25,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "12", "6", "yes"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("test name"));
+        assertThat(tracker.findAll().get(0).getName(), is("test name"));
     }
 
     /**
@@ -36,7 +36,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "12", "0", "test name2", "desc", "12", "6", "yes"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll().length, is(2));
+        assertThat(tracker.findAll().size(), is(2));
     }
 
     /**
@@ -47,7 +47,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         Input input = new StubInput(new String[]{"0", "test name", "desc", "12", "2", "0", "New name", "6", "yes"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findAll()[0].getName(), is("New name"));
+        assertThat(tracker.findAll().get(0).getName(), is("New name"));
     }
 
     /**
@@ -64,7 +64,7 @@ public class StartUITest {
                 "2",
                 "6", "yes"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findByName("test name3").length, is(0));
+        assertThat(tracker.findByName("test name3").size(), is(0));
     }
 
     /**
@@ -79,7 +79,7 @@ public class StartUITest {
                 "0", "test name3", "desc3", "14",
                 "6", "yes"});
         new StartUI(input, tracker).init();
-        String idForSearch = tracker.findByName("test name2")[0].getId();
+        String idForSearch = tracker.findByName("test name2").get(0).getId();
         assertThat(tracker.findById(idForSearch).getName(), is("test name2"));
     }
 
@@ -95,7 +95,7 @@ public class StartUITest {
                 "0", "test name3", "desc3", "14",
                 "6", "yes"});
         new StartUI(input, tracker).init();
-        assertThat(tracker.findByName("test name2")[0].getName(), is("test name2"));
+        assertThat(tracker.findByName("test name2").get(0).getName(), is("test name2"));
     }
 
     /**

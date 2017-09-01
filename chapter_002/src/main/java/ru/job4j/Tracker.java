@@ -1,8 +1,12 @@
 package ru.job4j;
 
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
 import ru.job4j.model.Item;
+
 /**
  * Class Tracker.
  *
@@ -15,7 +19,7 @@ public class Tracker {
     /**
      * items.
      */
-    private Item[] items = new Item[100];
+    private List<Item> items = new ArrayList<>();
     /**
      * max item.
      */
@@ -36,10 +40,10 @@ public class Tracker {
      * @return item
      */
     public Item add(Item item) {
-        if (this.counter <= this.items.length) {
+        if (this.counter <= this.items.size()) {
             //item.setId(String.valueOf(System.currentTimeMillis() + "-" + RD.nextInt(100)));
             item.setId(String.valueOf(this.idCount++));
-            items[this.counter++] = item;
+            items.add(item);
         }
         return item;
     }
@@ -50,7 +54,7 @@ public class Tracker {
      * @param item Item
      */
     public void update(Item item) {
-        this.items[getIdexInStorage(item)] = item;
+        this.items.add(getIdexInStorage(item), item);
     }
 
     /**
@@ -60,7 +64,7 @@ public class Tracker {
      */
     public void delete(Item item) {
         int itemIndex = getIdexInStorage(item);
-        System.arraycopy(this.items, itemIndex + 1, this.items, itemIndex, this.counter - itemIndex);
+        items.remove(itemIndex);
     }
 
     /**
@@ -68,12 +72,8 @@ public class Tracker {
      *
      * @return Item
      */
-    public Item[] findAll() {
-        Item[] newItem = new Item[this.counter];
-        for (int i = 0; i < this.counter; i++) {
-            newItem[i] = this.items[i];
-        }
-        return newItem;
+    public List<Item> findAll() {
+        return this.items;
     }
 
     /**
@@ -82,20 +82,16 @@ public class Tracker {
      * @param key String.
      * @return Item
      */
-    public Item[] findByName(String key) {
-        int currentCount = 0;
-        Item[] newItem = new Item[this.counter];
+    public List<Item> findByName(String key) {
+
+        List<Item> newItem = new ArrayList<>();
         for (Item item : this.items) {
             if (item != null && item.getName().equals(key)) {
-                newItem[currentCount] = item;
-                currentCount++;
+                newItem.add(item);
+
             }
         }
-
-        Item[] trimmItems = new Item[currentCount];
-        System.arraycopy(newItem, 0, trimmItems, 0, currentCount);
-
-        return trimmItems;
+        return newItem;
     }
 
     /**
@@ -105,10 +101,9 @@ public class Tracker {
      * @return Item
      */
     public Item findById(String id) {
-        int lenghtStorage = items.length;
-        for (int index = 0; index < lenghtStorage; index++) {
-            if (this.items[index] != null && this.items[index].getId().equals(id)) {
-                return this.items[index];
+        for (Item item : this.items) {
+            if (item != null && item.getId().equals(id)) {
+                return item;
             }
         }
         return null;
@@ -121,16 +116,16 @@ public class Tracker {
      * @return int
      */
     private int getIdexInStorage(Item item) {
-        int findIndex = 0;
-        int lenghtStorage = items.length;
+
         String itemId = item.getId();
 
-        for (int index = 0; index < lenghtStorage; index++) {
-            if (this.items[index] != null && this.items[index].getId().equals(itemId)) {
-                findIndex = index;
-                break;
+        int sizeList = this.items.size();
+        for (int i = 0; i < sizeList; i++) {
+            Item currentitem = this.items.get(i);
+            if (currentitem != null && currentitem.getId().equals(itemId)) {
+                return i;
             }
         }
-        return findIndex;
+        return 0;
     }
 }

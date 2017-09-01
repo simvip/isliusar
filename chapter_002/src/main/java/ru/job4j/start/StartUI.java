@@ -6,6 +6,8 @@ import ru.job4j.Tracker;
 import ru.job4j.ValidateInput;
 import ru.job4j.model.Item;
 
+import java.util.List;
+
 /**
  * Class ConsoleInput.
  *
@@ -93,7 +95,7 @@ import ru.job4j.model.Item;
 
         printList(true);
 
-        Item[] items;
+        List<Item> items;
         int userAnswer;
         Item currentItem = null;
 
