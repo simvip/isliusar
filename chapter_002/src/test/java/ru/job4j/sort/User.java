@@ -8,9 +8,23 @@ public class User implements Comparable {
      * name.
      */
     private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Getter.
+     * @return int
+     */
+    public int getAge() {
+        return age;
+    }
+
     /**
      * age.
      */
+
     private int age;
 
     /**
