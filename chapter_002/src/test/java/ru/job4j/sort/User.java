@@ -48,12 +48,8 @@ public class User implements Comparable {
     @Override
     public int compareTo(Object o) {
         User compareUser = (User) o;
-
-        if (compareUser.age == this.age) return 0;
-        else if (compareUser.age > this.age) return -1;
-        else if (compareUser.age < this.age) return 1;
-
-        return 3;
+        int rezultCompareName = this.name.compareTo(compareUser.name);
+        return rezultCompareName !=0 ? rezultCompareName : Integer.compare(this.age, compareUser.getAge());
     }
 
     /**
