@@ -15,6 +15,7 @@ public class User implements Comparable {
 
     /**
      * Getter.
+     *
      * @return int
      */
     public int getAge() {
