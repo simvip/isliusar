@@ -7,7 +7,7 @@ import java.util.NoSuchElementException;
  * Created by Ivan Sliusar on 14.09.2017.
  * Red Line Soft corp.
  */
-public class IteratorEvenNumbers implements Iterator {
+public class IteratorPrimeNumbers implements Iterator {
     /**
      * test array.
      */
@@ -22,7 +22,7 @@ public class IteratorEvenNumbers implements Iterator {
      *
      * @param numbers int[]
      */
-    public IteratorEvenNumbers(final int[] numbers) {
+    public IteratorPrimeNumbers(final int[] numbers) {
         this.numbers = numbers;
     }
 
@@ -36,7 +36,7 @@ public class IteratorEvenNumbers implements Iterator {
         boolean haveEven = false;
 
         for (int i = this.index; i < numbers.length; i++) {
-            if (numbers[i] % 2 == 0) {
+            if (isPrime(numbers[i])) {
                 haveEven = true;
                 break;
             }
@@ -54,12 +54,31 @@ public class IteratorEvenNumbers implements Iterator {
     public Object next() throws NoSuchElementException {
 
         for (int i = this.index; i < numbers.length; i++) {
-            if (numbers[i] % 2 == 0) {
+            if (isPrime(numbers[i])) {
                 this.index = i + 1;
                 return numbers[i];
             }
         }
 
         throw new NoSuchElementException();
+    }
+
+    /**
+     * Является ли число простым?
+     * @return boolean
+     * @param n int
+     */
+
+    private boolean isPrime(int n) {
+        if (n < 2) {
+            return false;
+        }
+        for (int i = 2; i * i <= n; i++) {
+            if (n % i == 0) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

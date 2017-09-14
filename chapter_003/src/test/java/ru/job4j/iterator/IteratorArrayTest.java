@@ -13,10 +13,9 @@ public class IteratorArrayTest {
      * Test foreach.
      */
     @Test
-    public void foreachTest(){
+    public void foreachTest() {
         IteratorArray array = new IteratorArray();
-        for (Object current :
-                array) {
+        for (Object current : array) {
             System.out.println(current);
         }
     }

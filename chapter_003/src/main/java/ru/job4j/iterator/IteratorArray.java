@@ -1,6 +1,5 @@
 package ru.job4j.iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 
@@ -14,15 +13,15 @@ public class IteratorArray implements Iterable {
      */
     private int[][] testarray;
     /**
-     * current index (coordinate x)
+     * current index (coordinate x).
      */
     private int x = 0;
     /**
-     * current index (coordinate y)
+     * current index (coordinate y).
      */
     private int y = 0;
     /**
-     * max index
+     * max index.
      */
     private int maxlength;
 
