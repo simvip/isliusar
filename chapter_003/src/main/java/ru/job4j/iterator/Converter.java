@@ -16,14 +16,19 @@ public class Converter {
      */
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         Iterator<Integer> integerIterator = new Iterator<Integer>() {
+            Iterator<Integer> cIterator = null;
+
             @Override
             public boolean hasNext() {
-                return it.hasNext();
+                if (cIterator == null || !cIterator.hasNext()) {
+                    if (it.hasNext()) cIterator = it.next();
+                }
+                return cIterator.hasNext();
             }
 
             @Override
             public Integer next() {
-                return it.next().next();
+                return cIterator.next();
             }
         };
         return integerIterator;
