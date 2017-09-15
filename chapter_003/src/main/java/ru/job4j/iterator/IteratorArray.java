@@ -28,12 +28,8 @@ public class IteratorArray implements Iterable {
     /**
      * Construct.
      */
-    public IteratorArray() {
-
-        this.testarray = new int[][]{
-                {1, 2},
-                {3, 4}
-        };
+    public IteratorArray(int[][] testarray) {
+        this.testarray = testarray;
         this.maxlength = this.testarray.length;
     }
 
@@ -47,14 +43,14 @@ public class IteratorArray implements Iterable {
         return new Iterator() {
             @Override
             public boolean hasNext() {
-                return !(x >= maxlength);
+                return x < testarray.length && !(x > testarray[x].length);
             }
 
             @Override
             public Object next() {
                 Object o = testarray[x][y];
                 y++;
-                if (y >= maxlength) {
+                if (y >= testarray[x].length) {
                     x++;
                     y = 0;
                 }

@@ -29,8 +29,13 @@ public class ConverterTest {
         Iterator<Integer> convert = new Converter().convert(it);
         convert.hasNext();
         convert.next();
+        convert.hasNext();
+        convert.next();
+        convert.hasNext();
+        convert.next();
+        convert.hasNext();
         int result = convert.next();
-        assertThat(result, is(2));
+        assertThat(result, is(1));
     }
 
 }

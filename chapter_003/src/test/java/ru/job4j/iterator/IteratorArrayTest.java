@@ -14,7 +14,19 @@ public class IteratorArrayTest {
      */
     @Test
     public void foreachTest() {
-        IteratorArray array = new IteratorArray();
+        int[][] value = {
+                {1, 2},
+                {3, 4}
+        };
+        IteratorArray array = new IteratorArray(value);
+
+        for (Object current : array) {
+            System.out.println(current);
+        }
+
+        int[][] value2 = {{1, 2}, {3}};
+        array = new IteratorArray(value2);
+
         for (Object current : array) {
             System.out.println(current);
         }
