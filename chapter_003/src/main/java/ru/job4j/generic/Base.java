@@ -12,6 +12,7 @@ abstract class Base {
 
     /**
      * Getter.
+     *
      * @return String
      */
     public String getId() {
@@ -20,6 +21,7 @@ abstract class Base {
 
     /**
      * Setter.
+     *
      * @param id String
      */
     public void setId(String id) {
