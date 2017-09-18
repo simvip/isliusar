@@ -1,6 +1,7 @@
 package ru.job4j.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 
 /**
@@ -48,12 +49,15 @@ public class IteratorArray implements Iterable {
 
             @Override
             public Object next() {
+                if (!hasNext()) throw new NoSuchElementException("no items");
+
                 Object o = testarray[x][y];
                 y++;
                 if (y >= testarray[x].length) {
                     x++;
                     y = 0;
                 }
+
                 return o;
             }
         };

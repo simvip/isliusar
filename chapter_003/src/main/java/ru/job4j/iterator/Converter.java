@@ -1,6 +1,7 @@
 package ru.job4j.iterator;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * Created by Ivan Sliusar on 15.09.2017.
@@ -28,6 +29,7 @@ public class Converter {
 
             @Override
             public Integer next() {
+                if (!hasNext()) throw new NoSuchElementException("no items");
                 return cIterator.next();
             }
         };
