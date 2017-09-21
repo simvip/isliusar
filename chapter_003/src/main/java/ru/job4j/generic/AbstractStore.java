@@ -26,7 +26,7 @@ public abstract class AbstractStore implements Store {
     }
 
     /**
-     * Add
+     * Add.
      *
      * @param value T
      */

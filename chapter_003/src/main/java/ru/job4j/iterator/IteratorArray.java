@@ -28,6 +28,7 @@ public class IteratorArray implements Iterable {
 
     /**
      * Construct.
+     * @param testarray int[][]
      */
     public IteratorArray(int[][] testarray) {
         this.testarray = testarray;
@@ -49,7 +50,9 @@ public class IteratorArray implements Iterable {
 
             @Override
             public Object next() {
-                if (!hasNext()) throw new NoSuchElementException("no items");
+                if (!hasNext()) {
+                    throw new NoSuchElementException("no items");
+                }
 
                 Object o = testarray[x][y];
                 y++;

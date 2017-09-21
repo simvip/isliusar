@@ -8,7 +8,7 @@ public class User extends Base {
     /**
      * Name user.
      */
-    public String name;
+    private String name;
 
     /**
      * Construct.
@@ -27,5 +27,21 @@ public class User extends Base {
     @Override
     public String toString() {
         return name;
+    }
+
+    /**
+     * Getter.
+     * @return name String
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Setter.
+     * @param name String
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 }

@@ -3,6 +3,7 @@ package ru.job4j.generic;
 /**
  * Created by Ivan Sliusar on 15.09.2017.
  * Red Line Soft corp.
+ * @param <T>
  */
 public interface Store<T extends Base> {
     /**
@@ -30,7 +31,7 @@ public interface Store<T extends Base> {
      * Get.
      *
      * @param id int
-     * @return
+     * @return value T
      */
     T get(int id);
 }

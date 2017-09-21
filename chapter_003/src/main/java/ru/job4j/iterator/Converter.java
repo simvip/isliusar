@@ -17,20 +17,32 @@ public class Converter {
      */
     public Iterator<Integer> convert(Iterator<Iterator<Integer>> it) {
         Iterator<Integer> integerIterator = new Iterator<Integer>() {
-            Iterator<Integer> cIterator = null;
+            private Iterator<Integer> cIterator = null;
 
             @Override
             public boolean hasNext() {
-                if (cIterator == null || !cIterator.hasNext()) {
-                    if (it.hasNext()) cIterator = it.next();
+                if (getcIterator() == null || !getcIterator().hasNext()) {
+                    if (it.hasNext()) {
+                        setcIterator(it.next());
+                    }
                 }
-                return cIterator.hasNext();
+                return getcIterator().hasNext();
             }
 
             @Override
             public Integer next() {
-                if (!hasNext()) throw new NoSuchElementException("no items");
-                return cIterator.next();
+                if (!hasNext()) {
+                    throw new NoSuchElementException("no items");
+                }
+                return getcIterator().next();
+            }
+
+            public Iterator<Integer> getcIterator() {
+                return cIterator;
+            }
+
+            public void setcIterator(Iterator<Integer> cIterator) {
+                this.cIterator = cIterator;
             }
         };
         return integerIterator;

@@ -5,6 +5,7 @@ import java.util.Iterator;
 /**
  * Created by Ivan Sliusar on 19.09.2017.
  * Red Line Soft corp.
+ * @param <T>
  */
 public class SimpleArray<T> implements SimpleContainer {
     /**
@@ -43,17 +44,17 @@ public class SimpleArray<T> implements SimpleContainer {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            SimpleArray<T> tSimpleArray = SimpleArray.this;
 
             @Override
             public boolean hasNext() {
-                return (tSimpleArray.curentIndex + 1) < tSimpleArray.values.length;
+                return (SimpleArray.this.curentIndex + 1) < SimpleArray.this.values.length;
             }
 
             @Override
             public T next() {
-                return (T) tSimpleArray.values[tSimpleArray.curentIndex++];
+                return (T) SimpleArray.this.values[SimpleArray.this.curentIndex++];
             }
+
         };
     }
 
@@ -71,7 +72,9 @@ public class SimpleArray<T> implements SimpleContainer {
 
     @Override
     public void add(Object o) {
-        if ((this.curentIndex + 1) == this.values.length) growArray();
+        if ((this.curentIndex + 1) == this.values.length) {
+            growArray();
+        }
         this.values[curentIndex++] = o;
     }
 
@@ -87,5 +90,15 @@ public class SimpleArray<T> implements SimpleContainer {
         this.values = newArray;
     }
 }
-//private class SimpleArrayIterator implements Iterator<T>
+//class SimpleArrayIterator<T> implements Iterator<T>{
+//    @Override
+//    public boolean hasNext() {
+//        return false;
+//    }
+//
+//    @Override
+//    public T next() {
+//        return null;
+//    }
+//}
 //class ArrayIterrator implements Iterator<T>

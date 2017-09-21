@@ -9,6 +9,7 @@ import static ru.job4j.list.SimplLinkedList.Rout.FORWARD;
 /**
  * Created by Ivan Sliusar on 19.09.2017.
  * Red Line Soft corp.
+ *
  * @param <T>
  */
 public class SimplLinkedList<T> implements SimpleContainer {
@@ -39,6 +40,40 @@ public class SimplLinkedList<T> implements SimpleContainer {
     }
 
     /**
+     * Getter size.
+     *
+     * @return int
+     */
+    public int getSize() {
+        return size;
+    }
+
+    /**
+     * Delete element.
+     *
+     * @param index int
+     */
+    public void delete(int index) {
+        Node node = getNode(index);
+
+        Node pNode = node.previous;
+        Node nNode = node.next;
+
+        pNode.next = nNode;
+
+        if (nNode != null) {
+            nNode.previous = pNode;
+        }
+        if (this.tail == node) {
+            this.tail = nNode != null ? nNode : pNode;
+        }
+
+        node.previous = null;
+        node.next = null;
+        this.size--;
+    }
+
+    /**
      * Enum Rout of step.
      */
     enum Rout {
@@ -62,13 +97,17 @@ public class SimplLinkedList<T> implements SimpleContainer {
         return new Iterator() {
             @Override
             public boolean hasNext() {
-                if (currentIterNod == null) currentIterNod = SimplLinkedList.this.head;
+                if (currentIterNod == null) {
+                    currentIterNod = SimplLinkedList.this.head;
+                }
                 return (SimplLinkedList.this.currentIterNod != null) && (SimplLinkedList.this.currentIterNod.next != null);
             }
 
             @Override
             public T next() {
-                if (!hasNext()) throw new NoSuchElementException("ups");
+                if (!hasNext()) {
+                    throw new NoSuchElementException("ups");
+                }
                 SimplLinkedList.this.currentIterNod = SimplLinkedList.this.currentIterNod.next;
                 return (T) SimplLinkedList.this.currentIterNod.value;
             }
@@ -102,7 +141,19 @@ public class SimplLinkedList<T> implements SimpleContainer {
      */
     @Override
     public T get(int index) {
-        if (this.size < index) throw new NoSuchElementException("ups");
+        return (T) getNode(index).value;
+    }
+
+    /**
+     * Get nod by index.
+     *
+     * @param index int
+     * @return node Node
+     */
+    private Node getNode(int index) {
+        if (this.size < index) {
+            throw new NoSuchElementException("ups");
+        }
 
         Node currentNod;
         Rout step;
@@ -112,14 +163,14 @@ public class SimplLinkedList<T> implements SimpleContainer {
         } else {
             currentNod = this.tail;
             step = BACK;
-            index = index - (size / 2 + (size % 2) > 0 ? 1 : 0);
+            index = this.size - index;
         }
 
         while (index != 0) {
             currentNod = step == FORWARD ? currentNod.next : currentNod.previous;
             index--;
         }
-        return (T) currentNod.value;
+        return currentNod;
     }
 
     /**
@@ -127,24 +178,72 @@ public class SimplLinkedList<T> implements SimpleContainer {
      */
     private class Node {
         /**
-         * Previous Node
+         * Previous Node.
          */
-        Node previous;
+        private Node previous;
         /**
          * Next Node.
          */
-        Node next;
+        private Node next;
         /**
          * Value.
          */
-        Object value;
+        private Object value;
 
         /**
          * Construct.
+         *
          * @param value Object.
          */
         Node(Object value) {
             this.value = value;
         }
+
+        /**
+         * Getter previous.
+         *
+         * @return Node
+         */
+        public Node getPrevious() {
+            return previous;
+        }
+
+        /**
+         * Setter previous.
+         *
+         * @param previous Node
+         */
+        public void setPrevious(Node previous) {
+            this.previous = previous;
+        }
+
+        /**
+         * Getter next.
+         *
+         * @return Node.
+         */
+        public Node getNext() {
+            return next;
+        }
+
+        /**
+         * Setter next.
+         *
+         * @param next Node.
+         */
+        public void setNext(Node next) {
+            this.next = next;
+        }
+
+        /**
+         * Getter value.
+         *
+         * @return value Object
+         */
+        public Object getValue() {
+            return value;
+        }
+
+
     }
 }

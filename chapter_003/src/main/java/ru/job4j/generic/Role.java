@@ -8,7 +8,7 @@ public class Role extends Base {
     /**
      * Title role.
      */
-    String roleName;
+    private String roleName;
 
     /**
      * Construct.
@@ -27,5 +27,21 @@ public class Role extends Base {
     @Override
     public String toString() {
         return this.roleName;
+    }
+
+    /**
+     * Getter.
+     * @return String
+     */
+    public String getRoleName() {
+        return roleName;
+    }
+
+    /**
+     * Setter.
+     * @param roleName String
+     */
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }
