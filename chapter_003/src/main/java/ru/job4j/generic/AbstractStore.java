@@ -5,11 +5,11 @@ package ru.job4j.generic;
  * Created by Ivan Sliusar on 18.09.2017.
  * Red Line Soft corp.
  */
-public abstract class AbstractStore implements Store {
+public abstract class AbstractStore<V extends Base> implements Store<V> {
     /**
      * Array storage.
      */
-    private SimpleArray<Base> storage;
+    private SimpleArray<V> storage;
     /**
      * Current index in storage.
      */
@@ -31,7 +31,7 @@ public abstract class AbstractStore implements Store {
      * @param value T
      */
     @Override
-    public void add(Base value) {
+    public void add(V value) {
         value.setId(String.valueOf(indexInStorage));
         storage.add(value);
     }
@@ -42,7 +42,7 @@ public abstract class AbstractStore implements Store {
      * @param value T
      */
     @Override
-    public void delete(Base value) {
+    public void delete(V value) {
         storage.delete(value);
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractStore implements Store {
      * @param value T
      */
     @Override
-    public void update(Base value) {
+    public void update(V value) {
         storage.update(Integer.valueOf(value.getId()), value);
     }
 
@@ -63,7 +63,7 @@ public abstract class AbstractStore implements Store {
      * @return Base
      */
     @Override
-    public Base get(int id) {
+    public V get(int id) {
         return storage.get(id);
     }
 }
