@@ -4,6 +4,7 @@ package ru.job4j.generic;
 /**
  * Created by Ivan Sliusar on 18.09.2017.
  * Red Line Soft corp.
+ * @param <V>
  */
 public abstract class AbstractStore<V extends Base> implements Store<V> {
     /**

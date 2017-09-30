@@ -53,7 +53,7 @@ public class SimpleArray<T> implements SimpleContainer {
             @Override
             public T next() {
                 return (T) SimpleArray.this.values[SimpleArray.this.curentIndex++];
-            }
+        }
 
         };
     }
