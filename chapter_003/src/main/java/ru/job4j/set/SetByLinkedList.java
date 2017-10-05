@@ -86,7 +86,7 @@ public class SetByLinkedList<T> implements Iterable<T> {
         boolean needAdd = true;
         Iterator<T> iterator = this.iterator();
         while (iterator.hasNext()) {
-            if (iterator.next() == o) {
+            if (o != null && o.equals(iterator.next())) {
                 needAdd = false;
                 break;
             }

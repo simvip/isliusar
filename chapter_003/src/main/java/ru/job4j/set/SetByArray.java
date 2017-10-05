@@ -63,7 +63,7 @@ public class SetByArray<T> implements Iterable {
     public void add(T value) {
         boolean needAdd = true;
         for (int i = 0; i < this.countValue; i++) {
-            if ((T) this.values[i] == value) {
+            if (value != null && value.equals(this.values[i])) {
                 needAdd = false;
                 break;
             }
