@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
  *
  * @param <T>
  */
-public class SetByArray<T> implements Iterable {
+public class SetByArray<T> implements Iterable<T> {
     /**
      * Array values.
      */
@@ -71,5 +71,25 @@ public class SetByArray<T> implements Iterable {
         if (needAdd) {
             this.values[countValue++] = value;
         }
+    }
+
+    /**
+     * Add value to Set.
+     *
+     * @param value T
+     */
+    public void addheshCode(T value) {
+        int index = indexFor(value.hashCode(), this.values.length - 1);
+
+        this.values[index] = value;
+
+    }
+
+    private int indexFor(int hash, int length) {
+        int cHash = Math.max(hash, hash*-1);
+        while (cHash > length) {
+            cHash = cHash/length;
+        }
+        return cHash;
     }
 }

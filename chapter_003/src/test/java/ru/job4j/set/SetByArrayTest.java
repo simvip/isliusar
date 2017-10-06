@@ -15,20 +15,39 @@ public class SetByArrayTest {
      */
     @Test
     public void whenAddToSetValueWithContainedInSetAddDoNothing() {
-        SetByArray<String> setByArray = new SetByArray<>(10);
+        SetByArray<ValueForTest> setByArray = new SetByArray<>(100);
 
-        setByArray.add("fist");
-        setByArray.add("second");
-        setByArray.add("third");
+        long start = System.nanoTime();
 
-        setByArray.add("third");
-        int maxValueInSet = 0;
-        for (Object value : setByArray) {
-            System.out.println((String) value);
-            maxValueInSet++;
+        for (int i = 0; i < 100; i++) {
+            setByArray.add(new ValueForTest(i));
         }
+        long end = System.nanoTime();
 
-        assertThat(maxValueInSet, is(3));
+        long beforeModification = end-start;
+        System.out.println("Перед модификацией скорость вставки (наносекунд) "+beforeModification);
+
+        SetByArray<ValueForTest> setByArrayindex = new SetByArray<>(50);
+
+        start = System.nanoTime();
+
+        for (int i = 0; i < 100; i++) {
+            setByArrayindex.addheshCode(new ValueForTest(i));
+        }
+        end = System.nanoTime();
+
+        long afterModification = end-start;
+        System.out.println("После модификации скорость вставки (наносекунд) "+afterModification);
+
+        System.out.println("После модификации скорость вставки возросла в " + beforeModification / afterModification);
+
+       // SetByArray<String> setArray = new SetByArray<>(100);
+//        int maxValueInSet = 0;
+//        for (String value : setArray) {
+//       //     System.out.println(value);
+//            maxValueInSet++;
+//        }
+//       assertThat(maxValueInSet, is(100));
     }
 
 }
