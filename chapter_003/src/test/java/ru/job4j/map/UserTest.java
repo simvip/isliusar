@@ -1,13 +1,11 @@
 package ru.job4j.map;
 
 import org.junit.Test;
-import ru.job4j.generic.*;
 
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
 
 /**
  * Created by Ivan Sliusar on 06.10.2017.
