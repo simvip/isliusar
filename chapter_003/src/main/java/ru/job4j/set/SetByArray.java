@@ -85,10 +85,16 @@ public class SetByArray<T> implements Iterable<T> {
 
     }
 
+    /**
+     * Index For.
+     * @param hash int
+     * @param length int
+     * @return int
+     */
     private int indexFor(int hash, int length) {
-        int cHash = Math.max(hash, hash*-1);
+        int cHash = Math.max(hash, hash * -1);
         while (cHash > length) {
-            cHash = cHash/length;
+            cHash = cHash / length;
         }
         return cHash;
     }

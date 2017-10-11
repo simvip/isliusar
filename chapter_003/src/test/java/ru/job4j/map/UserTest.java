@@ -12,7 +12,9 @@ import java.util.Map;
  * Red Line Soft corp.
  */
 public class UserTest {
-
+    /**
+     * Test.
+     */
     @Test
     public void notOverrideEqualsAndHashCode() {
         Calendar calendar = Calendar.getInstance();
@@ -21,13 +23,11 @@ public class UserTest {
         User user1 = new User("Bobby", 2, calendar);
         User user2 = new User("Bobby", 2, calendar);
 
-        Map<User,Object> map = new HashMap<>();
-        map.put(user1,user1);
-        map.put(user2,user2);
+        Map<User, Object> map = new HashMap<>();
+        map.put(user1, user1);
+        map.put(user2, user2);
 
         System.out.println(map.toString());
-
-
     }
 
 }

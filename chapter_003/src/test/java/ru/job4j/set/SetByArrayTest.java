@@ -2,8 +2,6 @@ package ru.job4j.set;
 
 import org.junit.Test;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * Created by Ivan Sliusar on 30.09.2017.
@@ -24,8 +22,8 @@ public class SetByArrayTest {
         }
         long end = System.nanoTime();
 
-        long beforeModification = end-start;
-        System.out.println("Перед модификацией скорость вставки (наносекунд) "+beforeModification);
+        long beforeModification = end - start;
+        System.out.println("Перед модификацией скорость вставки (наносекунд) " + beforeModification);
 
         SetByArray<ValueForTest> setByArrayindex = new SetByArray<>(50);
 
@@ -36,12 +34,12 @@ public class SetByArrayTest {
         }
         end = System.nanoTime();
 
-        long afterModification = end-start;
-        System.out.println("После модификации скорость вставки (наносекунд) "+afterModification);
+        long afterModification = end - start;
+        System.out.println("После модификации скорость вставки (наносекунд) " + afterModification);
 
         System.out.println("После модификации скорость вставки возросла в " + beforeModification / afterModification);
 
-       // SetByArray<String> setArray = new SetByArray<>(100);
+        // SetByArray<String> setArray = new SetByArray<>(100);
 //        int maxValueInSet = 0;
 //        for (String value : setArray) {
 //       //     System.out.println(value);
