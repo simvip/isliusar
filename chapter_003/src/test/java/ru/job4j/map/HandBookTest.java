@@ -27,8 +27,8 @@ public class HandBookTest {
     @Test
     public void whenDeleteExistingValueThenTrue() {
         HandBook<Integer, String> handBook = new HandBook<>();
-        handBook.insert(1, "Petrov");
-        handBook.insert(2, "Ivanov");
+        handBook.insert(300, "Petrov");
+        handBook.insert(200, "Ivanov");
 
         boolean result = handBook.delete(1);
         assertTrue(result);

@@ -1,5 +1,6 @@
 package ru.job4j.map;
 
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 /**
@@ -47,11 +48,10 @@ public class HandBook<T, V> {
      * @return int
      */
     private int getIndex(T key) {
-        int index = key.hashCode();
-        do {
-            index = index % values.length;
-        } while (index >= values.length);
-        return index;
+        return key.hashCode() & (this.values.length - 1);
+//        int hc = key.hashCode();
+//        hc = hc < 0 ? hc*-1 : hc;
+//        return hc%this.values.length;
     }
 
     /**
