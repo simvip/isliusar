@@ -1,6 +1,5 @@
 package ru.job4j.map;
 
-import java.util.HashMap;
 import java.util.NoSuchElementException;
 
 /**
@@ -20,7 +19,7 @@ public class HandBook<T, V> {
      * Construct.
      */
     public HandBook() {
-        this.values = new Object[100];
+        this.values = new Object[64];
     }
 
     /**
