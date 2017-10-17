@@ -48,9 +48,6 @@ public class HandBook<T, V> {
      */
     private int getIndex(T key) {
         return key.hashCode() & (this.values.length - 1);
-//        int hc = key.hashCode();
-//        hc = hc < 0 ? hc*-1 : hc;
-//        return hc%this.values.length;
     }
 
     /**
