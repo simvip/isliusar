@@ -19,7 +19,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     /**
      * Utility class Node.
      */
-    private class Node implements Comparable {
+    private class Node implements Comparable<E> {
         /**
          * List of children.
          */
@@ -46,17 +46,8 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
          * @return int
          */
         @Override
-        public int compareTo(Object o) {
-            if (o instanceof String) {
-                return ((String) this.value).compareTo((String) o);
-            } else if (o instanceof Integer) {
-                return ((Integer) this.value).compareTo((Integer) o);
-            } else {
-
-                Integer cHash = this.value.hashCode();
-                Integer oHash = o.hashCode();
-                return cHash.compareTo(oHash);
-            }
+        public int compareTo(E o) {
+            return this.value.compareTo(o);
         }
     }
 
