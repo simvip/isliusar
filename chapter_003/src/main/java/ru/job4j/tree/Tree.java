@@ -60,8 +60,14 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
+        if (parent==null || child == null) return false;
 
-        if (parent == null) {
+        for(E value: this){
+            if (value.compareTo(child)==0){
+                return false;
+            }
+        }
+        if (root ==null && parent == null) {
             root = new Node(child);
             return true;
         }
