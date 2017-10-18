@@ -60,7 +60,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        if (parent==null || child == null) return false;
+        if (parent==null && child == null) return false;
 
         for(E value: this){
             if (value.compareTo(child)==0){

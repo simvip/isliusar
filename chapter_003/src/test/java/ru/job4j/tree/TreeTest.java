@@ -22,6 +22,8 @@ public class TreeTest {
         tree.add("Test1", "Test02");
         tree.add("Test1", "Test03");
 
+        tree.add("Test3", "Test03");
+
         for (String value : tree) {
             System.out.println(value);
         }
