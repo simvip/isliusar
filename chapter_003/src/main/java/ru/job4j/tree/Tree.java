@@ -51,6 +51,25 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         }
     }
 
+    private int maxheight(Node node, int max){
+        if (node.children!=null){
+            max = Math.max(max,node.children.size());
+            for (Node current :
+                    node.children) {
+                max = maxheight(current,max);
+            }
+        }
+        return max;
+    }
+
+    /**
+     * This tree binary?.
+     * @return boolean
+     */
+    public boolean isBinary() {
+        return (maxheight(root, 0)<= 2);
+    }
+
     /**
      * Add value in tree.
      *
