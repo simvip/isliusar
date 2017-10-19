@@ -21,9 +21,20 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     private class Node implements Comparable<E> {
         /**
+         * Left node.
+         */
+        private Node left = null;
+
+        /**
+         * Right node.
+         */
+        private Node right = null;
+
+        /**
          * List of children.
          */
         private List<Node> children;
+
         /**
          * Value.
          */
@@ -37,6 +48,18 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         private Node(E value) {
             this.value = value;
             this.children = new ArrayList<>();
+        }
+
+        /**
+         * Construct.
+         * @param left Node
+         * @param right Node
+         * @param value E
+         */
+        private Node(Node left, Node right, E value) {
+            this.left = left;
+            this.right = right;
+            this.value = value;
         }
 
         /**
@@ -68,6 +91,34 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     public boolean isBinary() {
         return (maxheight(root, 0)<= 2);
+    }
+
+    /**
+     * Add.
+     */
+    public boolean add(E value) {
+        if (root==null) {
+            root = new Node(value);
+            return true;
+        }
+
+        return findParentByValue(new Node(value), root);
+    }
+
+    private boolean findParentByValue(Node newNode, Node currentNode){
+
+        if (newNode.value.compareTo(currentNode.value) == 1){
+            if (currentNode.right == null)
+                currentNode.right = newNode;
+            else
+                findParentByValue(newNode, currentNode.right);
+        } else {
+            if (currentNode.left == null)
+                currentNode.left = newNode;
+            else
+                findParentByValue(newNode, currentNode.right);
+        }
+        return true;
     }
 
     /**
