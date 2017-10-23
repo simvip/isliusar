@@ -21,20 +21,9 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     private class Node implements Comparable<E> {
         /**
-         * Left node.
-         */
-        private Node left = null;
-
-        /**
-         * Right node.
-         */
-        private Node right = null;
-
-        /**
          * List of children.
          */
         private List<Node> children;
-
         /**
          * Value.
          */
@@ -51,18 +40,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         }
 
         /**
-         * Construct.
-         * @param left Node
-         * @param right Node
-         * @param value E
-         */
-        private Node(Node left, Node right, E value) {
-            this.left = left;
-            this.right = right;
-            this.value = value;
-        }
-
-        /**
          * Override compare.
          *
          * @param o Object
@@ -74,12 +51,12 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         }
     }
 
-    private int maxheight(Node node, int max){
-        if (node.children!=null){
-            max = Math.max(max,node.children.size());
+    private int maxheight(Node node, int max) {
+        if (node.children != null) {
+            max = Math.max(max, node.children.size());
             for (Node current :
                     node.children) {
-                max = maxheight(current,max);
+                max = maxheight(current, max);
             }
         }
         return max;
@@ -87,38 +64,11 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
     /**
      * This tree binary?.
+     *
      * @return boolean
      */
     public boolean isBinary() {
-        return (maxheight(root, 0)<= 2);
-    }
-
-    /**
-     * Add.
-     */
-    public boolean add(E value) {
-        if (root==null) {
-            root = new Node(value);
-            return true;
-        }
-
-        return findParentByValue(new Node(value), root);
-    }
-
-    private boolean findParentByValue(Node newNode, Node currentNode){
-
-        if (newNode.value.compareTo(currentNode.value) == 1){
-            if (currentNode.right == null)
-                currentNode.right = newNode;
-            else
-                findParentByValue(newNode, currentNode.right);
-        } else {
-            if (currentNode.left == null)
-                currentNode.left = newNode;
-            else
-                findParentByValue(newNode, currentNode.right);
-        }
-        return true;
+        return (maxheight(root, 0) <= 2);
     }
 
     /**
@@ -130,14 +80,14 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
      */
     @Override
     public boolean add(E parent, E child) {
-        if (parent==null && child == null) return false;
+        if (parent == null && child == null) return false;
 
-        for(E value: this){
-            if (value.compareTo(child)==0){
+        for (E value : this) {
+            if (value.compareTo(child) == 0) {
                 return false;
             }
         }
-        if (root ==null && parent == null) {
+        if (root == null && parent == null) {
             root = new Node(child);
             return true;
         }

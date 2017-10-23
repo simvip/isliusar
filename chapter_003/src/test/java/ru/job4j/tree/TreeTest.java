@@ -49,16 +49,5 @@ public class TreeTest {
         assertFalse(tree.isBinary());
     }
 
-    /**
-     * Test search binary tree.
-     */
-    @Test
-    public void TestBinaryTree() {
-        Tree<Integer> tree = new Tree();
-        tree.add(2);
-        tree.add(1);
-        tree.add(3);
-        tree.add(4);
 
-    }
 }
