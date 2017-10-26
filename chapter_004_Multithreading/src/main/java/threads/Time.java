@@ -32,7 +32,7 @@ public class Time implements Runnable {
      */
     public Time(Thread monitorThread) {
         this.monitorThread = monitorThread;
-        this.maxOperationTimeMilli = 1000;
+        this.maxOperationTimeMilli = 10;
     }
 
     /**
@@ -40,18 +40,18 @@ public class Time implements Runnable {
      */
     @Override
     public void run() {
-        System.out.println("sss Thread Count State in cicle " + monitorThread.getState() + " " + monitorThread.isInterrupted());
+
         try {
             while (!monitorThread.isInterrupted() && this.maxOperationTimeMilli >= 0) {
                 Thread.sleep(10);
-                System.out.println("Thread Count State in cicle " + monitorThread.getState() + " " + monitorThread.isInterrupted());
                 this.maxOperationTimeMilli += -10;
             }
-            System.out.println("Thread Count State " + monitorThread.getState() + " " + monitorThread.isInterrupted());
+
             if (!monitorThread.isInterrupted()) {
                 monitorThread.interrupt();
-                System.out.println("Thread Count State " + monitorThread.getState() + " " + monitorThread.isInterrupted());
+                throw new InterruptedException();
             }
+
         } catch (InterruptedException e) {
             System.out.println("----------------------");
         }

@@ -12,8 +12,12 @@ public class CountProgramBrake {
      * @param inputString String
      */
     public CountProgramBrake(String inputString, long maxMillisecondsWork) {
+
         Thread countThread = new Thread(new CountChar(inputString));
         countThread.start();
+
+        Thread controlThread = new Thread(new Time(countThread, maxMillisecondsWork));
+        controlThread.start();
 
         try {
             countThread.join();
@@ -21,8 +25,6 @@ public class CountProgramBrake {
             e.printStackTrace();
         }
 
-        Thread controlThread = new Thread(new Time(countThread, maxMillisecondsWork));
-        controlThread.start();
         try {
             controlThread.join();
         } catch (InterruptedException e) {
