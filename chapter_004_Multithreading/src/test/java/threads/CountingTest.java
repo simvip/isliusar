@@ -20,21 +20,11 @@ public class CountingTest {
 
         Thread count = new Counting(inputString);
         count.start();
-
-        try {
-            Thread.sleep(1000);
-            count.interrupt();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
         try {
             count.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
 
         System.out.println("End calculating");
     }

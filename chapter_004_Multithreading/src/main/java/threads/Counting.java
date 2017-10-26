@@ -13,16 +13,15 @@ public class Counting extends Thread {
     /**
      * Counting words.
      */
-    private void countingWords() throws InterruptedException {
+    private void countingWords(){
         int max = 0;
         String[] split = this.inputString.split(" ");
         for (String value : split) {
-            if (!isInterrupted()) {
+            if (!Thread.currentThread().isInterrupted()) {
                 max++;
             } else {
-                throw new InterruptedException();
+                break;
             }
-
         }
         System.out.println("Words in the sentence " + max);
     }
@@ -30,15 +29,15 @@ public class Counting extends Thread {
     /**
      * Counting spaces.
      */
-    private void countingSpace() throws InterruptedException {
+    private void countingSpace(){
 
         int max = 0;
         String[] split = this.inputString.split(" ");
         for (String value : split) {
-            if (!isInterrupted()) {
+            if (!Thread.currentThread().isInterrupted()) {
                 max++;
             } else {
-                throw new InterruptedException();
+                break;
             }
         }
         max--;
@@ -48,15 +47,33 @@ public class Counting extends Thread {
     /**
      * Run.
      */
-
     @Override
     public void run() {
+
+        Thread threadW = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                countingWords();
+            }
+        });
+        threadW.start();
+
+        Thread threadS = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                countingSpace();
+            }
+        });
+        threadS.start();
+
         try {
-            countingSpace();
-            countingWords();
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
-            System.out.println("Interrupt count");
+            e.printStackTrace();
         }
+
+        threadW.interrupt();
+        threadS.interrupt();
     }
 
     /**
