@@ -15,24 +15,13 @@ public class Time implements Runnable {
     private long maxOperationTimeMilli;
 
     /**
-     * Construct with all parameters.
-     *
-     * @param monitorThread         Thread
-     * @param maxOperationTimeMilli long
-     */
-    public Time(Thread monitorThread, long maxOperationTimeMilli) {
-        this.monitorThread = monitorThread;
-        this.maxOperationTimeMilli = Math.max(maxOperationTimeMilli, 10);
-    }
-
-    /**
      * Truncated construct.
      *
      * @param monitorThread Thread
      */
-    public Time(Thread monitorThread) {
+    public Time(Thread monitorThread, long maxOperationTimeMilli) {
         this.monitorThread = monitorThread;
-        this.maxOperationTimeMilli = 10;
+        this.maxOperationTimeMilli = maxOperationTimeMilli;
     }
 
     /**
@@ -40,20 +29,15 @@ public class Time implements Runnable {
      */
     @Override
     public void run() {
+        System.out.format("Поток %s стартовал %n", Thread.currentThread().getName(), System.lineSeparator());
 
         try {
-            while (!monitorThread.isInterrupted() && this.maxOperationTimeMilli >= 0) {
-                Thread.sleep(10);
-                this.maxOperationTimeMilli += -10;
-            }
-
-            if (!monitorThread.isInterrupted()) {
-                monitorThread.interrupt();
-                throw new InterruptedException();
-            }
-
+            this.monitorThread.join(this.maxOperationTimeMilli);
         } catch (InterruptedException e) {
-            System.out.println("----------------------");
+            e.printStackTrace();
         }
+        monitorThread.interrupt();
+
+        System.out.format("Поток %s завершился %n", Thread.currentThread().getName(), System.lineSeparator());
     }
 }
