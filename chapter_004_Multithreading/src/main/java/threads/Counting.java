@@ -13,7 +13,7 @@ public class Counting extends Thread {
     /**
      * Counting words.
      */
-    private void countingWords(){
+    private void countingWords() {
         int max = 0;
         String[] split = this.inputString.split(" ");
         for (String value : split) {
@@ -29,7 +29,7 @@ public class Counting extends Thread {
     /**
      * Counting spaces.
      */
-    private void countingSpace(){
+    private void countingSpace() {
 
         int max = 0;
         String[] split = this.inputString.split(" ");

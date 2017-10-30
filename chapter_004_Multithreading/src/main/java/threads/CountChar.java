@@ -34,7 +34,11 @@ public class CountChar implements Runnable {
         int max = 0;
         char[] massive = this.inputString.toCharArray();
         for (char item : massive) {
-            max++;
+            if (!Thread.currentThread().isInterrupted()) {
+                max++;
+            } else {
+                break;
+            }
         }
         System.out.format("Количество символов  предолжении %s %n", max, System.lineSeparator());
     }
