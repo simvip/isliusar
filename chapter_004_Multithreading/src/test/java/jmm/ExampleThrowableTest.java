@@ -12,8 +12,8 @@ public class ExampleThrowableTest {
      */
     @Test
     public void testThrowable() {
-        for (int i = 0; i < 5; i++) {
-            new Thread(new ExampleThrowable(i), "#" + i).start();
-        }
+//        for (int i = 0; i < 5; i++) {
+//            new Thread(new ExampleThrowable(i), "#" + i).start();
+//        }
     }
 }
