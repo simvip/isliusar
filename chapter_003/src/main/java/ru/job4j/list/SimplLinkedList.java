@@ -53,7 +53,7 @@ public class SimplLinkedList<T> implements SimpleContainer {
      *
      * @param index int
      */
-    public void delete(int index) {
+    public synchronized void delete(int index) {
         Node node = getNode(index);
 
         Node pNode = node.previous;
@@ -93,7 +93,7 @@ public class SimplLinkedList<T> implements SimpleContainer {
      * @return Iterator Iterator
      */
     @Override
-    public Iterator iterator() {
+    public synchronized Iterator iterator() {
         return new Iterator() {
             @Override
             public boolean hasNext() {
@@ -120,7 +120,7 @@ public class SimplLinkedList<T> implements SimpleContainer {
      * @param o Object
      */
     @Override
-    public void add(Object o) {
+    public synchronized void add(Object o) {
         Node node = new Node(o);
         if (this.tail != null) {
             this.tail.next = node;
@@ -140,7 +140,7 @@ public class SimplLinkedList<T> implements SimpleContainer {
      * @return
      */
     @Override
-    public T get(int index) {
+    public synchronized T get(int index) {
         return (T) getNode(index).value;
     }
 

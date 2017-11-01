@@ -66,12 +66,12 @@ public class SimpleArray<T> implements SimpleContainer {
      * @return
      */
     @Override
-    public T get(int index) {
+    public synchronized T get(int index) {
         return (T) this.values[index];
     }
 
     @Override
-    public void add(Object o) {
+    public synchronized void add(Object o) {
         if ((this.curentIndex + 1) == this.values.length) {
             growArray();
         }
