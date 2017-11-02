@@ -14,12 +14,12 @@ import static org.junit.Assert.*;
 public class ParallerSearchTest {
     @Test
     public void searchFiles() {
-        List<String> filterlist = new ArrayList<>();
-        filterlist.add(".txt");
-        filterlist.add(".doc");
-
-        ParallerSearch parallerSearch = new ParallerSearch();
-        parallerSearch.searchFiles("C:\\Test\\", "I like it", filterlist);
+//        List<String> filterlist = new ArrayList<>();
+//        filterlist.add(".txt");
+//        filterlist.add(".doc");
+//
+//        ParallerSearch parallerSearch = new ParallerSearch();
+//        parallerSearch.searchFiles("C:\\Test\\", "I like it", filterlist);
     }
 
 }
