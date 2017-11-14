@@ -1,5 +1,6 @@
 package monitore;
 
+import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class UserStorage {
     /**
      * Storage.
      */
+    @GuardedBy("this")
     private Map<Integer, User> storage;
 
     /**
