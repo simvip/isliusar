@@ -1,5 +1,8 @@
 package wait;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,6 +12,7 @@ import java.util.Queue;
  * Created by Ivan Sliusar on 02.11.2017.
  * Red Line Soft corp.
  */
+@ThreadSafe
 public class ProducerAndConsumer {
 
     /**
@@ -19,17 +23,19 @@ public class ProducerAndConsumer {
     /**
      * pull task.
      */
-    private Queue<String> queue = new LinkedList<>();
+    @GuardedBy("lock")
+    private BlockingQueue<String> queue = new BlockingQueue<>(4);
 
     /**
      * Work is done.
      */
+    @GuardedBy("this")
     private boolean workIsDone = false;
 
     /**
      * capacity queue.
      */
-    private int capacity = 4;
+    private int capacity;
     /**
      * Input string.
      */
@@ -42,7 +48,8 @@ public class ProducerAndConsumer {
      */
     public ProducerAndConsumer(String inputString) {
         this.inputString = inputString;
-
+        this.capacity = 4;
+        queue = new BlockingQueue<>(this.capacity);
     }
 
     /**
@@ -99,18 +106,18 @@ public class ProducerAndConsumer {
     private void consumerTask() {
 
         synchronized (this.lock) {
-            while (true) {
-                if (queue.size() == 0) {
-                    if (this.workIsDone) {
-                        break;
-                    }
+
+            while (!workIsDone) {
+                if (queue.size() == 0){
                     try {
                         this.lock.wait();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
+
                 String value = queue.poll();
+
                 System.out.println(" Consume task " + value);
                 this.lock.notifyAll();
             }
@@ -127,7 +134,7 @@ public class ProducerAndConsumer {
     private void produceTask(String task) {
 
         synchronized (this.lock) {
-            if (queue.size() == this.capacity) {
+            while (queue.size() == this.capacity) {
                 try {
                     this.lock.wait();
                 } catch (InterruptedException e) {
@@ -137,6 +144,65 @@ public class ProducerAndConsumer {
             queue.add(task);
             System.out.println("Produce task " + task);
             this.lock.notifyAll();
+        }
+    }
+
+    private class BlockingQueue<T>{
+        /**
+         * Capacity
+         */
+        private int capacity;
+        /**
+         * Max index of array data.
+         */
+        private int maxIndex = -1;
+        /**
+         * array of values.
+         */
+        private Object data[];
+
+        /**
+         * Construct.
+         * @param lenght
+         */
+        public BlockingQueue(int lenght) {
+            this.capacity = lenght;
+            data = new Object[lenght];
+        }
+
+        /**
+         * Add value in queue.
+         * @param value T
+         */
+        public void add(T value){
+            synchronized (lock) {
+                if (maxIndex <= capacity - 1) {
+                    data[++maxIndex] = value;
+                }
+            }
+        }
+
+        /**
+         * Poll value from queue.
+         * @return T
+         */
+        public T poll(){
+            synchronized (lock) {
+                Object[] temp = new Object[this.data.length];
+                System.arraycopy(this.data, 1, temp, 0, maxIndex);
+                T returnvalue = (T) this.data[0];
+                maxIndex--;
+                this.data = temp;
+                return returnvalue;
+            }
+        }
+
+        /**
+         * Size of queue.
+         * @return int.
+         */
+        public int size(){
+            return maxIndex+1;
         }
     }
 
