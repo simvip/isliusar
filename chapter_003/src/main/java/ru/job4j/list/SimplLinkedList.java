@@ -1,5 +1,8 @@
 package ru.job4j.list;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -12,24 +15,24 @@ import static ru.job4j.list.SimplLinkedList.Rout.FORWARD;
  *
  * @param <T>
  */
+@ThreadSafe
 public class SimplLinkedList<T> implements SimpleContainer {
     /**
      * Head of list.
      */
+    @GuardedBy("this")
     private Node head;
     /**
      * Tail of list.
      */
+    @GuardedBy("this")
     private Node tail;
     /**
      * Size list.
      */
+    @GuardedBy("this")
     private int size;
 
-    /**
-     * Head of list.
-     */
-    private Node currentIterNod;
 
     /**
      * Construct.
@@ -95,12 +98,16 @@ public class SimplLinkedList<T> implements SimpleContainer {
     @Override
     public synchronized Iterator iterator() {
         return new Iterator() {
+            /**
+             * Head of list.
+             */
+            private Node currentIterNod;
             @Override
             public boolean hasNext() {
                 if (currentIterNod == null) {
                     currentIterNod = SimplLinkedList.this.head;
                 }
-                return (SimplLinkedList.this.currentIterNod != null) && (SimplLinkedList.this.currentIterNod.next != null);
+                return (currentIterNod != null) && (currentIterNod.next != null);
             }
 
             @Override
@@ -108,8 +115,8 @@ public class SimplLinkedList<T> implements SimpleContainer {
                 if (!hasNext()) {
                     throw new NoSuchElementException("ups");
                 }
-                SimplLinkedList.this.currentIterNod = SimplLinkedList.this.currentIterNod.next;
-                return (T) SimplLinkedList.this.currentIterNod.value;
+                currentIterNod = currentIterNod.next;
+                return (T) currentIterNod.value;
             }
         };
     }
