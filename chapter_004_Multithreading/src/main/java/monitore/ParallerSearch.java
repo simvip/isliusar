@@ -1,5 +1,8 @@
 package monitore;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.io.*;
 
 import java.util.ArrayList;
@@ -9,15 +12,17 @@ import java.util.List;
  * Created by Ivan Sliusar on 31.10.2017.
  * Red Line Soft corp.
  */
+@ThreadSafe
 public class ParallerSearch {
     /**
      * Lock status.
      */
-    private Object lock = new Object();
+    private final Object lock = new Object();
 
     /**
      * Result.
      */
+    @GuardedBy("lock")
     private List<String> result = new ArrayList<>();
 
 
@@ -32,12 +37,17 @@ public class ParallerSearch {
 
         File startFolder = new File(root);
         if (startFolder.exists()) {
+            ArrayList<Thread> poolThreads = new ArrayList<>();
             for (String ext : exts) {
                 FilenameFilter filenameFilter = (dir, name) -> name.endsWith(ext);
                 Thread thread = new Thread(() -> {
                     processFilesFromFolder(startFolder, text, filenameFilter);
                 });
                 thread.start();
+                poolThreads.add(thread);
+            }
+
+            for (Thread thread : poolThreads) {
                 try {
                     thread.join();
                 } catch (InterruptedException e) {
