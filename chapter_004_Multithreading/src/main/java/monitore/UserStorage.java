@@ -48,7 +48,7 @@ public class UserStorage {
     public boolean transfer(int fromid, int toId, int amoutn) {
         User userFrom = storage.get(fromid);
         User userTo = storage.get(toId);
-        if (userFrom == null && userTo == null) {
+        if (userFrom == null || userTo == null) {
             return false;
         }
 

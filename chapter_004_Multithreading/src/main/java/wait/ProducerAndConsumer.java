@@ -106,7 +106,7 @@ public class ProducerAndConsumer {
         synchronized (this.lock) {
 
             while (!workIsDone) {
-                if (queue.size() == 0){
+                if (queue.size() == 0) {
                     try {
                         this.lock.wait();
                     } catch (InterruptedException e) {
@@ -145,7 +145,7 @@ public class ProducerAndConsumer {
         }
     }
 
-    private class BlockingQueue<T>{
+    private class BlockingQueue<T> {
         /**
          * Capacity
          */
@@ -157,10 +157,11 @@ public class ProducerAndConsumer {
         /**
          * array of values.
          */
-        private Object data[];
+        private Object[] data;
 
         /**
          * Construct.
+         *
          * @param lenght
          */
         public BlockingQueue(int lenght) {
@@ -170,9 +171,10 @@ public class ProducerAndConsumer {
 
         /**
          * Add value in queue.
+         *
          * @param value T
          */
-        public void add(T value){
+        public void add(T value) {
             synchronized (lock) {
                 if (maxIndex <= capacity - 1) {
                     data[++maxIndex] = value;
@@ -182,9 +184,10 @@ public class ProducerAndConsumer {
 
         /**
          * Poll value from queue.
+         *
          * @return T
          */
-        public T poll(){
+        public T poll() {
             synchronized (lock) {
                 Object[] temp = new Object[this.data.length];
                 System.arraycopy(this.data, 1, temp, 0, maxIndex);
@@ -197,10 +200,11 @@ public class ProducerAndConsumer {
 
         /**
          * Size of queue.
+         *
          * @return int.
          */
-        public int size(){
-            return maxIndex+1;
+        public int size() {
+            return maxIndex + 1;
         }
     }
 
