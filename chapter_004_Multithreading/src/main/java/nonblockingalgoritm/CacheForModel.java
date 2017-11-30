@@ -1,4 +1,4 @@
-package nonblockingalgoritm1;
+package nonblockingalgoritm;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
@@ -37,6 +37,15 @@ public class CacheForModel {
     }
 
     /**
+     * Get model by id.
+     * @param id int
+     * @return Model
+     */
+    public Model getById(int id) {
+        return storage.get(id);
+    }
+
+    /**
      * Update value.
      *
      * @param updateValue Model
@@ -53,6 +62,8 @@ public class CacheForModel {
                         e.printStackTrace();
                     }
                 }
+                updateValue.incrementVersion();
+                System.out.println(updateValue);
                 return updateValue;
             }
         });

@@ -1,4 +1,4 @@
-package nonblockingalgoritm1;
+package nonblockingalgoritm;
 
 import org.junit.Test;
 
@@ -24,39 +24,42 @@ public class CacheForModelTest {
         Thread thread1 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 0; i < 100; i++) {
+                for (int i = 0; i < 10; i++) {
 
-                    Model updateModel = new Model(1, "First");
-                    updateModel.setName(Thread.currentThread().getName() + " " + i);
+                    Model model = cache.getById(2);
+                    model.setName(Thread.currentThread().getName() + " " + i);
                     try {
-                        Thread.sleep(10);
+                        Thread.sleep(5);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    cache.update(updateModel);
+                    cache.update(model);
                 }
             }
         }, "Thread 1");
 
-        thread1.start();
 
         Thread thread2 = new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 100; i < 150; i++) {
-                    Model updateModel = new Model(1, "First");
-                    updateModel.setName(Thread.currentThread().getName() + " " + i);
+                for (int i = 100; i < 105; i++) {
+
+                    Model model = cache.getById(2);
+                    System.out.println("Получил объект для измениня, версия " + model.getVersion());
+                    model.setName(Thread.currentThread().getName() + " " + i);
                     try {
-                        Thread.sleep(20);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    cache.update(updateModel);
+                    System.out.println("Пока спал верися поменялася " + model.getVersion());
+                    cache.update(model);
 
                 }
             }
         }, "Thread 2");
 
+        thread1.start();
         thread2.start();
         try {
             thread1.join();

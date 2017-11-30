@@ -1,4 +1,4 @@
-package nonblockingalgoritm1;
+package nonblockingalgoritm;
 
 import net.jcip.annotations.ThreadSafe;
 
@@ -91,6 +91,17 @@ public class Model {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * Increment version
+     */
+    public void incrementVersion() {
         this.version++;
+    }
+
+    @Override
+    public String toString() {
+        return "Model{" + "version=" + version + ", name='" + name + '\'' + '}';
     }
 }
