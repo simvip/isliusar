@@ -59,8 +59,7 @@ public class Bomberman extends Hero implements Runnable {
     @Override
     public void run() {
         try {
-
-            locker.lock();
+            placeOnBoard();
             boolean moveIsDone = false;
             while (game.stillGaming) {
 
@@ -73,6 +72,16 @@ public class Bomberman extends Hero implements Runnable {
                 // check the ability to move
 
                 for (Where where : Where.values()) {
+                    moveIsDone = move(where);
+                    if (moveIsDone) {
+                        break;
+                    }
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
                     moveIsDone = move(where);
                     if (moveIsDone) {
                         break;

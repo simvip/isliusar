@@ -49,11 +49,9 @@ public class Monster implements Runnable {
         try {
             int pick = 0;
             int maxDirections = 4;
-
             for (BaseMonster monster : monsters) {
-                monster.locker.lock();
+                monster.placeOnBoard();
             }
-
             while (game.stillGaming) {
 
                 for (BaseMonster monster : monsters) {

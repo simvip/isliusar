@@ -41,19 +41,19 @@ abstract class Hero {
     public Hero(String name, GameBomberman game) {
         this.game = game;
         this.name = name;
-        placeOnBoard();
     }
 
     /**
      * Place current hero on board.
      */
-    private void placeOnBoard() {
+    public void placeOnBoard() {
         boolean placeIsDone = false;
         while (!placeIsDone) {
             this.x = (int) (Math.random() * game.board.length);
             this.y = (int) (Math.random() * game.board[0].length);
             if (!game.board[x][y].isLocked()) {
                 this.locker = game.board[x][y];
+                this.locker.lock();
                 break;
             }
         }
@@ -86,11 +86,11 @@ abstract class Hero {
         }
 
         // Go outside the playing field
-        if ((this.x + newX) < 0 || (this.y + newY) < 0) {
+        if (newX < 0 || newY < 0) {
             return false;
         }
 
-        if ((this.x + newX) > game.board.length || (this.y + newY) > game.board[0].length) {
+        if (newX > game.board.length || newY > game.board[0].length) {
             return false;
         }
         // cell is not empty
