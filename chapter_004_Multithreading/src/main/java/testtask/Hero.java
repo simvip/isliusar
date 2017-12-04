@@ -1,5 +1,6 @@
 package testtask;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -84,7 +85,38 @@ abstract class Hero {
             default:
                 break;
         }
+        if (!opportunityToMove(newX, newY)){
+            return false;
+        }
 
+        ReentrantLock newLock = game.board[newX][newY];
+
+        try {
+            if (newLock.tryLock(500, TimeUnit.MILLISECONDS)) {
+                try {
+                    this.locker.unlock();
+                    this.locker = newLock;
+                    this.locker.lock();
+
+                    this.x = newX;
+                    this.y = newY;
+
+                    System.out.printf("%s go to [%s:%s] %n", this.name, x, y, System.lineSeparator());
+
+                } finally {
+                    newLock.unlock();
+                    return false;
+                }
+
+            }
+        } catch (InterruptedException e) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean opportunityToMove(int newX, int newY) {
         // Go outside the playing field
         if (newX < 0 || newY < 0) {
             return false;
@@ -93,19 +125,6 @@ abstract class Hero {
         if (newX > game.board.length || newY > game.board[0].length) {
             return false;
         }
-        // cell is not empty
-        if (game.board[newX][newY].isLocked()) {
-            return false;
-        }
-        this.locker.unlock();
-        this.locker = game.board[newX][newY];
-        this.locker.lock();
-
-        this.x = newX;
-        this.y = newY;
-
-        System.out.printf("%s go to [%s:%s] %n", this.name, x, y, System.lineSeparator());
-
         return true;
     }
 

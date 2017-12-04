@@ -70,28 +70,19 @@ public class Bomberman extends Hero implements Runnable {
                 }
 
                 // check the ability to move
-
                 for (Where where : Where.values()) {
                     moveIsDone = move(where);
                     if (moveIsDone) {
                         break;
                     }
-                    try {
-                        Thread.sleep(500);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    moveIsDone = move(where);
-                    if (moveIsDone) {
-                        break;
-                    }
                 }
+
                 if (!moveIsDone) {
                     game.stillGaming = false;
                 }
             }
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("ERROR OF HERO");
         } finally {
             if (locker.isLocked()) {
