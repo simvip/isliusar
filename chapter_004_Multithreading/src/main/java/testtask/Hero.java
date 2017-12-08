@@ -96,11 +96,11 @@ abstract class Hero {
                 try {
                     this.locker.unlock();
                     this.locker = newLock;
-                    this.locker.lock();
 
                     this.x = newX;
                     this.y = newY;
 
+                    System.err.println("locker count = " + locker.getHoldCount());
                     System.out.printf("%s go to [%s:%s] %n", this.name, x, y, System.lineSeparator());
 
                 } finally {
