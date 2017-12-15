@@ -103,13 +103,14 @@ abstract class Hero {
                     System.err.println("locker count = " + locker.getHoldCount());
                     System.out.printf("%s go to [%s:%s] %n", this.name, x, y, System.lineSeparator());
 
-                } finally {
-                    newLock.unlock();
+                } catch (Exception e){
+                    e.printStackTrace();
                     return false;
                 }
 
             }
         } catch (InterruptedException e) {
+            e.printStackTrace();
             return false;
         }
 
