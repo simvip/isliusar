@@ -85,34 +85,30 @@ abstract class Hero {
             default:
                 break;
         }
-        if (!opportunityToMove(newX, newY)){
+        if (!opportunityToMove(newX, newY)) {
             return false;
         }
 
         ReentrantLock newLock = game.board[newX][newY];
 
+
         try {
             if (newLock.tryLock(500, TimeUnit.MILLISECONDS)) {
-                try {
-                    this.locker.unlock();
-                    this.locker = newLock;
+                this.locker.unlock();
+                this.locker = newLock;
 
-                    this.x = newX;
-                    this.y = newY;
+                this.x = newX;
+                this.y = newY;
 
-                    System.err.println("locker count = " + locker.getHoldCount());
-                    System.out.printf("%s go to [%s:%s] %n", this.name, x, y, System.lineSeparator());
-
-                } catch (Exception e){
-                    e.printStackTrace();
-                    return false;
-                }
+                System.err.println("locker count = " + locker.getHoldCount());
+                System.out.printf("%s go to [%s:%s] %n", this.name, x, y, System.lineSeparator());
 
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
             return false;
         }
+
 
         return true;
     }
