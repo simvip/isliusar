@@ -19,6 +19,8 @@
 		<module>chapter_003</module>
 		<module>chapter_004_Multithreading</module>
 		<module>chapter_005</module>
+		<module>chapter_006_servlet_JSP</module>
+
 	</modules>
 	
 	<dependencies>
@@ -46,6 +48,14 @@
 			<artifactId>sqlite-jdbc</artifactId>
 			<version>3.21.0.1</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+		</dependency>
+
 
 	</dependencies>
 	
