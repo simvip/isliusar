@@ -1,4 +1,5 @@
 <web-app>
+
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
         <servlet-class>servlets.EchoServlet</servlet-class>
@@ -8,5 +9,18 @@
         <servlet-name>EchoServlet</servlet-name>
         <url-pattern>/echo</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>httpcrud.UsersServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/crud</url-pattern>
+    </servlet-mapping>
+
+
 </web-app>
 
