@@ -1,5 +1,44 @@
 <web-app>
 
+    <!--///////////////////////////////////////////////////-->
+    <!--                    Servlet JSP                   -->
+    <!--///////////////////////////////////////////////////-->
+
+    <!-- UPDATE Servlet-->
+    <servlet>
+        <servlet-name>UpdateServletJSP</servlet-name>
+        <servlet-class>jsp.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServletJSP</servlet-name>
+        <url-pattern>/updateusersjsp</url-pattern>
+    </servlet-mapping>
+
+    <!-- ADD Servlet-->
+    <servlet>
+        <servlet-name>AddServletJSP</servlet-name>
+        <servlet-class>jsp.AddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddServletJSP</servlet-name>
+        <url-pattern>/addusersjsp</url-pattern>
+    </servlet-mapping>
+
+    <!-- DELETE Servlet-->
+    <servlet>
+        <servlet-name>DeleteServletJSP</servlet-name>
+        <servlet-class>jsp.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServletJSP</servlet-name>
+        <url-pattern>/deleteusersjsp</url-pattern>
+    </servlet-mapping>
+
+    <!--///////////////////////////////////////////////////-->
+    <!--                     Servlet GUI in code           -->
+    <!--///////////////////////////////////////////////////-->
+
+
     <!-- GET Servlet-->
     <servlet>
         <servlet-name>GetServlet</servlet-name>
@@ -39,6 +78,11 @@
         <servlet-name>DeleteServlet</servlet-name>
         <url-pattern>/deleteusers</url-pattern>
     </servlet-mapping>
+
+
+    <!--///////////////////////////////////////////////////-->
+    <!--                     ECHO Servlet                  -->
+    <!--///////////////////////////////////////////////////-->
 
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
