@@ -1,5 +1,45 @@
 <web-app>
 
+    <!-- GET Servlet-->
+    <servlet>
+        <servlet-name>GetServlet</servlet-name>
+        <servlet-class>servletgui.GetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetServlet</servlet-name>
+        <url-pattern>/getusers</url-pattern>
+    </servlet-mapping>
+
+    <!-- UPDATE Servlet-->
+    <servlet>
+        <servlet-name>UpdateServlet</servlet-name>
+        <servlet-class>servletgui.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServlet</servlet-name>
+        <url-pattern>/updateusers</url-pattern>
+    </servlet-mapping>
+
+    <!-- ADD Servlet-->
+    <servlet>
+        <servlet-name>AddServlet</servlet-name>
+        <servlet-class>servletgui.AddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddServlet</servlet-name>
+        <url-pattern>/addusers</url-pattern>
+    </servlet-mapping>
+
+    <!-- DELETE Servlet-->
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>servletgui.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/deleteusers</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
         <servlet-class>servlets.EchoServlet</servlet-class>
