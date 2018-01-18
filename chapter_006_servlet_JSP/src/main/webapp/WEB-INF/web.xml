@@ -1,6 +1,29 @@
 <web-app>
 
     <!--///////////////////////////////////////////////////-->
+    <!--                    Servlet MVC                   -->
+    <!--///////////////////////////////////////////////////-->
+
+    <servlet>
+        <servlet-name>Users Controller</servlet-name>
+        <servlet-class>mvc.controls.UsersController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Users Controller</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <!-- UPDATE Servlet-->
+    <servlet>
+        <servlet-name>UpdateServletMVC</servlet-name>
+        <servlet-class>mvc.controls.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServletMVC</servlet-name>
+        <url-pattern>/updateusersmvc</url-pattern>
+    </servlet-mapping>
+
+    <!--///////////////////////////////////////////////////-->
     <!--                    Servlet JSP                   -->
     <!--///////////////////////////////////////////////////-->
 
