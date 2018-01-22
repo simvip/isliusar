@@ -1,5 +1,6 @@
 package mvc.controls;
 
+import mvc.models.Role;
 import mvc.models.User;
 import mvc.models.UserStore;
 import org.slf4j.Logger;
@@ -10,6 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
@@ -18,7 +20,7 @@ import java.util.Date;
  * Created by Ivan Sliusar on 09.01.2018.
  * Red Line Soft corp.
  */
-public class UpdateServlet extends HttpServlet {
+public class UpdateController extends HttpServlet {
     /**
      * Logger, now not use.
      */
@@ -40,29 +42,10 @@ public class UpdateServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User findUser = users.getUserByLogin(req.getParameter("login"));
 
-        resp.setContentType("text/html");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+        req.setAttribute("user",findUser);
+        req.setAttribute("Roles",Role.getAllRole());
 
-        writer.append("<!DOCTYPE html>\n" +
-                "<html lang=\"en\">\n" +
-                "<head>\n" +
-                "    <meta charset=\"UTF-8\">\n" +
-                "    <title>Title</title>\n" +
-                "</head>\n" +
-                "<body>\n" +
-
-                "<form action='" + req.getContextPath() + "/updateusersmvc' method='post'>" +
-                "<input type='hidden' name='status' value=UpdateUser />" +
-                "<p>Login : <input type='text' name='login' value=" + findUser.getLogin() + " '/></p>" +
-                "<p>Name  : <input type='text' name='name'  value=" + findUser.getName() + " '/></p>" +
-                "<p>Email : <input type='text' name='email' value=" + findUser.getEmail() + " '/></p>" +
-                "<input type='submit' value='--------- Update user ---------'/>" +
-                "</form>" +
-
-                "</body>" +
-                "</html>");
-
-        writer.flush();
+        req.getRequestDispatcher("WEB-INF/views/UpdateUserView.jsp").forward(req,resp);
     }
 
     /**
@@ -82,7 +65,8 @@ public class UpdateServlet extends HttpServlet {
                     req.getParameter("name"),
                     req.getParameter("login"),
                     req.getParameter("email"),
-                    new Date()
+                    new Date(),
+                    Role.valueOf(req.getParameter("role").trim())
             ));
             resp.sendRedirect(String.format("%s",req.getContextPath()));
         }

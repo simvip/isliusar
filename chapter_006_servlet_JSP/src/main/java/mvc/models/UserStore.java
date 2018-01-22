@@ -39,12 +39,13 @@ public enum UserStore {
      * Add user.
      */
     public void add(User user) {
-        String query = "INSERT INTO USERS(NAME,LOGIN,EMAIL,CREATEDATE) VALUES (?,?,?,?)";
+        String query = "INSERT INTO USERS(NAME,LOGIN,EMAIL,CREATEDATE,ROLE) VALUES (?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getLogin());
             stmt.setString(3, user.getEmail());
             stmt.setDate(4, new Date(user.getCreateDate().getTime()));
+            stmt.setString(5, user.getRole().name());
             stmt.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -56,11 +57,13 @@ public enum UserStore {
      * Update user.
      */
     public void update(User user) {
-        String query = "UPDATE USERS SET NAME = ?, EMAIL = ?  WHERE USERS.LOGIN = ?";
+        String query = "UPDATE USERS SET NAME = ?, EMAIL = ?, ROLE = ?  WHERE USERS.LOGIN = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
-            stmt.setString(3, user.getLogin());
+            stmt.setString(3, user.getRole().name());
+            stmt.setString(4, user.getLogin());
+
             stmt.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -96,7 +99,8 @@ public enum UserStore {
                                 rs.getString("name"),
                                 rs.getString("login"),
                                 rs.getString("email"),
-                                rs.getDate("createDate")
+                                rs.getDate("createDate"),
+                                Role.valueOf(rs.getString("role").trim())
                         ));
             }
             return rezult;
@@ -124,7 +128,8 @@ public enum UserStore {
                             rs.getString("name"),
                             rs.getString("login"),
                             rs.getString("email"),
-                            rs.getDate("createDate")
+                            rs.getDate("createDate"),
+                            Role.valueOf(rs.getString("role").trim())
                     );
                 }
             }
@@ -133,6 +138,39 @@ public enum UserStore {
         }
         return null;
     }
+
+    public boolean isCredential(String login){
+        String query = "SELECT * FROM USERS WHERE USERS.LOGIN = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, login);
+            try (ResultSet rs = stmt.executeQuery()) {
+                return rs.next();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public String getRole(String login){
+        String query = "SELECT * FROM USERS WHERE USERS.LOGIN = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, login);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()){
+                    return rs.getString("role");
+                }
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+
 
     /**
      * Get instanse

@@ -42,6 +42,6 @@ public class AddServlet extends HttpServlet {
                 req.getParameter("email"),
                 new java.util.Date()
         ));
-        resp.sendRedirect(String.format("%s/index.jsp",req.getContextPath()));
+        resp.sendRedirect(String.format("%s/UsersView.jsp",req.getContextPath()));
     }
 }

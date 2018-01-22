@@ -21,7 +21,7 @@ import java.util.Date;
  * Created by Ivan Sliusar on 09.01.2018.
  * Red Line Soft corp.
  */
-public class UsersController extends HttpServlet {
+public class SigninConroller extends HttpServlet {
     /**
      * Logger, not use now.
      */
@@ -33,14 +33,7 @@ public class UsersController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        HttpSession session = req.getSession();
-
-        req.setAttribute("UserRole",session.getAttribute("role"));
-        req.setAttribute("Users",users.getAllUsers());
-        req.setAttribute("Roles",Role.getAllRole());
-
-        req.getRequestDispatcher("/WEB-INF/views/UsersView.jsp").forward(req,resp);
+       req.getRequestDispatcher("WEB-INF/views/LoginView.jsp").forward(req,resp);
     }
 
     /**
@@ -53,21 +46,21 @@ public class UsersController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String whatToDo = req.getParameter("whatToDo");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
 
-        if ("delete".equals(whatToDo)) {
-            users.delete(req.getParameter("login"));
+        if (UserStore.getInstance().isCredential(login)){
+            HttpSession session = req.getSession();
 
-        }else if ("add".equals(whatToDo)) {
-            users.add(new User(
-                    req.getParameter("name"),
-                    req.getParameter("login"),
-                    req.getParameter("email"),
-                    new Date(),
-                    Role.valueOf(req.getParameter("role"))
-            ));
+            session.setAttribute("login",login);
+            session.setAttribute("role", UserStore.getInstance().getRole(login).trim());
+
+            resp.sendRedirect(String.format("%s",req.getContextPath()));
+        } else {
+            req.setAttribute("error","Credetional invalid");
+            doGet(req,resp);
         }
 
-        resp.sendRedirect(String.format("%s",req.getContextPath()));
+
     }
 }

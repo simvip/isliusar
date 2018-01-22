@@ -4,6 +4,15 @@
     <!--                    Servlet MVC                   -->
     <!--///////////////////////////////////////////////////-->
 
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>mvc.controls.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
     <servlet>
         <servlet-name>Users Controller</servlet-name>
         <servlet-class>mvc.controls.UsersController</servlet-class>
@@ -13,10 +22,29 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>SigninController</servlet-name>
+        <servlet-class>mvc.controls.SigninConroller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SigninController</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignOutController</servlet-name>
+        <servlet-class>mvc.controls.SignOutConroller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignOutController</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+
+
     <!-- UPDATE Servlet-->
     <servlet>
         <servlet-name>UpdateServletMVC</servlet-name>
-        <servlet-class>mvc.controls.UpdateServlet</servlet-class>
+        <servlet-class>mvc.controls.UpdateController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UpdateServletMVC</servlet-name>

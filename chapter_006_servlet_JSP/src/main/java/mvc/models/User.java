@@ -12,6 +12,11 @@ public class User {
      * Name.
      */
     private String name;
+
+    /**
+     * Users role.
+     */
+    private Role role;
     /**
      * Login.
      */
@@ -40,7 +45,7 @@ public class User {
      * @return String
      */
     public String getLogin() {
-        return login;
+        return login.trim();
     }
 
     /**
@@ -50,6 +55,14 @@ public class User {
      */
     public String getEmail() {
         return email;
+    }
+
+    /**
+     * Getter role.
+     * @return Role
+     */
+    public Role getRole() {
+        return role;
     }
 
     /**
@@ -78,11 +91,12 @@ public class User {
      * @param email      String
      * @param createDate Date
      */
-    public User(String name, String login, String email, Date createDate) {
+    public User(String name, String login, String email, Date createDate, Role role) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
+        this.role = role;
     }
 
     /**
