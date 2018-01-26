@@ -1,8 +1,7 @@
 package mvc.controls;
 
 
-import mvc.models.Role;
-import mvc.models.User;
+
 import mvc.models.UserStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.Date;
+
 
 
 /**
@@ -26,10 +25,7 @@ public class SigninConroller extends HttpServlet {
      * Logger, not use now.
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(EchoServlet.class);
-    /**
-     * User storage.
-     */
-    private final UserStore users = UserStore.getInstance();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,10 +43,9 @@ public class SigninConroller extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String login = req.getParameter("login");
-        String password = req.getParameter("password");
-
+        HttpSession session = req.getSession();
         if (UserStore.getInstance().isCredential(login)){
-            HttpSession session = req.getSession();
+
 
             session.setAttribute("login",login);
             session.setAttribute("role", UserStore.getInstance().getRole(login).trim());
@@ -58,6 +53,7 @@ public class SigninConroller extends HttpServlet {
             resp.sendRedirect(String.format("%s",req.getContextPath()));
         } else {
             req.setAttribute("error","Credetional invalid");
+            session.setAttribute("error",true);
             doGet(req,resp);
         }
 
