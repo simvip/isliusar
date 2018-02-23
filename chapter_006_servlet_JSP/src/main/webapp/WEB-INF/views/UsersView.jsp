@@ -26,12 +26,11 @@ Current role:
         Name : <input type=text name=name><br/>
         Login: <input type=text name=login><br/>
         Email: <input type=text name=email><br/>
-        Role : <input list="roles">
-        <datalist id="roles">
-            <c:forEach items="${Roles}" var="role">
-            <option value="${role.name}">
-                </c:forEach>
-        </datalist>
+        Role : <select name="role">
+        <c:forEach items="${Roles}" var="itemRole">
+            <option value="${itemRole.name}"> ${itemRole.name} </option>
+            </c:forEach>
+    </select>
         <br/>
         <input type=submit value="--------- Add user ---------"/>
     </form>

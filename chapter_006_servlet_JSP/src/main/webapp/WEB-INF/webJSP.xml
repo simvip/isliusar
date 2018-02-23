@@ -1,0 +1,162 @@
+<web-app>
+
+    <!--///////////////////////////////////////////////////-->
+    <!--                    Servlet MVC                   -->
+    <!--///////////////////////////////////////////////////-->
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>mvc.controls.AuthFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+    <!--<servlet>-->
+        <!--<servlet-name>Users Controller</servlet-name>-->
+        <!--<servlet-class>mvc.controls.UsersController</servlet-class>-->
+    <!--</servlet>-->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>Users Controller</servlet-name>-->
+        <!--<url-pattern>/</url-pattern>-->
+    <!--</servlet-mapping>-->
+
+    <servlet>
+        <servlet-name>SigninController</servlet-name>
+        <servlet-class>mvc.controls.SigninConroller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SigninController</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>SignOutController</servlet-name>
+        <servlet-class>mvc.controls.SignOutConroller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SignOutController</servlet-name>
+        <url-pattern>/signout</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- UPDATE Servlet-->
+    <servlet>
+        <servlet-name>UpdateServletMVC</servlet-name>
+        <servlet-class>mvc.controls.UpdateController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServletMVC</servlet-name>
+        <url-pattern>/updateusersmvc</url-pattern>
+    </servlet-mapping>
+
+    <!--///////////////////////////////////////////////////-->
+    <!--                    Servlet JSP                   -->
+    <!--///////////////////////////////////////////////////-->
+
+    <!-- UPDATE Servlet-->
+    <servlet>
+        <servlet-name>UpdateServletJSP</servlet-name>
+        <servlet-class>jsp.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServletJSP</servlet-name>
+        <url-pattern>/updateusersjsp</url-pattern>
+
+    </servlet-mapping>
+
+    <!-- ADD Servlet-->
+    <servlet>
+        <servlet-name>AddServletJSP</servlet-name>
+        <servlet-class>jsp.AddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddServletJSP</servlet-name>
+        <url-pattern>/addusersjsp</url-pattern>
+    </servlet-mapping>
+
+    <!-- DELETE Servlet-->
+    <servlet>
+        <servlet-name>DeleteServletJSP</servlet-name>
+        <servlet-class>jsp.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServletJSP</servlet-name>
+        <url-pattern>/deleteusersjsp</url-pattern>
+    </servlet-mapping>
+
+    <!--///////////////////////////////////////////////////-->
+    <!--                     Servlet GUI in code           -->
+    <!--///////////////////////////////////////////////////-->
+
+
+    <!-- GET Servlet-->
+    <servlet>
+        <servlet-name>GetServlet</servlet-name>
+        <servlet-class>servletgui.GetServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetServlet</servlet-name>
+        <url-pattern>/getusers</url-pattern>
+    </servlet-mapping>
+
+    <!-- UPDATE Servlet-->
+    <servlet>
+        <servlet-name>UpdateServlet</servlet-name>
+        <servlet-class>servletgui.UpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UpdateServlet</servlet-name>
+        <url-pattern>/updateusers</url-pattern>
+    </servlet-mapping>
+
+    <!-- ADD Servlet-->
+    <servlet>
+        <servlet-name>AddServlet</servlet-name>
+        <servlet-class>servletgui.AddServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddServlet</servlet-name>
+        <url-pattern>/addusers</url-pattern>
+    </servlet-mapping>
+
+    <!-- DELETE Servlet-->
+    <servlet>
+        <servlet-name>DeleteServlet</servlet-name>
+        <servlet-class>servletgui.DeleteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteServlet</servlet-name>
+        <url-pattern>/deleteusers</url-pattern>
+    </servlet-mapping>
+
+
+    <!--///////////////////////////////////////////////////-->
+    <!--                     ECHO Servlet                  -->
+    <!--///////////////////////////////////////////////////-->
+
+    <servlet>
+        <servlet-name>EchoServlet</servlet-name>
+        <servlet-class>servlets.EchoServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>EchoServlet</servlet-name>
+        <url-pattern>/echo</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UsersServlet</servlet-name>
+        <servlet-class>httpcrud.UsersServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/crud</url-pattern>
+    </servlet-mapping>
+
+
+</web-app>
+

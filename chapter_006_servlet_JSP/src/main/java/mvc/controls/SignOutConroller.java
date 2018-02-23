@@ -45,6 +45,7 @@ public class SignOutConroller extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         session.invalidate();
+        UserStore.getInstance().closeConnection();
         doGet(req,resp);
     }
 }

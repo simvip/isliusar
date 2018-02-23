@@ -1,6 +1,5 @@
 package mvc.models;
 
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +14,6 @@ public enum UserStore {
      * Connection to base.
      */
     private Connection connection;
-
-
     {
         try {
             Class.forName("org.postgresql.Driver");
@@ -39,13 +36,15 @@ public enum UserStore {
      * Add user.
      */
     public void add(User user) {
-        String query = "INSERT INTO USERS(NAME,LOGIN,EMAIL,CREATEDATE,ROLE) VALUES (?,?,?,?,?)";
+        String query = "INSERT INTO USERS(NAME,LOGIN,EMAIL,CREATEDATE,ROLE,id_country,id_region) VALUES (?,?,?,?,?,?,?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getLogin());
             stmt.setString(3, user.getEmail());
             stmt.setDate(4, new Date(user.getCreateDate().getTime()));
             stmt.setString(5, user.getRole().name());
+            stmt.setInt(6, user.getId_country());
+            stmt.setInt(7, user.getId_region());
             stmt.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
@@ -57,12 +56,15 @@ public enum UserStore {
      * Update user.
      */
     public void update(User user) {
-        String query = "UPDATE USERS SET NAME = ?, EMAIL = ?, ROLE = ?  WHERE USERS.LOGIN = ?";
+        String query = "UPDATE USERS SET NAME = ?, EMAIL = ?, ROLE = ? , id_country = ?, id_region = ? WHERE USERS.LOGIN = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, user.getName());
             stmt.setString(2, user.getEmail());
             stmt.setString(3, user.getRole().name());
-            stmt.setString(4, user.getLogin());
+
+            stmt.setInt(4, user.getId_country());
+            stmt.setInt(5, user.getId_region());
+            stmt.setString(6, user.getLogin());
 
             stmt.executeUpdate();
             connection.commit();
@@ -89,19 +91,37 @@ public enum UserStore {
      * Get all users
      */
     public List<User> getAllUsers() {
-        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT * FROM USERS;");) {
+        try (Statement stmt = connection.createStatement(); ResultSet rs = stmt.executeQuery("SELECT \n" +
+                "  users.id, \n" +
+                "  users.name, \n" +
+                "  users.login, \n" +
+                "  users.email, \n" +
+                "  users.createdate, \n" +
+                "  users.role, \n" +
+                "  tbl_country.name as country,\n" +
+                "  tbl_region.name as region \n" +
+                "  \n" +
+                "FROM \n" +
+                "  public.users, \n" +
+                "  public.tbl_region, \n" +
+                "  public.tbl_country\n" +
+                "WHERE \n" +
+                "  users.id_region = tbl_region.id AND\n" +
+                "  users.id_country = tbl_country.id;\n");) {
 
 
             ArrayList rezult = new ArrayList();
             while (rs.next()) {
-                rezult.add(
-                        new User(
-                                rs.getString("name"),
-                                rs.getString("login"),
-                                rs.getString("email"),
-                                rs.getDate("createDate"),
-                                Role.valueOf(rs.getString("role").trim())
-                        ));
+                User user = new User(
+                        rs.getString("name"),
+                        rs.getString("login"),
+                        rs.getString("email"),
+                        rs.getDate("createDate"),
+                        Role.valueOf(rs.getString("role").trim()),
+                        rs.getString("country"),
+                        rs.getString("region")
+                );
+                rezult.add(user);
             }
             return rezult;
         } catch (Exception e) {
@@ -109,6 +129,49 @@ public enum UserStore {
         }
         return null;
     }
+
+    /**
+     * Get all region
+     */
+    public List<Dislocation> getDislocation(String table, int id) {
+        String query = "SELECT * FROM " + table + " WHERE " + table + ".id_parent = ?";
+        ArrayList result = new ArrayList();
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+
+                    result.add(
+                            new Dislocation(rs.getInt("id"), rs.getString("name"))
+                    );
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public String getNameDislocatonById(String table, int id){
+
+        String query = "SELECT * FROM " + table + " WHERE " + table + ".id_parent = ?";
+        ArrayList result = new ArrayList();
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+
+                while (rs.next()) {
+
+                    return  rs.getString("name");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     /**
      * Get User by ID.
@@ -129,7 +192,9 @@ public enum UserStore {
                             rs.getString("login"),
                             rs.getString("email"),
                             rs.getDate("createDate"),
-                            Role.valueOf(rs.getString("role").trim())
+                            Role.valueOf(rs.getString("role").trim()),
+                            0,
+                            0
                     );
                 }
             }
@@ -139,7 +204,7 @@ public enum UserStore {
         return null;
     }
 
-    public boolean isCredential(String login){
+    public boolean isCredential(String login) {
         String query = "SELECT * FROM USERS WHERE USERS.LOGIN = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, login);
@@ -153,12 +218,12 @@ public enum UserStore {
         return false;
     }
 
-    public String getRole(String login){
+    public String getRole(String login) {
         String query = "SELECT * FROM USERS WHERE USERS.LOGIN = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, login);
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()){
+                while (rs.next()) {
                     return rs.getString("role");
                 }
 
@@ -171,7 +236,6 @@ public enum UserStore {
     }
 
 
-
     /**
      * Get instanse
      *
@@ -179,5 +243,16 @@ public enum UserStore {
      */
     public static UserStore getInstance() {
         return INSTANCE;
+    }
+
+    public void closeConnection() {
+        if (connection != null) {
+            try {
+                if (!connection.isClosed())
+                    connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

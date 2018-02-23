@@ -8,10 +8,55 @@ import java.util.Date;
  * Red Line Soft corp.
  */
 public class User {
+    public int getId_country() {
+        return id_country;
+    }
+
+    public int getId_region() {
+        return id_region;
+    }
+
     /**
      * Name.
      */
-    private String name;
+
+     private String name;
+
+    /**
+     * Getter city.
+     * @return String
+     */
+    public String getRegion() {
+        return region;
+    }
+
+    /**
+     * Getter country.
+     * @return String
+     */
+    public String getCountry() {
+        return country;
+    }
+
+    /**
+     * Region.
+     */
+    private String region;
+
+    /**
+     * Country.
+     */
+    private int id_country;
+
+    /**
+     * Region.
+     */
+    private int id_region;
+
+    /**
+     * Country.
+     */
+    private String country;
 
     /**
      * Users role.
@@ -91,12 +136,24 @@ public class User {
      * @param email      String
      * @param createDate Date
      */
-    public User(String name, String login, String email, Date createDate, Role role) {
+    public User(String name, String login, String email, Date createDate, Role role, String country, String region) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.createDate = createDate;
         this.role = role;
+        this.country = country;
+        this.region = region;
+    }
+
+    public User(String name, String login, String email, Date createDate, Role role, int country, int region) {
+        this.name = name;
+        this.login = login;
+        this.email = email;
+        this.createDate = createDate;
+        this.role = role;
+        this.id_country = country;
+        this.id_region = region;
     }
 
     /**

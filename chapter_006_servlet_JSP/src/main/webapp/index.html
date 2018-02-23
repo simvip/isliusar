@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>Flat HTML5/CSS3 Login Form</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="js/index.js"></script>
+</head>
+
+<body onload="updateTable()">
+
+
+<div class="index-page">
+    <a class="login-link" href="/login.html"
+       data-ga-click="(Logged out) Header, clicked Sign in, text:sign-in">Sign in</a>
+    <span class="text-gray">or</span>
+    <a class="logout-link" href="/join?source=header-home"
+       data-ga-click="(Logged out) Header, clicked Sign up, text:sign-up">Sign up</a>
+</div>
+
+<b></b>
+
+<div>
+    <button type="button" onclick="updateTable()"> update</button>
+</div>
+
+
+<div class="col-md-6">
+    <table class="table" id="usersTable">
+        <tr>
+            <th>Login</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th>Country</th>
+            <th>Region</th>
+            <th>Update</th>
+            <th>Delete</th>
+        </tr>
+        <tbody id="table_names">
+        </tbody>
+    </table>
+</div>
+
+
+</body>
+
+</html>

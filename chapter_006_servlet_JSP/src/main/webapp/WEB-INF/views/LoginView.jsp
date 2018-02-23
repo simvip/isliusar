@@ -13,6 +13,8 @@
     <title></title>
 </head>
 <body>
+
+
 <c:if test="${error != ''}">
     <div style="background-color: red">
         <c:out value="${error}" />

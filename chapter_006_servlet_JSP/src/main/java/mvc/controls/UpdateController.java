@@ -66,7 +66,9 @@ public class UpdateController extends HttpServlet {
                     req.getParameter("login"),
                     req.getParameter("email"),
                     new Date(),
-                    Role.valueOf(req.getParameter("role").trim())
+                    Role.valueOf(req.getParameter("role").trim()),
+                    0,
+                    0
             ));
             resp.sendRedirect(String.format("%s",req.getContextPath()));
         }

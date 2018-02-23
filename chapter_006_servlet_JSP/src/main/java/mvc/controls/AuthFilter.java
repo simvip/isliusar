@@ -15,15 +15,16 @@ public class AuthFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse resp, FilterChain chain) throws IOException, ServletException {
+
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) resp;
-        if (!request.getRequestURI().contains("/signin")) {
-            HttpSession session = request.getSession();
-            if (session.getAttribute("login") == null) {
-                response.sendRedirect(String.format("%s/signin", request.getContextPath()));
-                return;
-            }
-        }
+//        if (!request.getRequestURI().contains("/signin")) {
+//            HttpSession session = request.getSession();
+//            if (session.getAttribute("login") == null) {
+//                response.sendRedirect(String.format("%s/signin", request.getContextPath()));
+//                return;
+//            }
+//        }
         chain.doFilter(req, resp);
 
     }
