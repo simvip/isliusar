@@ -2,7 +2,6 @@ package mvc.controls;
 
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import mvc.models.User;
 import mvc.models.UserStore;
 import org.json.JSONObject;
@@ -95,7 +94,6 @@ public class SigninConroller extends HttpServlet {
             String login = req.getParameter("login");
             HttpSession session = req.getSession();
             if (UserStore.getInstance().isCredential(login)) {
-
 
                 session.setAttribute("login", login);
                 session.setAttribute("role", UserStore.getInstance().getRole(login).trim());

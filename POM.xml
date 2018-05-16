@@ -20,6 +20,7 @@
 		<module>chapter_004_Multithreading</module>
 		<module>chapter_005</module>
 		<module>chapter_006_servlet_JSP</module>
+		<module>chapter_007_hibernet</module>
 
 	</modules>
 	
