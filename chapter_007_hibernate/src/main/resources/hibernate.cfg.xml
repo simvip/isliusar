@@ -20,11 +20,24 @@
         <!-- Drop and re-create the database schema on startup -->
         <!--<property name="hbm2ddl.auto">create</property>-->
 
-        <mapping resource="models/Item.hbm.xml"/>
-        <mapping resource="models/Engine.hbm.xml"/>
-        <mapping resource="models/Transmission.hbm.xml"/>
-        <mapping resource="models/GearBox.hbm.xml"/>
-        <mapping resource="models/Car.hbm.xml"/>
+        <!-- MAPPING BY XML-->
+        <!--<mapping resource="models/Item.hbm.xml"/>-->
+
+        <!--<mapping resource="models/Car.hbm.xml"/>-->
+        <!--<mapping resource="models/Engine.hbm.xml"/>-->
+        <!--<mapping resource="models/Transmission.hbm.xml"/>-->
+        <!--<mapping resource="models/GearBox.hbm.xml"/>-->
+
+
+        <!--MAPPING BY ANNOTATION -->
+        <mapping class="models.User"/>
+
+        <mapping class="models.Item"/>
+
+        <mapping class="models.Car"/>
+        <mapping class="models.parts.Transmission"/>
+        <mapping class="models.parts.Engine"/>
+        <mapping class="models.parts.GearBox"/>
 
     </session-factory>
 </hibernate-configuration>
