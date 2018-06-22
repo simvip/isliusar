@@ -1,7 +1,5 @@
 package persistent;
 
-import models.User;
-
 import java.util.List;
 
 /**
@@ -9,9 +7,9 @@ import java.util.List;
  * Red Line Soft corp.
  */
 public interface Store<T> {
-    void add(User user);
-    void update(User user);
-    boolean delete(User user);
+    void add(T entity);
+    void update(T entity);
+    boolean delete(T entity);
     List<T> findAll();
     T findById(int id);
 }

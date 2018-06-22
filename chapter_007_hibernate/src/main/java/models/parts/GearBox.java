@@ -10,7 +10,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "gearbox")
-public @Data class GearBox{
+public @Data class GearBox implements BaseBlock{
     @Id @GeneratedValue
     @Column(name = "id")
     private Integer id;

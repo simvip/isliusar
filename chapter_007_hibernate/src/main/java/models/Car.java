@@ -23,12 +23,15 @@ public @Data class Car {
     private String name;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_engine")
     private Engine engine;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_transmission")
     private Transmission transmission;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "id_gearbox")
     private GearBox gearbox;
 
     public Car(String name, Engine engine, Transmission transmission, GearBox gearbox) {

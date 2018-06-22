@@ -33,6 +33,7 @@
         <mapping class="models.User"/>
 
         <mapping class="models.Item"/>
+        <mapping class="models.FileImage"/>
 
         <mapping class="models.Car"/>
         <mapping class="models.parts.Transmission"/>

@@ -1,13 +1,12 @@
 package presentation;
 
-import logic.ValidateService;
+import com.fasterxml.jackson.core.type.TypeReference;
+import logic.ValidateUser;
 import models.User;
-import org.codehaus.jackson.JsonGenerationException;
-import org.codehaus.jackson.map.JsonMappingException;
-import org.codehaus.jackson.map.ObjectMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.Crud;
+import utils.JsonParser;
 import utils.ThrowInPresentation;
 
 import javax.servlet.ServletException;
@@ -23,7 +22,9 @@ import java.util.List;
  * Red Line Soft corp.
  */
 public class UserServlet extends HttpServlet {
-    private static final ValidateService LOGIC = ValidateService.getInstance();
+    private static final ValidateUser LOGIC = ValidateUser.getInstance();
+    private static final JsonParser JSON_UTIL = JsonParser.getInstance();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,10 +33,9 @@ public class UserServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         List<User> users = LOGIC.findAll();
-        ObjectMapper mapper = new ObjectMapper();
         JSONArray jsonUsers = new JSONArray();
-        for (User user :users) {
-            jsonUsers.put(user.getId(),mapper.writeValueAsString(user));
+        for (User user : users) {
+            jsonUsers.put(user.getId(), JSON_UTIL.toString(user));
         }
 
         resp.getWriter().write(jsonUsers.toString());
@@ -43,7 +43,8 @@ public class UserServlet extends HttpServlet {
 
     /**
      * Override doPost
-     * @param req {@link HttpServletRequest}
+     *
+     * @param req  {@link HttpServletRequest}
      * @param resp {@link HttpServletResponse}
      * @throws ServletException
      * @throws IOException
@@ -52,12 +53,12 @@ public class UserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         JSONObject outJSON = new JSONObject();
-        outJSON.append("event","done");
+        outJSON.append("event", "done");
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
         JSONObject inJSON = new JSONObject(parseRequestToJson(req));
-        User user = generateUserByJson(inJSON.getJSONObject("user"));
+        User user = JSON_UTIL.fromJson(inJSON.getJSONObject("user").toString(), new TypeReference<User>(){});
 
         String inputCommand = inJSON.getJSONObject("service").getString("command");
         switch (Crud.valueOf(inputCommand)) {
@@ -95,20 +96,5 @@ public class UserServlet extends HttpServlet {
             System.out.println(e.toString());
         }
         return jb.toString();
-    }
-
-    private User generateUserByJson(JSONObject json) {
-        ObjectMapper mapper = new ObjectMapper();
-        User user = null;
-        try {
-            user = mapper.readValue(json.toString(), User.class);
-        } catch (JsonGenerationException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return user;
     }
 }

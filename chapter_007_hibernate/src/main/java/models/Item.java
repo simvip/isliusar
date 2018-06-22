@@ -19,8 +19,15 @@ class Item {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "decs")
-    private String decs;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "userId")
+    private User user;
+
+    @Column(name = "description")
+    private String desc;
+
+    @Column(name = "coverpath")
+    private String coverPath;
 
     @Column(name = "create_date")
     private Timestamp created;

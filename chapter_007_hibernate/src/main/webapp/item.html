@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ADD ITEM </title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="bootstrap/assets/js/vendor/holder.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class="row">
+        <fieldset id="parentFieldset">
+            <div class="col-md-8 col-md-offset-2">
+                <legend class="text-center">Add new Item</legend>
+
+                <fieldset>
+                    <legend>Item Details</legend>
+
+                    <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
+                            <label>ID</label>
+                            <input id="itemId" type="text" class="form-control" value="" disabled="disabled">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="User">User</label>
+                            <input id="userId" type="hidden" value="">
+                            <input id="userName" type="text" class="form-control" value="" disabled="disabled">
+                        </div>
+                        <br/>
+                        <div class="form-group col-md-12">
+                        <label>Description</label>
+                        <input id="desc" type="text" class="form-control" value="">
+                        </div>
+                    </div>
+
+                </fieldset>
+
+                <fieldset>
+                    <legend>Car Details</legend>
+
+                    <div class="form-group col-md-12">
+                        <label for="car">Car</label>
+                        <select id="car" class="form-control" name="" id="Car">
+
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="engine">Engine</label>
+                        <select id="engine" class="form-control" name="" id="engine">
+
+                        </select>
+                    </div>
+
+                    <div class="form-group col-md-4">
+                        <label for="gearbox">Gear box</label>
+                        <select id="gearbox" class="form-control" name="" id="gearbox">
+
+                        </select>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission" class="form-control" name="" id="Transmission">
+                        </select>
+                    </div>
+
+                </fieldset>
+                <fieldset>
+                    <legend>Photo of sail car</legend>
+
+                    <div class="container">
+                        <div id="main_area">
+                            <!-- Slider -->
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <div class="col-xs-10" id="slider">
+                                        <!-- Top part of the slider -->
+                                        <div class="row">
+                                            <div class="col-sm-12" id="carousel-bounding-box">
+                                                <div class="carousel slide" id="myCarousel">
+                                                    <!-- Carousel items -->
+                                                    <div id=carousel-inner class="carousel-inner">
+
+                                                    </div>
+                                                    <!-- Carousel nav -->
+                                                    <a class="left carousel-control" href="#myCarousel" role="button"
+                                                       data-slide="prev">
+                                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                                    </a>
+                                                    <a class="right carousel-control" href="#myCarousel" role="button"
+                                                       data-slide="next">
+                                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-5" id="slider-thumbs">
+                                    <!-- Bottom switcher of slider -->
+                                    <ul id="hide-bullets" class="hide-bullets">
+
+                                    </ul>
+                                </div>
+
+                                <!--/Slider-->
+                            </div>
+
+                        </div>
+                    </div>
+                </fieldset>
+                <br/>
+                <br/>
+                <!--<form action="upload" method="POST" enctype="multipart/form-data">-->
+                <form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+                    <input type="file" name="upload" multiple class="btn btn-default input-medium pull-left">
+                    <input type="submit" value="Press to upload files" class="btn btn-primary input-medium pull-right">
+                </form>
+                <br/>
+                <br/>
+                <button id="updateItem" type="button" class="btn btn-success input-medium pull-right">UPDATE ITEM
+                </button>
+            </div>
+        </fieldset>
+
+    </div>
+
+</div>
+
+
+<script src="js/item.js"></script>
+
+</body>
+
+</html>

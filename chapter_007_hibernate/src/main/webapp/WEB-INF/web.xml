@@ -3,6 +3,27 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
+
+    <filter>
+        <filter-name>AuthFilter</filter-name>
+        <filter-class>utils.LogFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>AuthFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
+
+    <servlet>
+        <servlet-name>SigninController</servlet-name>
+        <servlet-class>presentation.SigninConroller</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SigninController</servlet-name>
+        <url-pattern>/signin</url-pattern>
+    </servlet-mapping>
+
+
     <servlet>
         <servlet-name>Items Controller</servlet-name>
         <servlet-class>presentation.ItemServlet</servlet-class>
@@ -19,6 +40,16 @@
     <servlet-mapping>
         <servlet-name>User Controller</servlet-name>
         <url-pattern>/users</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>Upload File Controller</servlet-name>
+        <servlet-class>presentation.UploadServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Upload File Controller</servlet-name>
+        <url-pattern>/upload</url-pattern>
     </servlet-mapping>
 
 </web-app>

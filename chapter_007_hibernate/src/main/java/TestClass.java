@@ -1,4 +1,5 @@
-import models.parts.Transmission;
+import models.Item;
+import models.User;
 import org.hibernate.Session;
 import utils.UtilHibernate;
 
@@ -20,13 +21,16 @@ public class TestClass {
         Session session = UtilHibernate.openSession();
         session.beginTransaction();
 
-        Transmission transmission = new Transmission();
-        transmission.setName("2-Speed Direct Shift");
-        session.save(transmission);
+        User user = new User();
+        user.setId(1);
+//        user.setName("User 3");
+//        user.setEmail("mymail@gmail.com");
+//        session.save(user);
 
-        Transmission transmission2 = new Transmission();
-        transmission2.setName("3-Speed Direct Shift");
-        session.save(transmission2);
+        Item item = new Item();
+        item.setUser(user);
+        item.setDesc("Test");
+        session.save(item);
 
 
         session.getTransaction().commit();

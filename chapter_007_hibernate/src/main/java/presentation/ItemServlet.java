@@ -1,12 +1,16 @@
 package presentation;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.google.gson.Gson;
+import logic.ValidateFile;
+import logic.ValidateItem;
+import logic.ValidateUser;
+import models.FileImage;
 import models.Item;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 import org.json.JSONObject;
-import utils.UtilHibernate;
+import utils.Crud;
+import utils.JsonParser;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -14,9 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.function.Function;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,19 +27,78 @@ import java.util.function.Function;
  * Red Line Soft corp.
  */
 public class ItemServlet extends HttpServlet {
-    @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
-    }
+    /**
+     * Instance validate layer.
+     */
+    private static final ValidateItem LOGIC_ITEM = ValidateItem.getInstance();
+    private static final ValidateFile LOGIC_FILE = ValidateFile.getInstance();
+    private static final ValidateUser LOGIC_USER = ValidateUser.getInstance();
+    private static final JsonParser JSON_PARSER = JsonParser.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
+        JSONObject inputJSON = new JSONObject(parseRequestToJson(req));
+        String command = inputJSON.getString("command");
+
+        Boolean dataReceived = false;
+        JSONObject outJSON = new JSONObject();
+
+        switch (Crud.valueOf(command)) {
+            case FIND_ALL:
+                List<Item> allItems = LOGIC_ITEM.findAll();
+                dataReceived = allItems != null && allItems.size() != 0;
+                if (dataReceived)
+                    outJSON.put("list", new Gson().toJson(allItems));
+                break;
+
+            case DELETE:
+                dataReceived = LOGIC_ITEM.delete(inputJSON.getInt("itemId"));
+                break;
+
+            case CREATE_OR_UPDATE:
+                Item item = JSON_PARSER.fromJson(inputJSON.toString(), new TypeReference<Item>() {
+                });
+                item.setUser(LOGIC_USER.findByID(inputJSON.getInt("userId")));
+                dataReceived = LOGIC_ITEM.add(item);
+                outJSON.put("itemId", item.getId());
+                break;
+
+            case GET_DROPDOWN_LIST:
+                Map mapDropDownList = LOGIC_ITEM.getDopdownList();
+                dataReceived = mapDropDownList.size() != 0;
+                if (dataReceived)
+                    outJSON.put("list", new Gson().toJson(mapDropDownList));
+                break;
+
+            case GET_BY_ID:
+                Item findItem = LOGIC_ITEM.findByID(inputJSON.getInt("itemId"));
+                dataReceived = findItem != null;
+                if (dataReceived) {
+                    outJSON.put("list", new Gson().toJson(findItem));
+                }
+                break;
+
+            case GET_ALL_FILES:
+
+                List<FileImage> imageList = LOGIC_FILE.findAll(inputJSON.getInt("itemId"));
+                dataReceived = imageList.size() != 0;
+                if (dataReceived)
+                    outJSON.put("list", new Gson().toJson(imageList));
+                break;
+            default:
+        }
+        outJSON.put("answer",dataReceived);
+        resp.getWriter().write(outJSON.toString());
+    }
+
+    private String parseRequestToJson(HttpServletRequest req) {
         // Handle ajax (JSON or XML) response.
         StringBuilder jb = new StringBuilder();
         String line = "";
+
         try {
             BufferedReader reader = req.getReader();
             while ((line = reader.readLine()) != null)
@@ -44,70 +106,10 @@ public class ItemServlet extends HttpServlet {
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-
-        JSONObject inputJSON = new JSONObject(jb.toString());
-
-        int command = inputJSON.getInt("command");
-        JSONObject response = new JSONObject();
-
-        switch (command) {
-            case 0: //get all items
-                String s = new Gson().toJson(getAllItmems());
-                resp.getWriter().write(s);
-                break;
-            case 1: //delete items by id
-
-                response.put("answer",
-                        deleteById(
-                                inputJSON.getInt("itemId")
-                        ));
-                resp.getWriter().write(response.toString());
-                break;
-            case 2: // create or update
-                Item item = new Item();
-                if (inputJSON.has("id")&& !inputJSON.getString("id").isEmpty())
-                    item.setId(inputJSON.getInt("id"));
-                item.setDecs(inputJSON.getString("desc"));
-                item.setCreated(new Timestamp(inputJSON.getLong("dateCreate")));
-                item.setDone(Boolean.valueOf(inputJSON.getString("done")));
-                response.put("answer",createAndUpdate(item));
-                resp.getWriter().write(response.toString());
-                break;
-        }
-    }
-
-    private Collection<Item> getAllItmems() {
-       return this.tx(session -> session.createQuery("from Item ").list());
-    }
-
-    private boolean deleteById(int id){
-        return this.tx(session -> {
-            final Query query = session.createQuery("delete from Item where id=:id");
-            query.setInteger("id", id);
-            query.executeUpdate();
-            return true;
-        });
-    }
-
-    private boolean createAndUpdate(Item item){
-     return this.tx(session -> {
-        session.saveOrUpdate(item);
-         return true;
-     });
-    }
-
-    private <T> T tx(final Function<Session, T> command) {
-        final Session session = UtilHibernate.openSession();
-        final Transaction tx = session.beginTransaction();
-        try {
-            return command.apply(session);
-        } catch (final Exception e) {
-            e.printStackTrace();
-            session.getTransaction().rollback();
-        } finally {
-            tx.commit();
-            session.close();
-        }
-        return null;
+        return jb.toString();
     }
 }
+
+
+
+

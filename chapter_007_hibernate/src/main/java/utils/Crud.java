@@ -8,5 +8,11 @@ public enum Crud {
     CREATE,
     READ,
     UPDATE,
-    DELETE
+    DELETE,
+    CREATE_OR_UPDATE,
+    FIND_ALL,
+    GET_ALL_FILES,
+    GET_BY_ID,
+    GET_DROPDOWN_LIST
+
 }
