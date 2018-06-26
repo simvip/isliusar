@@ -79,13 +79,19 @@ $('#updateItem').on('click', function () {
     var jsonData = new Object();
     var itemId = $('#itemId').val();
     var userId = $('#userId').val();
-
+    // get by JavaScript
+    // var dCar = document.getElementById("car");
+    // var carId = dCar.options[dCar.selectedIndex].text;
+    // get by jQuery
+    var carId = $('#car :selected').val();
     jsonData.command = "CREATE_OR_UPDATE";
     jsonData.id = isNaN(itemId) ? null : itemId;
     jsonData.userId = isNaN(userId) ? null : userId;
+    jsonData.carId = isNaN(carId) ? null : carId;
     jsonData.desc = $('#desc').val();
     jsonData.coverPath = $('img').attr('src');
     jsonData.done = 'true';
+    jsonData.created = new Date();
 
     $.ajax({
         url: serverPath + "/items",

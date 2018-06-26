@@ -9,6 +9,7 @@ import persistent.parts.PostgreEngineStore;
 import persistent.parts.PostgreGearBoxStore;
 import persistent.parts.PostgreTransmissionStore;
 
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -53,6 +54,25 @@ public class ValidateItem {
         if (deleteItem != null)
             STORE.delete(deleteItem);
         return !itemExistInBase(id);
+    }
+
+    public List<Item> findAllByFilter(Map<String, String> parameters) {
+        //typify the parameters
+        Map<String, Object> typifyMap = new HashMap<>();
+        if (parameters.containsKey("sDate")) {
+
+            java.sql.Timestamp sDate = new Timestamp(Long.parseLong(parameters.get("sDate")));
+            typifyMap.put("sDate", sDate);
+
+            java.sql.Timestamp eDate = new Timestamp(Long.parseLong(parameters.get("eDate")));
+            typifyMap.put("eDate", eDate);
+        }
+        if (parameters.containsKey("withPhoto"))
+            typifyMap.put("withPhoto", Integer.valueOf(parameters.get("withPhoto"))==1);
+        if (parameters.containsKey("carId"))
+            typifyMap.put("carId", Integer.valueOf(parameters.get("carId")));
+
+        return STORE.findAllByParam(typifyMap);
     }
 
     public List<Item> findAll() {

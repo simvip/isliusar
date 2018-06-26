@@ -20,6 +20,10 @@ class Item {
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn (name = "carId")
+    private Car car;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn (name = "userId")
     private User user;
 

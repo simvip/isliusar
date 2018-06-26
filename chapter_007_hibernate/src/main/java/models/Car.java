@@ -43,4 +43,9 @@ public @Data class Car {
 
     public Car() {
     }
+
+    @Override
+    public String toString() {
+        return this.getId().toString();
+    }
 }

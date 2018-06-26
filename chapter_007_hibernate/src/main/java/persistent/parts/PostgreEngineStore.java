@@ -8,6 +8,7 @@ import persistent.Store;
 import utils.UtilHibernate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -58,6 +59,10 @@ public class PostgreEngineStore implements Store<Engine> {
         return this.tx(session -> session.get(Engine.class,id));
     }
 
+    @Override
+    public List<Engine> findAllByParam(Map<String, Object> param) {
+        return null;
+    }
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = UtilHibernate.openSession();

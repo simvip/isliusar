@@ -8,6 +8,7 @@ import persistent.Store;
 import utils.UtilHibernate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -58,6 +59,10 @@ public class PostgreTransmissionStore implements Store<Transmission> {
         return this.tx(session -> session.get(Transmission.class,id));
     }
 
+    @Override
+    public List<Transmission> findAllByParam(Map<String, Object> param) {
+        return null;
+    }
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = UtilHibernate.openSession();

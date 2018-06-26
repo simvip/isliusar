@@ -1,6 +1,5 @@
-import models.Item;
-import models.User;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import utils.UtilHibernate;
 
 
@@ -20,17 +19,19 @@ public class TestClass {
 
         Session session = UtilHibernate.openSession();
         session.beginTransaction();
-
-        User user = new User();
-        user.setId(1);
+        Query query = session.createQuery("from Item where car.id=:carId");
+        query.setParameter("carId",2);
+        query.list();
+//        User user = new User();
+//        user.setId(1);
 //        user.setName("User 3");
 //        user.setEmail("mymail@gmail.com");
 //        session.save(user);
 
-        Item item = new Item();
-        item.setUser(user);
-        item.setDesc("Test");
-        session.save(item);
+//        Item item = new Item();
+//        item.setUser(user);
+//        item.setDesc("Test");
+//        session.save(item);
 
 
         session.getTransaction().commit();

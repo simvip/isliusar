@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import utils.UtilHibernate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -48,6 +49,7 @@ public class PostgreItemStore implements Store<Item> {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Item> findAll() {
         return (List<Item>) this.tx(
                 session -> session.createQuery("from Item ").list()
@@ -60,6 +62,36 @@ public class PostgreItemStore implements Store<Item> {
         return this.tx(session -> session.get(Item.class, id));
     }
 
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Item> findAllByParam(Map<String, Object> parameters) {
+
+        return (List<Item>) this.tx(session -> {
+
+                    StringBuilder hql = new StringBuilder("from Item where 1=1");
+                    // add dynamic conditions
+                    if (parameters.containsKey("sDate")) {
+                        hql.append(" AND created between :sDate and :eDate");
+                    }
+                    if (parameters.containsKey("carId")) {
+                        hql.append(" AND car.id =:carId");
+                    }
+                    if (parameters.containsKey("withPhoto")) {
+                        if ((boolean) parameters.get("withPhoto"))
+                            hql.append(" AND coverPath != '' AND coverPath IS NOT NULL");
+                    }
+
+                    final Query query = session.createQuery(hql.toString());
+
+                    // set parameters from input map
+                    for (String p : query.getNamedParameters()) {
+                        query.setParameter(p, parameters.get(p));
+                    }
+                    return query.list();
+                }
+        );
+    }
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = UtilHibernate.openSession();

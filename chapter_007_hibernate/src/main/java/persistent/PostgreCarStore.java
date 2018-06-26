@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import utils.UtilHibernate;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 /**
@@ -57,6 +58,10 @@ public class PostgreCarStore implements Store<Car> {
         return this.tx(session -> session.get(Car.class,id));
     }
 
+    @Override
+    public List<Car> findAllByParam(Map<String, Object> param) {
+        return null;
+    }
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = UtilHibernate.openSession();
