@@ -4,6 +4,7 @@ package presentation;
 import com.google.gson.Gson;
 import logic.ValidateUser;
 import models.User;
+import org.apache.log4j.Logger;
 import org.json.JSONObject;
 
 import javax.servlet.ServletException;
@@ -22,8 +23,9 @@ import java.util.Map;
  * Red Line Soft corp.
  */
 public class SigninConroller extends HttpServlet {
-
+    private static final Logger logger = Logger.getLogger(SigninConroller.class);
     private static final ValidateUser LOGIC = ValidateUser.getInstance();
+
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -42,8 +44,8 @@ public class SigninConroller extends HttpServlet {
                 BufferedReader reader = req.getReader();
                 while ((line = reader.readLine()) != null)
                     jb.append(line);
-            } catch (Exception e) {
-                System.out.println(e.toString());
+            } catch (Exception ex) {
+                logger.error("We have a problem with parse request JSON",ex);
             }
 
             JSONObject inputJson = new JSONObject(jb.toString());

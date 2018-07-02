@@ -3,6 +3,7 @@ package presentation;
 import com.fasterxml.jackson.core.type.TypeReference;
 import logic.ValidateUser;
 import models.User;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.Crud;
@@ -22,6 +23,7 @@ import java.util.List;
  * Red Line Soft corp.
  */
 public class UserServlet extends HttpServlet {
+    private static final Logger LOGGER = Logger.getLogger(SigninConroller.class);
     private static final ValidateUser LOGIC = ValidateUser.getInstance();
     private static final JsonParser JSON_UTIL = JsonParser.getInstance();
 
@@ -64,7 +66,6 @@ public class UserServlet extends HttpServlet {
         switch (Crud.valueOf(inputCommand)) {
             case CREATE:
                 LOGIC.add(user);
-
                 break;
             case UPDATE:
                 LOGIC.update(user);
@@ -73,11 +74,7 @@ public class UserServlet extends HttpServlet {
                 LOGIC.delete(user);
                 break;
             default:
-                try {
-                    throw new ThrowInPresentation("Don`t recognize command");
-                } catch (ThrowInPresentation throwInPresentation) {
-                    throwInPresentation.printStackTrace();
-                }
+                LOGGER.error(new ThrowInPresentation("Don`t recognize command"));
         }
         resp.getWriter().write(outJSON.toString());
 
@@ -92,8 +89,8 @@ public class UserServlet extends HttpServlet {
             BufferedReader reader = req.getReader();
             while ((line = reader.readLine()) != null)
                 jb.append(line);
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        } catch (Exception ex) {
+            LOGGER.error("We have a problem with parse request JSON",ex);
         }
         return jb.toString();
     }

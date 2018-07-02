@@ -1,6 +1,7 @@
 package persistent;
 
 import models.Car;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -15,6 +16,7 @@ import java.util.function.Function;
  * Red Line Soft corp.
  */
 public class PostgreCarStore implements Store<Car> {
+    private static final Logger LOGGER = Logger.getLogger(PostgreCarStore.class);
     final static PostgreCarStore INSTANCE = new PostgreCarStore();
     public static Store getInstance(){
        return INSTANCE;
@@ -69,6 +71,7 @@ public class PostgreCarStore implements Store<Car> {
         try {
             return command.apply(session);
         } catch (final Exception e) {
+            LOGGER.error(e);
             throw e;
         } finally {
             transaction.commit();

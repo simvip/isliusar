@@ -1,6 +1,7 @@
 package persistent;
 
 import models.Item;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -15,6 +16,7 @@ import java.util.function.Function;
  * Red Line Soft corp.
  */
 public class PostgreItemStore implements Store<Item> {
+    private static final Logger LOGGER = Logger.getLogger(PostgreItemStore.class);
     final static PostgreItemStore INSTANCE = new PostgreItemStore();
 
     public static Store getInstance() {
@@ -99,6 +101,7 @@ public class PostgreItemStore implements Store<Item> {
         try {
             return command.apply(session);
         } catch (final Exception e) {
+            LOGGER.error(e);
             throw e;
         } finally {
             transaction.commit();

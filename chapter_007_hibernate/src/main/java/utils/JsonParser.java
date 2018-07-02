@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.log4j.Logger;
+import presentation.UploadServlet;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,6 +19,7 @@ public class JsonParser {
 
     // {{start:setup}}
     private static final JsonParser DEFAULT_SERIALIZER;
+    private static final Logger LOGGER = Logger.getLogger(UploadServlet.class);
     static {
         ObjectMapper mapper = new ObjectMapper();
 
@@ -185,7 +188,8 @@ public class JsonParser {
 
     public static class JsonException extends RuntimeException {
         private JsonException(Exception ex) {
-            super(ex);
+            LOGGER.error(ex);
+            //super(ex);
         }
     }
 

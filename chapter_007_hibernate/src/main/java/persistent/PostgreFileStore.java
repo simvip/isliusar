@@ -1,6 +1,7 @@
 package persistent;
 
 import models.FileImage;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -14,6 +15,7 @@ import java.util.function.Function;
  * Red Line Soft corp.
  */
 public class PostgreFileStore{
+    private static final Logger LOGGER = Logger.getLogger(PostgreFileStore.class);
     final static PostgreFileStore INSTANCE = new PostgreFileStore();
     public static PostgreFileStore getInstance(){
        return INSTANCE;
@@ -68,6 +70,7 @@ public class PostgreFileStore{
         try {
             return command.apply(session);
         } catch (final Exception e) {
+            LOGGER.error(e);
             throw e;
         } finally {
             transaction.commit();

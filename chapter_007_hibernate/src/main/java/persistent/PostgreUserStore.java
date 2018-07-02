@@ -1,6 +1,7 @@
 package persistent;
 
 import models.User;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -14,6 +15,7 @@ import java.util.function.Function;
  * Red Line Soft corp.
  */
 public class PostgreUserStore {
+    private static final Logger LOGGER = Logger.getLogger(PostgreUserStore.class);
     final static PostgreUserStore INSTANCE = new PostgreUserStore();
     public static PostgreUserStore getInstance(){
        return INSTANCE;
@@ -74,6 +76,7 @@ public class PostgreUserStore {
         try {
             return command.apply(session);
         } catch (final Exception e) {
+            LOGGER.error(e);
             throw e;
         } finally {
             transaction.commit();

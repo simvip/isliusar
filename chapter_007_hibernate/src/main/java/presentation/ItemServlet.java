@@ -8,6 +8,7 @@ import logic.ValidateItem;
 import logic.ValidateUser;
 import models.FileImage;
 import models.Item;
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import utils.Crud;
@@ -32,6 +33,7 @@ public class ItemServlet extends HttpServlet {
     /**
      * Instance validate layer.
      */
+    private static final Logger logger = Logger.getLogger(ItemServlet.class);
     private static final ValidateItem LOGIC_ITEM = ValidateItem.getInstance();
     private static final ValidateFile LOGIC_FILE = ValidateFile.getInstance();
     private static final ValidateUser LOGIC_USER = ValidateUser.getInstance();
@@ -118,8 +120,9 @@ public class ItemServlet extends HttpServlet {
             BufferedReader reader = req.getReader();
             while ((line = reader.readLine()) != null)
                 jb.append(line);
-        } catch (Exception e) {
-            System.out.println(e.toString());
+        } catch (Exception ex) {
+            logger.error("We have a problem with parse request to JSON",ex);
+
         }
         return jb.toString();
     }

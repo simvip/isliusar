@@ -5,6 +5,7 @@ import models.FileImage;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 
 
 import javax.servlet.ServletException;
@@ -20,6 +21,8 @@ import java.util.*;
  * Red Line Soft corp.
  */
 public class UploadServlet extends HttpServlet {
+
+    private static final Logger logger = Logger.getLogger(UploadServlet.class);
     /**
      * Instance validate layer.
      */
@@ -53,6 +56,7 @@ public class UploadServlet extends HttpServlet {
         // checking whether it is query multipart/fom-data
         boolean isMultipart = ServletFileUpload.isMultipartContent(req);
         if (!isMultipart) {
+            logger.warn(HttpServletResponse.SC_BAD_REQUEST);
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST);
             return;
         }
@@ -84,8 +88,8 @@ public class UploadServlet extends HttpServlet {
                     listFiles.add(item);
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ex) {
+            logger.error(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,ex);
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             return;
         }
@@ -94,8 +98,8 @@ public class UploadServlet extends HttpServlet {
                 listFiles) {
             try {
                 processUploadedFile(itemId, item);
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ex) {
+                logger.error("Problem with",ex);
             }
         }
     }
