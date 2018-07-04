@@ -1,12 +1,17 @@
 package persistent;
 
 import models.Item;
+import models.Item_;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import utils.UtilHibernate;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -69,28 +74,42 @@ public class PostgreItemStore implements Store<Item> {
     @SuppressWarnings("unchecked")
     public List<Item> findAllByParam(Map<String, Object> parameters) {
 
-        return (List<Item>) this.tx(session -> {
+        return this.tx(session -> {
 
-                    StringBuilder hql = new StringBuilder("from Item where 1=1");
-                    // add dynamic conditions
+                    CriteriaBuilder builder = session.getCriteriaBuilder();
+                    CriteriaQuery<Item> query = builder.createQuery(Item.class);
+                    Root<Item> root = query.from(Item.class);
+                    query.select(root);
+
+
                     if (parameters.containsKey("sDate")) {
-                        hql.append(" AND created between :sDate and :eDate");
+
+                        query.where(
+                                builder.between(
+                                        root.get(Item_.created)
+                                        , (Timestamp) parameters.get("sDate")
+                                        , (Timestamp) parameters.get("eDate")
+                                )
+                        );
+
+
                     }
                     if (parameters.containsKey("carId")) {
-                        hql.append(" AND car.id =:carId");
-                    }
+
+                        query.where(
+                                builder.equal(
+                                        root.get(Item_.car)
+                                        , parameters.get("carId")
+                                )
+                        );
+                   }
                     if (parameters.containsKey("withPhoto")) {
-                        if ((boolean) parameters.get("withPhoto"))
-                            hql.append(" AND coverPath != '' AND coverPath IS NOT NULL");
-                    }
+                        if ((boolean) parameters.get("withPhoto")) {
+                            query.where(builder.notEqual(root.get(Item_.coverPath),""));
 
-                    final Query query = session.createQuery(hql.toString());
-
-                    // set parameters from input map
-                    for (String p : query.getNamedParameters()) {
-                        query.setParameter(p, parameters.get(p));
+                        }
                     }
-                    return query.list();
+                    return session.createQuery(query).getResultList();
                 }
         );
     }
