@@ -10,5 +10,5 @@ public interface Storage {
     void add(User user);
     void update(User user);
     void delete(User user);
-    User findById(User user);
+    User findById(int id);
 }

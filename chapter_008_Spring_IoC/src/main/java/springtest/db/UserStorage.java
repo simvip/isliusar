@@ -14,7 +14,7 @@ public class UserStorage {
     private final Storage storage;
 
     @Autowired
-    public UserStorage(@Qualifier("memoryStorage") final Storage storage) {
+    public UserStorage(@Qualifier("jdbc")final Storage storage) {
         this.storage = storage;
     }
 
@@ -34,7 +34,7 @@ public class UserStorage {
     }
 
 
-    public User findById(User user) {
-        return storage.findById(user);
+    public User findById(int id) {
+        return storage.findById(id);
     }
 }

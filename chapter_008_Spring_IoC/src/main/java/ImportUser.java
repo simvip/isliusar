@@ -1,3 +1,6 @@
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import springtest.db.UserStorage;
 import springtest.models.User;
 
 /**
@@ -7,7 +10,15 @@ import springtest.models.User;
 public class ImportUser {
 
     public static void main(String[] args) {
-        new User();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-context.xml");
+        UserStorage store = context.getBean(UserStorage.class);
+
+        User user = new User();
+        user.setName("Piter");
+        store.add(user);
+
+        System.out.println(""+store.findById(1));
+
 
     }
 }

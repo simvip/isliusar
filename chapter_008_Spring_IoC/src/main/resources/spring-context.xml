@@ -12,11 +12,25 @@
     http://www.springframework.org/schema/context
     http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!--<bean id="memory" class="springtest.db.MemoryStorage"></bean>-->
-    <!--<bean id="storage" class="springtest.db.UserStorage">-->
-    <!--<constructor-arg name="storage" ref="memory"/>-->
-    <!--</bean>-->
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 
-    <context:component-scan base-package="springtest"/>
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/springIoC" />
+        <property name="username" value="postgres" />
+        <property name="password" value="postgres" />
+    </bean>
+
+    <bean id="memory" class="springtest.db.MemoryStorage"></bean>
+
+    <bean id="jdbc" class="springtest.db.JdbcStorage">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+    <bean id="storage" class="springtest.db.UserStorage">
+        <constructor-arg ref="memory"></constructor-arg>
+    </bean>
+
+    <!--<context:component-scan base-package="springtest"/>-->
 
 </beans>

@@ -37,7 +37,7 @@ public class MemoryStorage implements Storage {
     }
 
     @Override
-    public User findById(User user) {
-        return this.userList.get(user.getId());
+    public User findById(int id) {
+        return this.userList.get(id);
     }
 }

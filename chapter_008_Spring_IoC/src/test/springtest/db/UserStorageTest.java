@@ -37,7 +37,7 @@ public class UserStorageTest {
     @Test
     public void add() throws Exception {
         storage.add(user1);
-        assertThat(user1,is(storage.findById(user1)));
+        assertThat(user1,is(storage.findById(user1.getId())));
     }
 
     @Test
@@ -45,20 +45,20 @@ public class UserStorageTest {
         storage.add(user1);
         user1.setName("Mik");
         storage.update(user1);
-        assertThat(user1.getName(),is(storage.findById(user1).getName()));
+        assertThat(user1.getName(),is(storage.findById(user1.getId()).getName()));
     }
 
     @Test
     public void delete() throws Exception {
         storage.add(user1);
         storage.delete(user1);
-        assertNull(storage.findById(user1));
+        assertNull(storage.findById(user1.getId()));
     }
 
     @Test
     public void findById() throws Exception {
         storage.add(user1);
-        assertThat(user1.getId(),is(storage.findById(user1).getId()));
+        assertThat(user1.getId(),is(storage.findById(user1.getId()).getId()));
     }
 
 }
