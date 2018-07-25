@@ -1,7 +1,7 @@
 package springtest.db;
 
-import org.springframework.stereotype.Component;
 import springtest.models.User;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.Connection;

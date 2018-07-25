@@ -1,9 +1,10 @@
 package springtest.db;
 
+import springtest.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import springtest.models.User;
 import org.springframework.stereotype.Component;
+
 
 /**
  * Created by Ivan Sliusar on 06.07.2018.

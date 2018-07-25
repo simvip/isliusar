@@ -20,7 +20,7 @@
         <!--<property name="current_session_context_class">thread</property>-->
 
         <!--MAPPING BY ANNOTATION -->
-        <mapping class="models.User"/>
+        <mapping class="User"/>
 
         <mapping class="models.Item"/>
         <mapping class="models.FileImage"/>

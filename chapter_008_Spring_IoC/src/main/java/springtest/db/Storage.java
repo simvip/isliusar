@@ -1,5 +1,6 @@
 package springtest.db;
 
+
 import springtest.models.User;
 
 /**

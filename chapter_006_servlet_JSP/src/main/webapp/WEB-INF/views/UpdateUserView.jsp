@@ -1,4 +1,4 @@
-<%@ page import="mvc.models.User" %>
+<%@ page import="mvc.User" %>
 <%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Admin
