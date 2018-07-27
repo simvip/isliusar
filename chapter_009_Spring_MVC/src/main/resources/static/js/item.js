@@ -52,6 +52,8 @@ $('#fileUploadForm').submit(function () {
     // Create an FormData object
     var data = new FormData(form);
     data.append('itemId', $('#itemId').val());
+    data.append('file', file.files);
+    
   
     $.ajax({
         type: 'POST',
