@@ -51,6 +51,7 @@ function fillDropDownMenu() {
         url: serverPath + "/items",
         type: 'POST',
         data: JSON.stringify(jsonData),
+        contentType: "application/json",
         dataType: 'json',
         async: true,
 
@@ -78,6 +79,7 @@ function fillDropDownMenu() {
 function updateForm() {
 
     console.log("Get all items");
+
     var keyParam = ['carId', 'sDate', 'eDate', 'withPhoto'];
     var mapParam = [];
     var valueParameter = null;
@@ -86,15 +88,15 @@ function updateForm() {
         if (valueParameter != null) mapParam.push({name: nameOfParam, value: valueParameter});
     });
 
-
     var jsonData = new Object();
     jsonData.command = "FIND_ALL";
-    jsonData.queryParam = mapParam.length == 0 ? null : mapParam;
+    jsonData.queryParam = mapParam.length == 0 ? null : JSON.stringify(mapParam);
 
     $.ajax({
         url: serverPath + "/items",
         type: 'POST',
         data: JSON.stringify(jsonData),
+        contentType: "application/json",
         dataType: 'json',
         async: true,
 

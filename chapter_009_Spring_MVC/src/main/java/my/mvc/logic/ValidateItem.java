@@ -21,15 +21,13 @@ import java.util.Map;
 public class ValidateItem {
 
     private static final ValidateItem INSTANCE = new ValidateItem();
-
     private static final Store STORE = PostgreItemStore.getInstance();
 
     public static ValidateItem getInstance() {
         return INSTANCE;
     }
 
-    private ValidateItem() {
-    }
+    private ValidateItem() {}
 
     private boolean itemExistInBase(int id) {
         return STORE.findById(id) != null;
@@ -42,7 +40,6 @@ public class ValidateItem {
             STORE.update(item);
         return itemExistInBase(item.getId());
     }
-
 
     public boolean update(Item item) {
         STORE.update(item);
@@ -60,15 +57,15 @@ public class ValidateItem {
         //typify the parameters
         Map<String, Object> typifyMap = new HashMap<>();
         if (parameters.containsKey("sDate")) {
-
             java.sql.Timestamp sDate = new Timestamp(Long.parseLong(parameters.get("sDate")));
             typifyMap.put("sDate", sDate);
-
             java.sql.Timestamp eDate = new Timestamp(Long.parseLong(parameters.get("eDate")));
             typifyMap.put("eDate", eDate);
         }
+
         if (parameters.containsKey("withPhoto"))
             typifyMap.put("withPhoto", Integer.valueOf(parameters.get("withPhoto"))==1);
+
         if (parameters.containsKey("carId"))
             typifyMap.put("carId", Integer.valueOf(parameters.get("carId")));
 
@@ -84,15 +81,11 @@ public class ValidateItem {
     }
 
     public Map<String, List<BaseBlock>> getDopdownList() {
-
         Map<String, List<BaseBlock>> listMap = new HashMap<>();
-
         listMap.put("engine", PostgreEngineStore.getInstance().findAll());
         listMap.put("gearbox", PostgreGearBoxStore.getInstance().findAll());
         listMap.put("transmission", PostgreTransmissionStore.getInstance().findAll());
-
         listMap.put("car", PostgreCarStore.getInstance().findAll());
-
         return listMap;
     }
 }

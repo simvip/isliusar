@@ -20,23 +20,18 @@ public class PostgreFileStore{
     public static PostgreFileStore getInstance(){
        return INSTANCE;
     }
-    private PostgreFileStore() {
-}
-
+    private PostgreFileStore() {}
 
     public void add(FileImage fileImage) {
         this.tx(session -> session.save(fileImage));
     }
-
 
     public void update(FileImage fileImage) {
         this.tx(session -> {
             session.update(fileImage);
             return true;
         });
-
     }
-
 
     public boolean delete(FileImage fileImage) {
         return this.tx(session -> {
@@ -46,7 +41,6 @@ public class PostgreFileStore{
             return true;
         });
     }
-
 
     public List<FileImage> findAll(int id) {
         return (List<FileImage>) this.tx(
@@ -58,11 +52,9 @@ public class PostgreFileStore{
         );
     }
 
-
     public FileImage findById(int id) {
         return this.tx(session -> session.get(FileImage.class,id));
     }
-
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = UtilHibernate.openSession();
@@ -77,7 +69,6 @@ public class PostgreFileStore{
             session.close();
         }
     }
-
 }
 
 

@@ -38,5 +38,4 @@ class Item {
 
     @Column(name = "done")
     private Boolean done;
-
 }

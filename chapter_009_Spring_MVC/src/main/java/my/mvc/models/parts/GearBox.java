@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "gearbox")
 public @Data class GearBox implements BaseBlock{
+
     @Id @GeneratedValue
     @Column(name = "id")
     private Integer id;
@@ -18,12 +19,9 @@ public @Data class GearBox implements BaseBlock{
     @Column(name = "name")
     private String name;
 
-
     public GearBox(Integer id) {
         this.id = id;
     }
 
-    public GearBox() {
-
-    }
+    public GearBox() {}
 }

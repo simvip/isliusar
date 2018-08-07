@@ -15,23 +15,19 @@ public class ValidateCar {
     public static ValidateCar getInstance(){
         return INSTANCE;
     }
-    private ValidateCar() {
-    }
 
+    private ValidateCar() {}
 
     public void add(Car car) {
         STORE.add(car);
     }
 
-
     public void update(Car car) {
         STORE.update(car);
     }
 
-
     public void delete(Car car) {
         STORE.delete(car);
-
     }
 
     public Car findByID(int id) {

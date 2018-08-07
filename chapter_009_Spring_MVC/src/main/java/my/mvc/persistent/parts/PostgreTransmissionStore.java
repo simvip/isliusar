@@ -20,8 +20,7 @@ public class PostgreTransmissionStore implements Store<Transmission> {
     public static Store getInstance(){
        return INSTANCE;
     }
-    private PostgreTransmissionStore() {
-}
+    private PostgreTransmissionStore() {}
 
     @Override
     public void add(Transmission transmission) {
@@ -34,7 +33,6 @@ public class PostgreTransmissionStore implements Store<Transmission> {
             session.update(transmission);
             return true;
         });
-
     }
 
     @Override
@@ -76,7 +74,6 @@ public class PostgreTransmissionStore implements Store<Transmission> {
             session.close();
         }
     }
-
 }
 
 

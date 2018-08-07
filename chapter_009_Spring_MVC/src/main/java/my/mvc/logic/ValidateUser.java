@@ -18,21 +18,16 @@ public class ValidateUser {
         return INSTANCE;
     }
 
-    private ValidateUser() {
-    }
+    private ValidateUser() {}
 
     public void add(User user) {
         if (user.getId() == null)
             STORE.add(user);
         else
             STORE.update(user);
-    };
+    }
 
-
-
-    public void update(User user) {
-        STORE.update(user);
-    };
+    public void update(User user) {STORE.update(user);}
 
     public void delete(User user) {
         User deleteUser = (User) STORE.findById(user.getId());
@@ -40,13 +35,9 @@ public class ValidateUser {
             STORE.delete(deleteUser);
     }
 
-    ;
-
     public List<User> findAll() {
         return STORE.findAll();
     }
-
-    ;
 
     public User findByEmail(String email) {
         return (User) STORE.findByEmail(email);
@@ -55,6 +46,4 @@ public class ValidateUser {
     public User findByID(int id) {
         return (User) STORE.findById(id);
     }
-
-    ;
 }

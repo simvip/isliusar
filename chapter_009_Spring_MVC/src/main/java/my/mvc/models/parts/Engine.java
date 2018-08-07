@@ -26,6 +26,5 @@ class Engine implements BaseBlock{
         this.id = id;
     }
 
-    public Engine() {
-    }
+    public Engine() {}
 }

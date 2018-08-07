@@ -42,7 +42,6 @@ public class PostgreItemStore implements Store<Item> {
             session.update(entity);
             return true;
         });
-
     }
 
     @Override
@@ -63,52 +62,45 @@ public class PostgreItemStore implements Store<Item> {
         );
     }
 
-
     @Override
     public Item findById(int id) {
         return this.tx(session -> session.get(Item.class, id));
     }
-
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Item> findAllByParam(Map<String, Object> parameters) {
 
         return this.tx(session -> {
-
                     CriteriaBuilder builder = session.getCriteriaBuilder();
                     CriteriaQuery<Item> query = builder.createQuery(Item.class);
                     Root<Item> root = query.from(Item.class);
                     query.select(root);
 
-
                     if (parameters.containsKey("sDate")) {
-
-                        query.where(
-                                builder.between(
-                                        root.get(Item_.created)
-                                        , (Timestamp) parameters.get("sDate")
-                                        , (Timestamp) parameters.get("eDate")
+                        query.where(builder.between(
+                                root.get(Item_.created)
+                                , (Timestamp) parameters.get("sDate")
+                                , (Timestamp) parameters.get("eDate")
                                 )
                         );
-
-
                     }
-                    if (parameters.containsKey("carId")) {
 
+                    if (parameters.containsKey("carId")) {
                         query.where(
                                 builder.equal(
                                         root.get(Item_.car)
                                         , parameters.get("carId")
                                 )
                         );
-                   }
+                    }
+
                     if (parameters.containsKey("withPhoto")) {
                         if ((boolean) parameters.get("withPhoto")) {
-                            query.where(builder.notEqual(root.get(Item_.coverPath),""));
-
+                            query.where(builder.notEqual(root.get(Item_.coverPath), ""));
                         }
                     }
+
                     return session.createQuery(query).getResultList();
                 }
         );
@@ -127,5 +119,4 @@ public class PostgreItemStore implements Store<Item> {
             session.close();
         }
     }
-
 }

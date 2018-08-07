@@ -20,8 +20,8 @@ public class PostgreEngineStore implements Store<Engine> {
     public static Store getInstance(){
        return INSTANCE;
     }
-    private PostgreEngineStore() {
-}
+
+    private PostgreEngineStore() {}
 
     @Override
     public void add(Engine engine) {
@@ -34,7 +34,6 @@ public class PostgreEngineStore implements Store<Engine> {
             session.update(engine);
             return true;
         });
-
     }
 
     @Override
@@ -76,7 +75,6 @@ public class PostgreEngineStore implements Store<Engine> {
             session.close();
         }
     }
-
 }
 
 

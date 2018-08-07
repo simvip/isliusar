@@ -9,6 +9,4 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ComponentScan({"my.mvc"})
-public class SpringRootConfig {
-
-}
+public class SpringRootConfig {}

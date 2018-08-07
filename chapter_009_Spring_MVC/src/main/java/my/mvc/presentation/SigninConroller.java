@@ -25,23 +25,20 @@ import java.util.Map;
  * Red Line Soft corp.
  */
 @Component
-public class SigninConroller{
+public class SigninConroller {
     private static final Logger logger = Logger.getLogger(SigninConroller.class);
     private static final ValidateUser LOGIC = ValidateUser.getInstance();
 
-
-    @RequestMapping(value="/signin",method = RequestMethod.GET)
+    @RequestMapping(value = "/signin", method = RequestMethod.GET)
     protected String doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        req.getRequestDispatcher("login.html").forward(req, resp);
         return "login";
     }
 
-    @RequestMapping(value="/signin",method = RequestMethod.POST)
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
         boolean ajax = "XMLHttpRequest".equals(req.getHeader("X-Requested-With"));
-
         if (ajax) {
-
             StringBuilder jb = new StringBuilder();
             String line = "";
             try {
@@ -49,16 +46,14 @@ public class SigninConroller{
                 while ((line = reader.readLine()) != null)
                     jb.append(line);
             } catch (Exception ex) {
-                logger.error("We have a problem with parse request JSON",ex);
+                logger.error("We have a problem with parse request JSON", ex);
             }
 
             JSONObject inputJson = new JSONObject(jb.toString());
-
             int command = inputJson.getInt("command");
             switch (command) {
                 case 1:
                     User user = LOGIC.findByEmail(inputJson.getString("email").trim());
-
                     Map<String, String> responseMap = new LinkedHashMap<>();
                     responseMap.put("validate", "false");
 
@@ -77,7 +72,6 @@ public class SigninConroller{
                     resp.getWriter().write(new Gson().toJson(responseMap));
                     break;
             }
-
         }
     }
 }

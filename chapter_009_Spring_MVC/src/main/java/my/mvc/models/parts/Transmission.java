@@ -23,6 +23,5 @@ public @Data class Transmission implements BaseBlock{
         this.id = id;
     }
 
-    public Transmission() {
-    }
+    public Transmission() {}
 }

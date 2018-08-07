@@ -21,8 +21,7 @@ public class PostgreCarStore implements Store<Car> {
     public static Store getInstance(){
        return INSTANCE;
     }
-    private PostgreCarStore() {
-}
+    private PostgreCarStore() {}
 
     @Override
     public void add(Car car) {
@@ -35,7 +34,6 @@ public class PostgreCarStore implements Store<Car> {
             session.update(car);
             return true;
         });
-
     }
 
     @Override
@@ -78,7 +76,6 @@ public class PostgreCarStore implements Store<Car> {
             session.close();
         }
     }
-
 }
 
 

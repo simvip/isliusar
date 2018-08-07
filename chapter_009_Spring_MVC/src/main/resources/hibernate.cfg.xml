@@ -7,7 +7,6 @@
         <property name="connection.url">jdbc:postgresql://localhost:5432/testHibernate</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
-
         <property name="connection.username">postgres</property>
         <property name="connection.password">postgres</property>
 
@@ -17,28 +16,13 @@
         <!-- Enable Hibernate's automatic session context management -->
         <property name="current_session_context_class">thread</property>
 
-        <!-- Drop and re-create the database schema on startup -->
-        <!--<property name="hbm2ddl.auto">create</property>-->
-
-        <!-- MAPPING BY XML-->
-        <!--<mapping resource="models/Item.hbm.xml"/>-->
-
-        <!--<mapping resource="models/Car.hbm.xml"/>-->
-        <!--<mapping resource="models/Engine.hbm.xml"/>-->
-        <!--<mapping resource="models/Transmission.hbm.xml"/>-->
-        <!--<mapping resource="models/GearBox.hbm.xml"/>-->
-
-
         <!--MAPPING BY ANNOTATION -->
         <mapping class="my.mvc.models.User"/>
-
         <mapping class="my.mvc.models.Item"/>
         <mapping class="my.mvc.models.FileImage"/>
-
         <mapping class="my.mvc.models.Car"/>
         <mapping class="my.mvc.models.parts.Transmission"/>
         <mapping class="my.mvc.models.parts.Engine"/>
         <mapping class="my.mvc.models.parts.GearBox"/>
-
     </session-factory>
 </hibernate-configuration>

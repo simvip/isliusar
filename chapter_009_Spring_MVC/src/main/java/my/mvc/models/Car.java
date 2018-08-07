@@ -41,8 +41,7 @@ public @Data class Car {
         this.gearbox = gearbox;
     }
 
-    public Car() {
-    }
+    public Car() {}
 
     @Override
     public String toString() {

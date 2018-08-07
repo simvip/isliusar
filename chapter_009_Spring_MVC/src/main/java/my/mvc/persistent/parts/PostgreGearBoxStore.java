@@ -20,8 +20,7 @@ public class PostgreGearBoxStore implements Store<GearBox> {
     public static Store getInstance(){
        return INSTANCE;
     }
-    private PostgreGearBoxStore() {
-}
+    private PostgreGearBoxStore() {}
 
     @Override
     public void add(GearBox gearBox) {
@@ -34,7 +33,6 @@ public class PostgreGearBoxStore implements Store<GearBox> {
             session.update(gearBox);
             return true;
         });
-
     }
 
     @Override
@@ -76,7 +74,6 @@ public class PostgreGearBoxStore implements Store<GearBox> {
             session.close();
         }
     }
-
 }
 
 

@@ -19,20 +19,16 @@ public class ValidateFile{
     private ValidateFile() {
     }
 
-
     public void add(FileImage fileImage) {
         STORE.add(fileImage);
     }
-
 
     public void update(FileImage fileImage) {
         STORE.update(fileImage);
     }
 
-
     public void delete(FileImage fileImage) {
         STORE.delete(fileImage);
-
     }
 
     public List<FileImage> findAll(int id) {

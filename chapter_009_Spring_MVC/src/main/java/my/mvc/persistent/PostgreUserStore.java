@@ -20,23 +20,18 @@ public class PostgreUserStore {
     public static PostgreUserStore getInstance(){
        return INSTANCE;
     }
-    private PostgreUserStore() {
-}
-
+    private PostgreUserStore() {}
 
     public void add(User user) {
         this.tx(session -> session.save(user));
     }
-
 
     public void update(User user) {
         this.tx(session -> {
             session.update(user);
             return true;
         });
-
     }
-
 
     public boolean delete(User user) {
         return this.tx(session -> {
@@ -47,13 +42,11 @@ public class PostgreUserStore {
         });
     }
 
-
     public List<User> findAll() {
         return (List<User>) this.tx(
                 session -> session.createQuery("from User").list()
         );
     }
-
 
     public User findById(int id) {
         return this.tx(session -> session.get(User.class,id));
@@ -68,7 +61,6 @@ public class PostgreUserStore {
                 }
         );
     }
-
 
     private <T> T tx(final Function<Session, T> command) {
         final Session session = UtilHibernate.openSession();
