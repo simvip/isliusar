@@ -1,9 +1,10 @@
-package models;
+package my.jpa.models;
 
 import lombok.Data;
-import models.parts.Engine;
-import models.parts.GearBox;
-import models.parts.Transmission;
+import my.jpa.models.parts.BaseBlock;
+import my.jpa.models.parts.Engine;
+import my.jpa.models.parts.GearBox;
+import my.jpa.models.parts.Transmission;
 
 import javax.persistence.*;
 
@@ -12,9 +13,8 @@ import javax.persistence.*;
  * Red Line Soft corp.
  */
 @Entity
-//@Table(name = "car")
-@Table(name = "")
-public @Data class Car {
+@Table(name = "Car")
+public @Data class Car implements BaseBlock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -42,8 +42,7 @@ public @Data class Car {
         this.gearbox = gearbox;
     }
 
-    public Car() {
-    }
+    public Car() {}
 
     @Override
     public String toString() {
