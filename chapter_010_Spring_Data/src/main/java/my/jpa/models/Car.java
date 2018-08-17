@@ -13,7 +13,7 @@ import javax.persistence.*;
  * Red Line Soft corp.
  */
 @Entity
-@Table(name = "Car")
+@Table(name = "car")
 public @Data class Car implements BaseBlock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

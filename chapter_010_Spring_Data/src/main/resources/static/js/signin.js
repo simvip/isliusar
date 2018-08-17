@@ -26,6 +26,7 @@ function login() {
         url: serverPath + "/signin",
         type: 'POST',
         data: JSON.stringify(jsonData),
+        contentType: "application/json",
         dataType: 'json',
         async: true,
 

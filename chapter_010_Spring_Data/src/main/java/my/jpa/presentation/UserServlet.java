@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Controller
 public class UserServlet {
-    private static final Logger LOGGER = Logger.getLogger(SigninConroller.class);
+    private static final Logger LOGGER = Logger.getLogger(UserServlet.class);
     @Autowired
     private ValidateUser LOGIC;
     private static final JsonParser JSON_UTIL = JsonParser.getInstance();

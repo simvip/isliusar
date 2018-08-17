@@ -14,6 +14,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -174,6 +176,12 @@ public class ItemServlet {
     @ResponseBody
     protected String doPost(@RequestBody ItemsInputParameters parameters) throws ServletException, IOException {
         return handleRequest(parameters);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public RedirectView redirectWithUsingRedirectView(
+            RedirectAttributes attributes) {
+        return new RedirectView("index.html");
     }
 }
 
