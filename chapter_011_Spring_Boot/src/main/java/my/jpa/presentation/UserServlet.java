@@ -34,7 +34,7 @@ public class UserServlet {
 
 
     @RequestMapping(value="/users",method = RequestMethod.GET)
-    protected String doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public String doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
@@ -58,7 +58,7 @@ public class UserServlet {
      * @throws IOException
      */
     @RequestMapping(value="/users",method = RequestMethod.POST)
-    protected String doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public String doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         JSONObject outJSON = new JSONObject();
         outJSON.append("event", "done");

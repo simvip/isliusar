@@ -14,8 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.ServletException;
 import java.io.IOException;
@@ -32,11 +30,11 @@ import java.util.function.Function;
 @RestController
 public class ItemServlet {
     @Autowired
-    private ValidateItem LOGIC_ITEM;
+    private ValidateItem logicItem;
     @Autowired
-    private ValidateFile LOGIC_FILE;
+    private ValidateFile logicFile;
 
-    private JsonParser JSON_PARSER = JsonParser.getInstance();
+    private JsonParser jsonParser = JsonParser.getInstance();
     private static final Logger logger = Logger.getLogger(ItemServlet.class);
     private Map<Crud, Function<ItemsInputParameters, String>> dispatch = new HashMap<>();
 
@@ -92,10 +90,10 @@ public class ItemServlet {
                     JSONObject jb = jArray.getJSONObject(i);
                     mapParam.put(jb.getString("name"), jb.getString("value"));
                 }
-                allItems = LOGIC_ITEM.findAllByFilter(mapParam);
+                allItems = logicItem.findAllByFilter(mapParam);
                 logger.info("Find items by param. Size of found list " + allItems.size());
             } else {
-                allItems = LOGIC_ITEM.findAll();
+                allItems = logicItem.findAll();
                 logger.info("Find all items. Size of found list " + allItems.size());
             }
             dataReceived = allItems != null && allItems.size() != 0;
@@ -110,7 +108,7 @@ public class ItemServlet {
         return parameters -> {
             Boolean dataReceived = false;
             JSONObject outJSON = new JSONObject();
-            dataReceived = LOGIC_ITEM.delete(parameters.getId());
+            dataReceived = logicItem.delete(parameters.getId());
             outJSON.put("answer", dataReceived);
             return outJSON.toString();
         };
@@ -120,12 +118,12 @@ public class ItemServlet {
         return parameters -> {
             Boolean dataReceived = false;
             JSONObject outJSON = new JSONObject();
-            Item item = JSON_PARSER.fromJson(
+            Item item = jsonParser.fromJson(
                     parameters.toString(),
                     new TypeReference<Item>() {
                     }
             );
-            dataReceived = LOGIC_ITEM.add(item);
+            dataReceived = logicItem.add(item);
             outJSON.put("itemId", item.getId());
             outJSON.put("answer", dataReceived);
             return outJSON.toString();
@@ -136,7 +134,7 @@ public class ItemServlet {
         return parameters -> {
             Boolean dataReceived = false;
             JSONObject outJSON = new JSONObject();
-            Map mapDropDownList = LOGIC_ITEM.getDopdownList();
+            Map mapDropDownList = logicItem.getDopdownList();
             dataReceived = mapDropDownList.size() != 0;
             if (dataReceived)
                 outJSON.put("list", new Gson().toJson(mapDropDownList));
@@ -149,7 +147,7 @@ public class ItemServlet {
         return parameters -> {
             Boolean dataReceived = false;
             JSONObject outJSON = new JSONObject();
-            Item findItem = LOGIC_ITEM.findByID(parameters.getId());
+            Item findItem = logicItem.findByID(parameters.getId());
             dataReceived = findItem != null;
             if (dataReceived) {
                 outJSON.put("list", new Gson().toJson(findItem));
@@ -163,7 +161,7 @@ public class ItemServlet {
         return parameters -> {
             Boolean dataReceived = false;
             JSONObject outJSON = new JSONObject();
-            List<FileImage> imageList = LOGIC_FILE.findAll(parameters.getId());
+            List<FileImage> imageList = logicFile.findAll(parameters.getId());
             dataReceived = imageList.size() != 0;
             if (dataReceived)
                 outJSON.put("list", new Gson().toJson(imageList));
@@ -174,15 +172,15 @@ public class ItemServlet {
 
     @RequestMapping(value = "/items", method = RequestMethod.POST)
     @ResponseBody
-    protected String doPost(@RequestBody ItemsInputParameters parameters) throws ServletException, IOException {
+    public String doPost(@RequestBody ItemsInputParameters parameters) throws ServletException, IOException {
         return handleRequest(parameters);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public RedirectView redirectWithUsingRedirectView(
-            RedirectAttributes attributes) {
-        return new RedirectView("index.html");
-    }
+//    @RequestMapping(value = "/", method = RequestMethod.GET)
+//    public RedirectView redirectWithUsingRedirectView(
+//            RedirectAttributes attributes) {
+//        return new RedirectView("test");
+//    }
 }
 
 

@@ -1,19 +1,20 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <!--<link rel="icon" href="../../../../favicon.ico">-->
+
 
     <title>Car sale area</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../../css/album.css" rel="stylesheet">
+    <link th:href="@{/css/album.css}" rel="stylesheet">
   </head>
 
   <body>
@@ -26,7 +27,7 @@
           <h1 class="jumbotron-heading">Selling Car place</h1>
           <p class="lead text-muted">Created by Ivan Sliusar.</p>
           <p>
-            <a href="item.html" class="btn btn-primary my-2">Add Item</a>
+            <a th:href="@{/item}" class="btn btn-primary my-2">Add Item</a>
             <!--<a href="#" class="btn btn-secondary my-2">Secondary action</a>-->
           </p>
           <div class="btn-group">
@@ -56,8 +57,8 @@
             <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown">
             </button>
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="index.html">all</a>
-              <a class="dropdown-item" href="index.html?withPhoto=1">with photo</a>
+              <a class="dropdown-item" href="index">all</a>
+              <a class="dropdown-item" href="index?withPhoto=1">with photo</a>
             </div>
           </div>
         </div>
@@ -90,11 +91,13 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <!--<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../bootstrap/assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-    <script src="../../bootstrap/assets/js/vendor/popper.min.js"></script>
-    <script src="../../bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="../../bootstrap/assets/js/vendor/holder.min.js"></script>
+    <script>window.jQuery || document.write('<script th:src="@{/bootstrap/assets/js/vendor/jquery-slim.min.js}"><\/script>')</script>
 
-    <script src="../../js/index.js"></script>
+    <!--<script th:src="@{/bootstrap/assets/js/vendor/jquery-slim.min.js}"></script>-->
+    <script th:src="@{/bootstrap/assets/js/vendor/popper.min.js}"></script>
+    <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/assets/js/vendor/holder.min.js}"></script>
+
+    <script th:src="@{/js/index.js}"></script>
   </body>
 </html>

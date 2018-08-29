@@ -1,12 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>ADD ITEM </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="../../bootstrap/assets/js/vendor/holder.min.js"></script>
+    <script th:src="@{/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/bootstrap/assets/js/vendor/holder.min.js}"></script>
 </head>
 <body>
 
@@ -43,26 +44,26 @@
 
                     <div class="form-group col-md-12">
                         <label for="car">Car</label>
-                        <select id="car" class="form-control" name="" id="Car">
+                        <select class="form-control" name="" id="car">
 
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="engine">Engine</label>
-                        <select id="engine" class="form-control" name="" id="engine">
+                        <select class="form-control" name="" id="engine">
 
                         </select>
                     </div>
 
                     <div class="form-group col-md-4">
                         <label for="gearbox">Gear box</label>
-                        <select id="gearbox" class="form-control" name="" id="gearbox">
+                        <select class="form-control" name="" id="gearbox">
 
                         </select>
                     </div>
                     <div class="form-group col-md-4">
                         <label for="transmission">Transmission</label>
-                        <select id="transmission" class="form-control" name="" id="Transmission">
+                        <select class="form-control" name="" id="transmission">
                         </select>
                     </div>
 
@@ -129,8 +130,7 @@
 
 </div>
 
-
-<script src="../../js/item.js"></script>
+<script th:src="@{/js/item.js}"></script>
 
 </body>
 

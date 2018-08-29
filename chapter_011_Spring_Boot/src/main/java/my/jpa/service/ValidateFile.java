@@ -15,26 +15,26 @@ import java.util.List;
 @Service
 public class ValidateFile{
     @Autowired
-    private FileRepository REPO;
+    private FileRepository repo;
 
     private ValidateFile() {
     }
 
     public void add(FileImage fileImage) {
-        REPO.save(fileImage);
+        repo.save(fileImage);
     }
 
     public void update(FileImage fileImage) {
-        REPO.save(fileImage);
+        repo.save(fileImage);
     }
 
     public void delete(FileImage fileImage) {
-        REPO.delete(fileImage);
+        repo.delete(fileImage);
     }
 
     public List<FileImage> findAll(int id) {
         List<FileImage> images = new ArrayList<>();
-        REPO.findAllByItemId(Integer.valueOf(id))
+        repo.findAllByItemId(Integer.valueOf(id))
                 .forEach(fileImage -> images.add(fileImage));
         return images;
     }

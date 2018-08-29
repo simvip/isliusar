@@ -29,7 +29,7 @@ public class UploadServlet {
      * Instance validate layer.
      */
     @Autowired
-    private ValidateFile LOGIC;
+    private ValidateFile logic;
     private static final Logger logger = Logger.getLogger(UploadServlet.class);
 
     /**
@@ -67,7 +67,7 @@ public class UploadServlet {
                 image.setName(serverFile.getName());
                 image.setPath(FilenameUtils.getFullPathNoEndSeparator(serverFile.getPath()));
                 image.setItemId(Integer.valueOf(itemId));
-                LOGIC.add(image);
+                logic.add(image);
 
                 logger.info("Server File Location="
                         + serverFile.getAbsolutePath());

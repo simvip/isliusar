@@ -15,34 +15,34 @@ import java.util.List;
 @Service
 public class ValidateUser {
     @Autowired
-    private UserRepository REPO;
+    private UserRepository repo;
 
     private ValidateUser() {}
 
     public void add(User user) {
-        REPO.save(user);
+        repo.save(user);
     }
 
     public void update(User user) {
-        REPO.save(user);}
+        repo.save(user);}
 
     public void delete(User user) {
         User deleteUser = findByID(user.getId());
         if (deleteUser != null)
-            REPO.delete(deleteUser);
+            repo.delete(deleteUser);
     }
 
     public List<User> findAll() {
         List<User> users = new ArrayList<>();
-        REPO.findAll().forEach(u->users.add(u));
+        repo.findAll().forEach(u->users.add(u));
         return users;
     }
 
     public User findByEmail(String email) {
-        return (User) REPO.findByEmail(email);
+        return (User) repo.findByEmail(email);
     }
 
     public User findByID(int id) {
-        return REPO.findById(Integer.valueOf(id)).get();
+        return repo.findById(Integer.valueOf(id)).get();
     }
 }

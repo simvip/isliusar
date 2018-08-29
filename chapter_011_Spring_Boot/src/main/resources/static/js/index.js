@@ -40,7 +40,7 @@ function fillDropDownMenu() {
     ).getTime().toString();
 
     var options = '';
-    options += '<a class="dropdown-item" href="index.html?sDate=' + firstDate + '&eDate=' + lastDate + '">in today day</a>'
+    options += '<a class="dropdown-item" href="index?sDate=' + firstDate + '&eDate=' + lastDate + '">in today day</a>'
     $('#period').html(options);
 
     var jsonData = new Object();
@@ -62,7 +62,7 @@ function fillDropDownMenu() {
                 if (nameDropDown == 'car') {
                     var options = '';
                     $.each(arrayValue, function (index, value) {
-                        options += '<a class="dropdown-item" href="index.html?carId=' + String(value.id).trim() + '">' + value.name + '</a>'
+                        options += '<a class="dropdown-item" href="index?carId=' + String(value.id).trim() + '">' + value.name + '</a>'
                     });
                     $('#' + nameDropDown).html(options);
                 }

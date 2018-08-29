@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,79 +20,80 @@ import java.util.Map;
 @Service
 public class ValidateItem {
     @Autowired
-    public ItemRepository ITEM_REPO;
+    public ItemRepository itemRepo;
     @Autowired
-    public CarRepository CAR_REPO;
+    public CarRepository carRepo;
     @Autowired
-    public EngineRepository ENGINE_REPO;
+    public EngineRepository engineRepo;
     @Autowired
-    public GearBoxRepository GEAR_REPO;
+    public GearBoxRepository gearRepo;
     @Autowired
-    public TransmissionRepository TRANSMISSION_REPO;
+    public TransmissionRepository transmissionRepo;
 
     private ValidateItem() {}
 
     private boolean itemExistInBase(int id) {
-        return ITEM_REPO.findById(id).get() != null;
+        return itemRepo.findById(id).get() != null;
     }
 
     public boolean add(Item item) {
-        ITEM_REPO.save(item);
+        itemRepo.save(item);
         return itemExistInBase(item.getId());
     }
 
     public boolean update(Item item) {
-        ITEM_REPO.save(item);
+        itemRepo.save(item);
         return itemExistInBase(item.getId());
     }
 
     public boolean delete(int id) {
-        Item deleteItem = ITEM_REPO.findById(Integer.valueOf(id)).get();
+        Item deleteItem = itemRepo.findById(Integer.valueOf(id)).get();
         if (deleteItem != null)
-            ITEM_REPO.delete(deleteItem);
+            itemRepo.delete(deleteItem);
         return !itemExistInBase(id);
     }
 
     public List<Item> findAllByFilter(Map<String, String> parameters) {
-//        //typify the parameters
-//        Map<String, Object> typifyMap = new HashMap<>();
-//        if (parameters.containsKey("sDate")) {
-//            java.sql.Timestamp sDate = new Timestamp(Long.parseLong(parameters.get("sDate")));
-//            typifyMap.put("sDate", sDate);
-//            java.sql.Timestamp eDate = new Timestamp(Long.parseLong(parameters.get("eDate")));
-//            typifyMap.put("eDate", eDate);
-//        }
-//
-//        if (parameters.containsKey("withPhoto"))
-//            typifyMap.put("withPhoto", Integer.valueOf(parameters.get("withPhoto"))==1);
-//
-//        if (parameters.containsKey("carId"))
-//            typifyMap.put("carId", Integer.valueOf(parameters.get("carId")));
-//
-//        return ITEM_REPO.findAllByParam(typifyMap);
+
+        if (parameters.containsKey("sDate")) {
+            java.sql.Timestamp sDate = new Timestamp(Long.parseLong(parameters.get("sDate")));
+            java.sql.Timestamp eDate = new Timestamp(Long.parseLong(parameters.get("eDate")));
+            return itemRepo.findByCreatedBetween(sDate,eDate);
+        }
+
+        if (parameters.containsKey("withPhoto")){
+            if (Integer.valueOf(parameters.get("withPhoto"))==1)
+                return itemRepo.findByCoverPathIsNotNull();
+            else
+                return itemRepo.findByCoverPathIsNull();
+        }
+
+        if (parameters.containsKey("carId"))
+            itemRepo.findByCarId(Integer.valueOf(parameters.get("carId")));
+
         return null;
     }
 
     public List<Item> findAll() {
         List<Item> items = new ArrayList<>();
-        ITEM_REPO.findAll().forEach(item -> items.add(item));
+        itemRepo.findAll().forEach(item -> items.add(item));
         return items;
     }
 
     public Item findByID(int id) {
-        return ITEM_REPO.findById(id).get();
+        return itemRepo.findById(id).get();
     }
 
     public Map<String, List<BaseBlock>> getDopdownList() {
         Map<String, List<BaseBlock>> listMap = new HashMap<>();
         listMap.put("car",
-                findAllInSetRepository(CAR_REPO));
+                findAllInSetRepository(carRepo));
         listMap.put("engine",
-                findAllInSetRepository(ENGINE_REPO));
+                findAllInSetRepository(engineRepo));
         listMap.put("gearbox",
-                findAllInSetRepository(GEAR_REPO));
+                findAllInSetRepository(gearRepo));
         listMap.put("transmission",
-                findAllInSetRepository(TRANSMISSION_REPO));
+                findAllInSetRepository(transmissionRepo));
         return listMap;
     }
     private List<BaseBlock>findAllInSetRepository(CrudRepository repository){

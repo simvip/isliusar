@@ -12,23 +12,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class ValidateCar {
     @Autowired
-    private CarRepository REPO;
+    private CarRepository repo;
 
     private ValidateCar() {}
 
     public void add(Car car) {
-        REPO.save(car);
+        repo.save(car);
     }
 
     public void update(Car car) {
-        REPO.save(car);
+        repo.save(car);
     }
 
     public void delete(Car car) {
-        REPO.delete(car);
+        repo.delete(car);
     }
 
     public Car findByID(int id) {
-        return REPO.findById(id).get();
+        return repo.findById(id).get();
     }
 }
