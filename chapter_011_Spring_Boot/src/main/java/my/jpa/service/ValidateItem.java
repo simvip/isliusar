@@ -3,6 +3,7 @@ package my.jpa.service;
 import my.jpa.models.Item;
 import my.jpa.models.parts.BaseBlock;
 import my.jpa.repository.*;
+import my.jpa.utils.RequestParameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,9 @@ public class ValidateItem {
     @Autowired
     public TransmissionRepository transmissionRepo;
 
-    private ValidateItem() {}
+
+    private ValidateItem() {
+    }
 
     private boolean itemExistInBase(int id) {
         return itemRepo.findById(id).get() != null;
@@ -53,24 +56,32 @@ public class ValidateItem {
         return !itemExistInBase(id);
     }
 
-    public List<Item> findAllByFilter(Map<String, String> parameters) {
-
-        if (parameters.containsKey("sDate")) {
-            java.sql.Timestamp sDate = new Timestamp(Long.parseLong(parameters.get("sDate")));
-            java.sql.Timestamp eDate = new Timestamp(Long.parseLong(parameters.get("eDate")));
-            return itemRepo.findByCreatedBetween(sDate,eDate);
+    public List<Item> findAllByFilter(ItemRequestWrapper wrapper) {
+        ArrayList<RequestParameter> parameters = wrapper.getParameters();
+        if (parameters.size() == 1) {
+            RequestParameter parameter = parameters.get(0);
+            if (parameter.getKey().equals("withPhoto")) {
+                if (Integer.valueOf(parameter.getValue()) == 1)
+                    return itemRepo.findByCoverPathIsNotNull();
+                else
+                    return itemRepo.findByCoverPathIsNull();
+            }
+            if (parameter.getKey().equals("carId")) {
+                Integer carId = Integer.valueOf(parameter.getValue());
+                return itemRepo.findAllByCar(carRepo.findById(carId).get());
+            }
+        } else {
+            java.sql.Timestamp eDate = null;
+            java.sql.Timestamp sDate = null;
+            for (RequestParameter parameter : parameters) {
+                if (parameter.getKey().equals("sDate")) {
+                    sDate = new Timestamp(Long.parseLong(parameter.getValue()));
+                } else if (parameter.getKey().equals("eDate")) {
+                    eDate = new Timestamp(Long.parseLong(parameter.getValue()));
+                }
+            }
+            return itemRepo.findByCreatedBetween(sDate, eDate);
         }
-
-        if (parameters.containsKey("withPhoto")){
-            if (Integer.valueOf(parameters.get("withPhoto"))==1)
-                return itemRepo.findByCoverPathIsNotNull();
-            else
-                return itemRepo.findByCoverPathIsNull();
-        }
-
-        if (parameters.containsKey("carId"))
-            itemRepo.findByCarId(Integer.valueOf(parameters.get("carId")));
-
         return null;
     }
 
@@ -96,9 +107,10 @@ public class ValidateItem {
                 findAllInSetRepository(transmissionRepo));
         return listMap;
     }
-    private List<BaseBlock>findAllInSetRepository(CrudRepository repository){
+
+    private List<BaseBlock> findAllInSetRepository(CrudRepository repository) {
         List<BaseBlock> blockList = new ArrayList<>();
-        repository.findAll().forEach(value -> blockList.add((BaseBlock)value));
+        repository.findAll().forEach(value -> blockList.add((BaseBlock) value));
         return blockList;
     }
 }

@@ -1,6 +1,9 @@
 package my.jpa.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -10,7 +13,11 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "filespath")
-public @Data class FileImage {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class FileImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

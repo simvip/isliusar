@@ -1,5 +1,7 @@
 package my.jpa.models.parts;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -11,7 +13,9 @@ import javax.persistence.*;
 @Entity
 @Table(name = "engine")
 public
+@AllArgsConstructor
 @Data
+@Builder
 class Engine implements BaseBlock{
 
     @Id

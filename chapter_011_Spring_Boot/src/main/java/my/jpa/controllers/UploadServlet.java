@@ -1,11 +1,12 @@
-package my.jpa.presentation;
+package my.jpa.controllers;
 
-import my.jpa.service.ValidateFile;
 import my.jpa.models.FileImage;
+import my.jpa.service.ValidateFile;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
 import java.io.File;
 import java.util.Date;
 
@@ -22,26 +22,22 @@ import java.util.Date;
  * Red Line Soft corp.
  */
 @Controller
+@RequestMapping(UploadServlet.UPLOAD_URI)
 public class UploadServlet {
-    @Autowired
-    ServletContext context;
+    public final static String UPLOAD_URI = "/upload";
+    private static final Logger logger = Logger.getLogger(UploadServlet.class);
+    @Value("${local.ImageStorage}")
+    private String localImageStorage;
     /**
      * Instance validate layer.
      */
     @Autowired
     private ValidateFile logic;
-    private static final Logger logger = Logger.getLogger(UploadServlet.class);
-
-    /**
-     * Name of the directory where uploaded files will be saved, relative to
-     * the web application directory.
-     */
-    private static final String SAVE_DIR = "uploadFiles";
 
     /**
      * Upload multiple file using Spring Controller
      */
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public
     @ResponseBody
     String uploadMultipleFileHandler(@RequestParam("itemId") String itemId,
@@ -51,12 +47,9 @@ public class UploadServlet {
             MultipartFile file = files[i];
             try {
                 byte[] bytes = file.getBytes();
-                String appPath = context.getRealPath("/WEB-INF/classes/static");
+
                 // save file in directory
-                File serverFile = new File(appPath
-                        + File.separator
-                        + SAVE_DIR
-                        + File.separator
+                File serverFile = new File(this.localImageStorage
                         + generateUniqueFileName(itemId)
                         + "."
                         + FilenameUtils.getExtension(file.getOriginalFilename()));

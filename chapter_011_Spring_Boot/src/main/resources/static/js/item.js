@@ -1,7 +1,8 @@
 var serverHostName = window.location.hostname;
 var serverProtocolName = window.location.protocol;
 var portName = window.location.port;
-var save_dir = "uploadFiles\\";
+//from addResourceHandler webconfig
+var rootDirectoryForImages = "/image/";
 var serverPath = serverProtocolName + "//" + serverHostName;
 if (portName.length === 0) {
     portName = "80";
@@ -46,6 +47,7 @@ $('#fileUploadForm').submit(function () {
 
     //stop submit the form, we will post it manually.
     event.preventDefault();
+
     // Get form
     var form = $('#fileUploadForm')[0];
 
@@ -53,8 +55,7 @@ $('#fileUploadForm').submit(function () {
     var data = new FormData(form);
     data.append('itemId', $('#itemId').val());
     data.append('file', file.files);
-    
-  
+
     $.ajax({
         type: 'POST',
         enctype: 'multipart/form-data',
@@ -79,24 +80,31 @@ $('#fileUploadForm').submit(function () {
 $('#updateItem').on('click', function () {
     console.log("Add/Update ITEM");
 
-    var jsonData = new Object();
-    var itemId   = $('#itemId').val();
-    var userId   = $('#userId').val();
-    var carId    = $('#car :selected').val();
+    // Car
+    var jsonCar = new Object()
+    var carId = $('#car :selected').val();
+    jsonCar.id = isNaN(carId) ? null : parseInt(carId);
 
-    var jsonCar  = new Object()
+    // User
     var jsonUser = new Object()
+    var userId = $('#userId').val();
     jsonUser.id = isNaN(userId) ? null : userId;
-    jsonCar.id  = isNaN(carId)  ? null : parseInt(carId);
 
+    // Item
+    var itemId = $('#itemId').val();
+    var item = new Object()
+    item.id = isNaN(itemId) ? null : itemId;
+    item.user = jsonUser;
+    item.car = jsonCar;
+    item.desc = $('#desc').val();
+    item.done = 'true';
+    item.created = new Date();
+    item.coverPath = $('img').attr('src');
+
+    // JSON request
+    var jsonData = new Object();
     jsonData.command = "CREATE_OR_UPDATE";
-    jsonData.id      = isNaN(itemId) ? null : itemId;
-    jsonData.user    = jsonUser;
-    jsonData.car     = jsonCar;
-    jsonData.desc    = $('#desc').val();
-    jsonData.done    = 'true';
-    jsonData.created = new Date();
-    jsonData.coverPath = $('img').attr('src');
+    jsonData.item = item;
 
     $.ajax({
         url: serverPath + "/items",
@@ -106,7 +114,7 @@ $('#updateItem').on('click', function () {
         contentType: "application/json",
         async: true,
         success: function (response) {
-            if (response.answer){
+            if (response.answer) {
                 var itemId = $('#itemId').val(response.itemId);
             }
         },
@@ -131,9 +139,7 @@ function fillDropDownMenu() {
         dataType: 'json',
         async: true,
         success: function (response) {
-            if (!response.answer) return;
-            var list = JSON.parse(response.list);
-            $.each(list, function (nameDropDown, arrayValue) {
+            $.each(response, function (nameDropDown, arrayValue) {
                 var options = '';
                 $.each(arrayValue, function (index, value) {
                     options += '<option value="' + value.id + '">' + value.name + '</option>';
@@ -152,13 +158,15 @@ function fillDropDownMenu() {
 function fillImages() {
     console.log("Fill carousel image");
     var itemId = $('#itemId').val();
-    if (isNaN(itemId) || itemId==="") {
+    if (isNaN(itemId) || itemId === "") {
         return;
     }
 
     var jsonData = new Object();
+    var item = new Object()
+    item.id = itemId;
     jsonData.command = "GET_ALL_FILES";
-    jsonData.itemId = itemId;
+    jsonData.item = item;
 
     $.ajax({
         url: serverPath + "/items",
@@ -169,16 +177,13 @@ function fillImages() {
         async: true,
 
         success: function (response) {
-            if (!response.answer) return;
-
             var count = 0;
             var filePath = "";
-            var arrayvalue = JSON.parse(response.list);
 
             var hideBullets = "";
             var carouselInner = "";
-            $.each(arrayvalue, function (index, value) {
-                filePath = save_dir + value.name.trim();
+            $.each(response, function (index, value) {
+                filePath = rootDirectoryForImages + value.name.trim();
 
                 hideBullets = hideBullets + '' +
                     '<li class="col-sm-3">' +
@@ -216,8 +221,11 @@ function fillItem() {
     $('#itemId').val(parseInt(itemId));
 
     var jsonData = new Object();
+    var item = new Object()
+    item.id = itemId;
+
     jsonData.command = "GET_BY_ID";
-    jsonData.itemId = parseInt(itemId);
+    jsonData.item = item;
 
     $.ajax({
         url: serverPath + "/items",
@@ -228,12 +236,9 @@ function fillItem() {
         async: true,
 
         success: function (response) {
-            if (!response.answer) return;
-
-            var item = JSON.parse(response.list);
-            $('#desc').val(item.desc);
-            $('#userId').val(String(item.user.id));
-            $('#userName').val(item.user.name.trim());
+            $('#desc').val(response.desc);
+            $('#userId').val(String(response.user.id));
+            $('#userName').val(response.user.name.trim());
             establishVisibility();
         },
         error: function (xhr, status, error) {
@@ -244,18 +249,7 @@ function fillItem() {
 }
 
 function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
+    return window.location.pathname.replace("/item/", "");
 }
 
 function establishVisibility() {
@@ -264,4 +258,5 @@ function establishVisibility() {
     if (currentUserId != userOnForm) {
         $('#parentFieldset').prop("disabled", true);
     }
+
 }

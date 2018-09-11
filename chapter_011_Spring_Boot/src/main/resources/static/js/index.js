@@ -1,7 +1,5 @@
 var serverHostName = window.location.hostname;
-
 var serverProtocolName = window.location.protocol;
-
 var portName = window.location.port;
 
 if (portName.length == 0) {
@@ -101,11 +99,8 @@ function updateForm() {
         async: true,
 
         success: function (response) {
-            if (!response.answer) return;
-            var list = JSON.parse(response.list);
             var items = "";
-
-            $.each(list, function (index, item) {
+            $.each(response, function (index, item) {
                 console.log('' + index + ": " + item.decs);
                 items = items + ' <div class="col-md-4">'
                     + '<div id="' + item.id + '" class="card mb-4 box-shadow">'
@@ -114,7 +109,8 @@ function updateForm() {
                     + '<p class="card-text">' + item.desc + '</p>'
                     + '<div class="d-flex justify-content-between align-items-center">'
                     + '<div class="btn-group">'
-                    + '<a role="button" href="item.html?itemId=' + String(item.id).trim() + '" class="btn btn-sm btn-outline-secondary">View</a>'
+                    // + '<a role="button" href="item.html?itemId=' + String(item.id).trim() + '" class="btn btn-sm btn-outline-secondary">View</a>'
+                    + '<a role="button" href="item/' + String(item.id).trim() + '" class="btn btn-sm btn-outline-secondary">View</a>'
                     + '<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>'
                     + '</div>'
                 //      + '<small class="text-muted">' + item.id + '</small>';

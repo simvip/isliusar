@@ -1,5 +1,7 @@
 package my.jpa.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import my.jpa.models.parts.BaseBlock;
 import my.jpa.models.parts.Engine;
@@ -14,7 +16,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "car")
-public @Data class Car implements BaseBlock{
+@AllArgsConstructor
+@Data
+@Builder
+public class Car implements BaseBlock{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

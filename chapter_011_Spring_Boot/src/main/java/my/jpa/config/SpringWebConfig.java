@@ -2,8 +2,9 @@ package my.jpa.config;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import my.jpa.controllers.ItemServlet;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -30,22 +31,25 @@ import java.util.Properties;
 @ComponentScan(basePackages = "my.jpa")
 @EnableJpaRepositories(basePackages = "my.jpa.repository")
 @PropertySource(value= {"classpath:application.properties"})
-public class SpringWebConfig
-        implements WebMvcConfigurer ,ApplicationContextAware {
+public class SpringWebConfig implements WebMvcConfigurer {
+
+    private static final Logger LOGGER = Logger.getLogger(ItemServlet.class);
+
+    @Value("${local.ImageStorage}")
+    private String localImageStorage;
+
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/META-INF/resources/", "classpath:/resources/",
             "classpath:/static/", "classpath:/public/"};
-    private ApplicationContext applicationContext;
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) {
-        this.applicationContext = applicationContext;
-    }
+
 
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/index").setViewName("index");
+        registry.addViewController("/users").setViewName("index");
         registry.addViewController("/").setViewName("index");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/item").setViewName("item");
+        registry.addViewController("/item/**").setViewName("item");
         registry.addViewController("/test").setViewName("test");
     }
 
@@ -58,6 +62,11 @@ public class SpringWebConfig
             registry.addResourceHandler("/**")
                     .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
         }
+        if (localImageStorage != null){
+            LOGGER.info("Serving image content from "+localImageStorage);
+            registry.addResourceHandler("/image/**").addResourceLocations("file:///"+localImageStorage);
+        }
+
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
@@ -121,6 +130,10 @@ public class SpringWebConfig
         jpaProperties.put("hibernate.hbm2ddl.auto",
                 env.getRequiredProperty("hibernate.hbm2ddl.auto")
         );
+        // Populate dp from files.
+        jpaProperties.put("hibernate.hbm2ddl.import_files",
+                env.getRequiredProperty("hibernate.hbm2ddl.import_files")
+        );
 
         //Configures the naming strategy that is used when Hibernate creates
         //new database objects and schema elements
@@ -140,10 +153,6 @@ public class SpringWebConfig
                 env.getRequiredProperty("hibernate.format_sql")
         );
 
-        // Populate dp from files.
-        jpaProperties.put("hibernate.hbm2ddl.import_files",
-                env.getRequiredProperty("hibernate.hbm2ddl.import_files")
-        );
 
         // Disable feature detection by this undocumented parameter. Check the org.hibernate.engine.jdbc.internal.JdbcServiceImpl.configure method for more details.
         jpaProperties.put("spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults",

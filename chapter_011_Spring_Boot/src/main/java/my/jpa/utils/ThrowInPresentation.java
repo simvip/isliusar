@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
  * Red Line Soft corp.
  */
 public class ThrowInPresentation extends Exception{
-    private static final Logger LOGGER = Logger.getLogger(LogFilter.class);
+    private static final Logger LOGGER = Logger.getLogger(ThrowInPresentation.class);
     public ThrowInPresentation() {
         LOGGER.error(this);
 

@@ -39,7 +39,4 @@ public class ValidateFile{
         return images;
     }
 
-    public FileImage findByID(int id) {
-        return null;
-    }
 }

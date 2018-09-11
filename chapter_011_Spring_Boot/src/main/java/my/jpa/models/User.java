@@ -1,6 +1,9 @@
 package my.jpa.models;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,7 +14,11 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "users")
-public @Data class User {
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -24,6 +31,9 @@ public @Data class User {
 
     @Column(name = "email")
     private String email;
+
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "createDate")
     private Timestamp createDate;

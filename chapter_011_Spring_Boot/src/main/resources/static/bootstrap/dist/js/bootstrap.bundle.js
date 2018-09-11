@@ -2272,7 +2272,7 @@
    * @memberof Popper.Utils
    * @param {dataObject} data
    * @param {Array} modifiers
-   * @param {String} ends - Optional modifier name used as stopper
+   * @param {String} ends - Optional modifier key used as stopper
    * @returns {dataObject}
    */
   function runModifiers(modifiers, data, ends) {
@@ -2365,7 +2365,7 @@
   }
 
   /**
-   * Get the prefixed supported property name
+   * Get the prefixed supported property key
    * @method
    * @memberof Popper.Utils
    * @argument {String} property (camelCase)
@@ -2710,8 +2710,8 @@
    * @method
    * @memberof Popper.Utils
    * @param {Array} modifiers - list of modifiers
-   * @param {String} requestingName - name of requesting modifier
-   * @param {String} requestedName - name of requested modifier
+   * @param {String} requestingName - key of requesting modifier
+   * @param {String} requestedName - key of requested modifier
    * @returns {Boolean}
    */
   function isModifierRequired(modifiers, requestingName, requestedName) {
@@ -3810,7 +3810,7 @@
       // modifiers have the ability to execute arbitrary code when Popper.js get inited
       // such code is executed in the same order of its modifier
       // they could add new properties to their options configuration
-      // BE AWARE: don't add options to `options.modifiers.name` but to `modifierOptions`!
+      // BE AWARE: don't add options to `options.modifiers.key` but to `modifierOptions`!
       this.modifiers.forEach(function (modifierOptions) {
         if (modifierOptions.enabled && isFunction(modifierOptions.onLoad)) {
           modifierOptions.onLoad(_this.reference, _this.popper, _this.options, modifierOptions, _this.state);

@@ -1,4 +1,4 @@
-Insert into users (id,name,email) Values(3,'testUser','test@gmail.com');
+Insert into users (id,createdate,name,login,email,password) Values(3,'2018-08-31 16:41:39.852000','User','User','user@gmail.com','vfitymrf');
 
 Insert into transmission (name) Values('КПП-6');
 Insert into transmission (name) Values('AКПП');
